@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
+
+import Layout from './common/Layout';
 // import useLocalStorage from "./hooks/useLocalStorage";
 import Navigation from "./routes-nav/Navigation";
 import Routes from "./routes-nav/Routes";
@@ -8,7 +10,6 @@ import CapConApi from "./api/api";
 import UserContext from "./auth/UserContext";
 import jwt from "jsonwebtoken";
 import './App.css';
-
 import PrjListPage from "./projects/PrjListPage";
 
 
@@ -122,15 +123,17 @@ function App() {
   // if (!infoLoaded) return <LoadingSpinner />;
 
   return (
-    <BrowserRouter>
-      <UserContext.Provider
+      <BrowserRouter>
+        <Layout>
+        <UserContext.Provider
           value={{ currentUser, setCurrentUser }}>
-        <div className="App">
-          <Navigation logout={logout} />
-          <Routes login={login} signup={signup} />
-        </div>
-      </UserContext.Provider>
-    </BrowserRouter>
+              <div className="App">
+                <Navigation logout={logout} />
+                <Routes login={login} signup={signup} />
+              </div>
+        </UserContext.Provider>
+        </Layout>
+      </BrowserRouter>
   );
 }
 
