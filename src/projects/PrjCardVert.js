@@ -1,40 +1,95 @@
 import React from "react";
-import Tag from "../tags/Tag";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import { faComments } from '@fortawesome/free-regular-svg-icons';
+import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardActions from '@material-ui/core/CardActions';
+import Chip from '@material-ui/core/Chip';
+import Divider from '@material-ui/core/Divider';
+import { makeStyles } from '@material-ui/core/styles';
+import { Avatar, IconButton, Typography } from '@material-ui/core';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
 import "./PrjCardVert.css";
 
 
-function PrjCardVert() {
+const useStyles = makeStyles((theme) => ({
+  divider: {
+    marginBottom: theme.spacing(2),
+  },
+  actions: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
+  }, 
+}))
+
+function PrjCardVert({ 
+  name,
+  image,
+  repoUrl,
+  siteUrl,
+  description, 
+  feedbackRequest, 
+  createdAt, 
+  lastModified,
+  prjLikesCount,
+  prjCommentsCount,
+  firstName, 
+  lastName, 
+  photoUrl,
+  tags}) {
+
   console.debug('PrjCardVert');
 
+  const classes = useStyles();
+
   return (
-    <div className="vertical prj-card card">
-      <img src="https://via.placeholder.com/250x250?text=p1+image" className="card-img-top" alt=""/>
-      <div className="card-body">
-        <h5 className="card-title">
-          Project Title
-        </h5>
-        <p className="card-text">Potentially longish description of project goes here.</p>
-      </div>
-      <div className="card-body d-flex justify-content-between border-top border-secondary-50">
-        <span>
-          <Tag></Tag>
-          <Tag></Tag>
-        </span>
-        <span><FontAwesomeIcon icon={faComments} /> 3 <FontAwesomeIcon icon={faHeart} /> 5</span>
-      </div>
-      <ul className="list-group list-group-flush">
-        <li className="list-group-item">
-          <img className="avatar" src="https://via.placeholder.com/75x75?text=avatar" alt="avatar"/>
-          Creator Name
+    <Card 
+      elevation={3}
+      className="vertical prj-card"
+    >
+      <CardMedia 
+        component="img" 
+        image={image} alt=""
+      />
+      <CardContent>
+        <Typography component="h3" variant="title">
+          {name}
+        </Typography>
+        <Typography variant="body1">
+          {description}
+        </Typography>
+      </CardContent>
+
+      <CardActions className={classes.actions}>
+        <Box>
+          {tags.map(tag => (
+            <Chip size="small" label={tag.tagText}/> 
+          ))}
+        </Box>
+
+        <Box display='flex' align-items='center'>
+          <FavoriteBorderIcon/>
+          <Box mx={1}>{prjLikesCount}</Box>
+          <ModeCommentOutlinedIcon mx={8}/>
+          <Box ml={1}>{prjCommentsCount}</Box>
+        </Box>
+      </CardActions>
+      <Divider variant="middle" className={classes.divider}/>
+      <ul>
+        <li>
+          <img src='https://via.placeholder.com/75x75?text=user+photo' alt="project creator" />
+          {firstName}{lastName}
         </li>
       </ul>
-      <div className="card-body">
-        <p className="card-text">I'm looking for any feedback you can provide, including ways to make my code more efficient, how to organize my CSS better, and anything else you can think of. Thank you for your time!!</p>
-      </div>
-    </div>
+      <Divider variant="middle" className={classes.divider}/>
+      <CardContent>
+        <Typography>{feedbackRequest}</Typography>
+      </CardContent>
+    </Card>
   );
 }
 
