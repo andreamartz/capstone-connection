@@ -4,11 +4,19 @@ import { Container } from '@material-ui/core';
 import LoadingSpinner from "../common/LoadingSpinner";
 import PrjCardVert from './PrjCardVert';
 import CapConApi from "../api/api";
+import { makeStyles } from '@material-ui/core/styles';
 import "./PrjCardList.css";
 
+const useStyles = makeStyles((theme) => ({
+  project: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3)
+  },
+}));
 
-function PrjCardList() {
-  
+
+const PrjCardList = () => {
+  const classes = useStyles();
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -25,8 +33,8 @@ function PrjCardList() {
 
   const breakpoints = {
     default: 3,  // default number of columns
-    1100: 2,     // at screen width of 1100px, reduce to 2 columns
-    700: 1
+    960: 2,     // at screen width of 1100px, reduce to 2 columns
+    600: 1
   }
 
   return (
@@ -37,28 +45,32 @@ function PrjCardList() {
         ? (
         <Masonry
           breakpointCols={breakpoints}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
+          className="masonry-grid"
+          columnClassName="masonry-grid_column"
         >
           {projects.map(p => (
-            <PrjCardVert className="card" 
-              key={p.id}
-              name={p.name}
-              firstName={p.firstName}
-              lastName={p.lastName}
-              photoUrl={p.photoUrl}
-              image={p.image}
-              repoUrl={p.repoUrl}
-              siteUrl={p.siteUrl}
-              description={p.description}
-              feedbackRequest={p.feedbackRequest}
-              createdAt={p.createdAt}
-              lastModified={p.lastModified}
-            />
+            <div key={p.id} className={classes.project}>
+              <PrjCardVert
+                name={p.name}
+                image={p.image}
+                repoUrl={p.repoUrl}
+                siteUrl={p.siteUrl}
+                description={p.description}
+                feedbackRequest={p.feedbackRequest}
+                createdAt={p.createdAt}
+                lastModified={p.lastModified}
+                prjLikesCount={p.prjLikesCount}
+                prjCommentsCount={p.prjCommentsCount}
+                firstName={p.creator.firstName}
+                lastName={p.creator.lastName}
+                photoUrl={p.creator.photoUrl}
+                tags={p.tags}
+              />
+            </div>
           ))}
         </Masonry>
         ) : (
-          <p className="lead">Sorry, no results were found!</p>
+          <p>Sorry, no results were found!</p>
         )
       }    
     </Container>
