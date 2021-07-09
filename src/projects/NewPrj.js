@@ -95,35 +95,21 @@ const INITIAL_STATE_FORM_DATA = {
     const file = e.target.files[0];
     console.log("FILE: ", file);
     previewFile(file);
-    console.log("TYPEOF PREVIEWSOURCE: ", typeof previewSource);
-    // let base64EncodedImage = previewSource.slice(5);
-    let base64EncodedImage = previewSource;
-    console.log("BASE64ENCODEDIMAGE: ", base64EncodedImage);
-    setFormData(data => ({ ...data, image: base64EncodedImage }));
-    
-
-    // setSelectedFile(file);
-    // setFileInputState(e.target.value);
   };
-
-
 
   const previewFile = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);   // converts file contents to a base 64 encoded image
     reader.onloadend = () => {
-      setPreviewSource(reader.result);
+      setFormData(data => ({ ...data, image: reader.result }));
     };
-    console.log("PREVIEWSOURCE: ", previewSource);
   };
 
   const handleSubmit = async (e) => {
     console.log('submitting');
     e.preventDefault();
-    if (!previewSource) return;
+    if (!formData.image) return;
 
-    // MY CODE
-    console.log("PREVIEWSOURCE: ", previewSource);
     console.log("FORMDATA: ", formData);
     let result = await CapConApi.addProject(formData);
     console.log("RESULT: ", result);
@@ -132,9 +118,6 @@ const INITIAL_STATE_FORM_DATA = {
     } else {
       setFormErrors(result.error);
     }
-    // END MY CODE
-
-    // uploadImage(previewSource);
   };
 
   const fileInputRef = useRef();
@@ -175,9 +158,10 @@ const INITIAL_STATE_FORM_DATA = {
           Submit
         </Button>
       </form>
-      {previewSource && (
+      {/* Preview the selected image */}
+      {formData.image && (
         <img
-          src={previewSource}
+          src={formData.image}
           alt="chosen"
           style={{ height: '300px' }}
         />
