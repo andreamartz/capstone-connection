@@ -48,6 +48,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+// CHECK:
+// 1. Fix file input button formatting.
+// 2. Add controlled input for tags (I'm envisioning a group of checkboxes) and add tags to formData and INITIAL_STATE_FORM_DATA
+// 3. Replace hard-coded creatorId in formData (once we have auth) with currentUser's id (somehow???)
+// 4. Add error handling with formErrors state (?? - or is this only for auth forms??)
+//    a. missing required fields
+//    b. input too long/too short/wrong format
+//    c. etc.
+// 5. Add form validations with Material UI Formik (see Net Ninja Material UI tut video #28)
+// 6. Consider pulling handleChange, handleFileInputChange, and handleSubmit into separate helper functions file(s).
 
 const NewPrj = () => {
   const classes = useStyles();
