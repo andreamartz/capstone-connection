@@ -60,6 +60,16 @@ const useStyles = makeStyles((theme) => ({
 // 6. Consider pulling handleChange, handleFileInputChange, and handleSubmit into separate helper functions file(s).
 
 const NewPrj = () => {
+const INITIAL_STATE_FORM_DATA = {
+  name: "Submission16",
+  description: "Great photo!",
+  image: "",
+  creatorId: "1",
+  repoUrl: "https://training.cloudinary.com/learn/course/introduction-for-api-users-developers/lessons/transforming-content-for-aesthetics-1025?page=16",
+  siteUrl: "https://training.cloudinary.com/learn/course/introduction-for-api-users-developers/lessons/transforming-content-for-aesthetics-1025?page=16",
+  feedbackRequest: "Anything you want to share"
+};
+
   const classes = useStyles();
   const history = useHistory();
   const [previewSource, setPreviewSource] = useState('');  // previewSource is the raw string that represents the file
