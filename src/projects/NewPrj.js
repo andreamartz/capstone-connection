@@ -75,8 +75,6 @@ const INITIAL_STATE_FORM_DATA = {
   const [fileInputState, setFileInputState] = useState('');
   const [formData, setFormData] = useState( INITIAL_STATE_FORM_DATA );
   const [formErrors, setFormErrors] = useState([]);
-  // const [fileInputState, setFileInputState] = useState('');
-
 
   console.debug(
     "NewPrj",
