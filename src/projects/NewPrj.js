@@ -90,15 +90,7 @@ const INITIAL_STATE_FORM_DATA = {
     setFormData(data => ({ ...data, [name]: value }));
   }
 
-  // ORIGINAL FROM JAMES QUICK VIDEO
-  // const handleFileInputChange = (e) => {
-  //   const file = e.target.files[0];
-  //   previewFile(file);
-  //   // setSelectedFile(file);
-  //   // setFileInputState(e.target.value);
-  // };
-
-  const handleFileInputChange =  (e) => {
+  const handleFileInputChange = (e) => {
     // const { name, value } = e.target.files[0];
     const file = e.target.files[0];
     console.log("FILE: ", file);
@@ -145,14 +137,6 @@ const INITIAL_STATE_FORM_DATA = {
     // uploadImage(previewSource);
   };
 
-  // ORIGINAL FROM JAMES QUICK
-  // const uploadImage = async (base64EncodedImage) => {
-  //   // console.log("BASE64ENCODEDIMAGE: ", base64EncodedImage);
-  //   const data = { data: base64EncodedImage };
-  //   console.log("DATA: ", data);
-  //   const image = await CapConApi.addProject(data);
-  // };
-  
   const fileInputRef = useRef();
 
   return (
