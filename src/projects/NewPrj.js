@@ -72,18 +72,8 @@ const INITIAL_STATE_FORM_DATA = {
 
   const classes = useStyles();
   const history = useHistory();
-  const [previewSource, setPreviewSource] = useState('');  // previewSource is the raw string that represents the file
   const [fileInputState, setFileInputState] = useState('');
-  const [formData, setFormData] = useState({
-    name: "Submission10!",
-    creatorId: "1",
-    repoUrl: "https://developer.mozilla.org/en-US/docs/Web/API/FileReader10",
-    siteUrl: "https://developer.mozilla.org/en-US/docs/Web/API/FileReader10",
-    // description: "Description of First Submission",
-    // feedbackRequest: "",
-    // tags: "",
-    image: ""
-  });
+  const [formData, setFormData] = useState( INITIAL_STATE_FORM_DATA );
   const [formErrors, setFormErrors] = useState([]);
   // const [fileInputState, setFileInputState] = useState('');
 
