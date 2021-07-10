@@ -64,6 +64,19 @@ const useStyles = makeStyles((theme) => ({
 // 6. Consider pulling handleChange, handleFileInputChange, and handleSubmit into separate helper functions file(s).
 
 const NewPrj = () => {
+  console.debug("NewPrj");
+  
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    getAllTagsOnMount();
+  }, []); 
+
+  async function getAllTagsOnMount() {
+    console.debug("NewPrj useEffect getAllTagsOnMount");
+    const tags = await CapConApi.getTags();
+    setTags(tags); 
+  }
   
   const INITIAL_STATE_FORM_DATA = {
     name: "",
