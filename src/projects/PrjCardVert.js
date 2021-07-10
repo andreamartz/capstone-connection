@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function PrjCardVert({ 
+  likeProject,
+  idx,
+  id,
   name,
   image,
   repoUrl,
