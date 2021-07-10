@@ -6,11 +6,9 @@ import Layout from './common/Layout';
 import Navigation from "./routes-nav/Navigation";
 import Routes from "./routes-nav/Routes";
 // import LoadingSpinner from "./common/LoadingSpinner";
-import CapConApi from "./api/api";
 import UserContext from "./auth/UserContext";
 import jwt from "jsonwebtoken";
 import './App.css';
-import PrjListPage from "./projects/PrjListPage";
 
 
 // Key name for storing token in localStorage for "remember me" re-login
