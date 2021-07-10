@@ -123,13 +123,14 @@ function App() {
   return (
       <BrowserRouter>
         <Layout>
-        <UserContext.Provider
-          value={{ currentUser, setCurrentUser }}>
-              <div className="App">
-                <Navigation logout={logout} />
-                <Routes login={login} signup={signup} />
-              </div>
-        </UserContext.Provider>
+          <UserContext.Provider
+            value={{ currentUser, setCurrentUser }}
+          >
+            <div className="App">
+              <Navigation logout={logout} />
+              <Routes login={login} signup={signup} />
+            </div>
+          </UserContext.Provider>
         </Layout>
       </BrowserRouter>
   );
