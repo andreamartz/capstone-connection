@@ -149,11 +149,17 @@ const NewPrj = () => {
           value={fileInputState}
           className="form-input"
         />
-
-        {formErrors.length
-          ? <Alert type="danger" messages={formErrors} />
-          : null
-        }
+        </Box>
+        {/* Preview the selected image */}
+        <Box my={2}>
+          {formData.image && (
+            <img
+              src={formData.image}
+              alt="chosen"
+              style={{ height: '300px' }}
+            />
+          )}
+        </Box>
         <Button
           className={classes.button}
           variant="contained"
@@ -163,14 +169,6 @@ const NewPrj = () => {
           Submit
         </Button>
       </form>
-      {/* Preview the selected image */}
-      {formData.image && (
-        <img
-          src={formData.image}
-          alt="chosen"
-          style={{ height: '300px' }}
-        />
-      )}
     </Paper>
   );
 }
