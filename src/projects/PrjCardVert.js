@@ -24,7 +24,10 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
   }, 
-}))
+  iconButton: {
+    padding: '0'
+  }
+}));
 
 function PrjCardVert({ 
   name,
