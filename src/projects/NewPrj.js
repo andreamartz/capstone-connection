@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import CapConApi from "../api/api";
 import Alert from "../common/Alert";
 import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
