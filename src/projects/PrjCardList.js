@@ -61,9 +61,12 @@ const PrjCardList = () => {
           className="masonry-grid"
           columnClassName="masonry-grid_column"
         >
-          {projects.map(p => (
+          {projects.map((p, idx) => (
             <div key={p.id} className={classes.project}>
               <PrjCardVert
+                likeProject={() => {likeProject(idx)}}
+                idx={idx}
+                id={p.id}
                 name={p.name}
                 image={p.image}
                 repoUrl={p.repoUrl}
