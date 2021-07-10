@@ -29,6 +29,17 @@ const PrjCardList = () => {
     setProjects(projects);
   }
 
+  async function likeProject(projectIdx) {
+    const likerId = 1;  // CHECK replace likerId with currentUser.id once we have auth
+    const projectId = projects[projectIdx].id;
+    const like = await CapConApi.addProjectLike({likerId, projectId});  // CHECK replace likerId with currentUser.id once we have auth
+    console.log(projectIdx);
+    console.log("LIKE: ", like);
+    if (like) {
+      setProjects([...projects, projects[projectIdx].prjLikesCount++]);
+    }
+  }
+
   if (!projects) return <LoadingSpinner />;
 
   const breakpoints = {
