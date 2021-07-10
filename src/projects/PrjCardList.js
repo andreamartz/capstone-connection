@@ -24,7 +24,7 @@ const PrjCardList = () => {
   }, []); 
 
   async function getAllProjectsOnMount() {
-    console.debug("ProjectList useEffect getAllProjectsOnMount");
+    console.debug("PrjCardList useEffect getAllProjectsOnMount");
     const projects = await CapConApi.getProjects();
     setProjects(projects);
   }
