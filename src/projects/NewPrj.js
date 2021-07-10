@@ -139,6 +139,62 @@ const NewPrj = () => {
       {/* <Alert msg={errMsg} type="danger" /> */}
       {/* <Alert msg={successMsg} type="success" /> */}
       <form onSubmit={handleSubmit} className={classes.form} noValidate>
+        <TextField
+          className={classes.textField}
+          type="text"
+          name="name"
+          label="Project name"
+          variant="outlined"
+          value={formData.name}
+          fullWidth
+          required
+          onChange={handleChange}
+        />
+        <TextField
+          className={classes.textField}
+          type="text"
+          name="repoUrl"
+          label="URL of code repository"
+          variant="outlined"
+          value={formData.repoUrl}
+          fullWidth
+          required
+          onChange={handleChange}
+        />
+        <TextField
+          className={classes.textField}
+          type="text"
+          name="siteUrl"
+          label="URL where app is deployed"
+          variant="outlined"
+          value={formData.siteUrl}
+          fullWidth
+          required
+          onChange={handleChange}
+        />
+        <TextField
+          className={classes.textField}
+          type="text"
+          name="description"
+          label="Project Description"
+          variant="outlined"
+          value={formData.description}
+          fullWidth
+          required
+          onChange={handleChange}
+        />
+        <TextField
+          className={classes.textField}
+          type="text"
+          name="feedbackRequest"
+          label="What specific feedback would you like to receive?"
+          variant="outlined"
+          value={formData.feedbackRequest}
+          multiline
+          fullWidth
+          required
+          onChange={handleChange}
+        />
         <Box>
           <input
             id="fileInput"
