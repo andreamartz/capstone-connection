@@ -57,8 +57,15 @@ class CapConApi {
     console.log("RES from CapConApi: ", res);
     return res.project;
   }
+  /** Like a project */
+
+  static async addProjectLike(data) {
+    console.log("addProjectLike DATA: ", data);
+    let res = await this.request("project_likes/new", data, "post");
     console.log("RES: ", res);
-    return res.project;
+    return res.projectLike;
+  }
+
   }
 
 }
