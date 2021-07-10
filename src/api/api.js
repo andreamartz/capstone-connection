@@ -66,6 +66,13 @@ class CapConApi {
     return res.projectLike;
   }
 
+  /** Get a list of tags */
+
+  static async getTags() {
+    let res = await this.request("tags");
+    return res.tags;
+  }
+
   }
 
 }
