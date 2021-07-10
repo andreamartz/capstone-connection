@@ -54,6 +54,9 @@ class CapConApi {
   static async addProject(data) {
     console.log("DATA SENT: ", data);
     let res = await this.request("projects/new", data, "post");
+    console.log("RES from CapConApi: ", res);
+    return res.project;
+  }
     console.log("RES: ", res);
     return res.project;
   }
