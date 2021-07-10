@@ -75,7 +75,10 @@ function PrjCardVert({
         </Box>
 
         <Box display='flex' align-items='center'>
-          <FavoriteBorderIcon/>
+          {/* <IconButton aria-label="like" className ={classes.iconButton} onClick={() => {likeProject(idx)}}> */}
+          <IconButton aria-label="like" className ={classes.iconButton} onClick={likeProject}>
+            <FavoriteBorderIcon/>
+          </IconButton>
           <Box mx={1}>{prjLikesCount}</Box>
           <ModeCommentOutlinedIcon mx={8}/>
           <Box ml={1}>{prjCommentsCount}</Box>
