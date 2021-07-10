@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: theme.spacing(2)
+  },
+  textField: {
+    marginBottom: theme.spacing(2)
   }
 }));
 
