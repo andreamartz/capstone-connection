@@ -72,9 +72,11 @@ function PrjCardVert({
 
       <CardActions className={classes.actions}>
         <Box>
-          {tags.map(tag => (
+          {tags
+          ? tags.map(tag => (
             <Chip size="small" label={tag.tagText}/> 
-          ))}
+          ))
+          : null}
         </Box>
 
         <Box display='flex' align-items='center'>
