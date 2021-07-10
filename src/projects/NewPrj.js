@@ -139,16 +139,15 @@ const NewPrj = () => {
       {/* <Alert msg={errMsg} type="danger" /> */}
       {/* <Alert msg={successMsg} type="success" /> */}
       <form onSubmit={handleSubmit} className={classes.form} noValidate>
-
-        <input
-          id="fileInput"
-          ref={fileInputRef}
-          type="file"
-          name="image"
-          onChange={handleFileInputChange}
-          value={fileInputState}
-          className="form-input"
-        />
+        <Box>
+          <input
+            id="fileInput"
+            ref={fileInputRef}
+            type="file"
+            name="image"
+            onChange={handleFileInputChange}
+            value={fileInputState}
+          />
         </Box>
         {/* Preview the selected image */}
         <Box my={2}>
