@@ -14,10 +14,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const PrjCardList = () => {
-  const classes = useStyles();
+  console.debug("PrjCardList");
+
   const [projects, setProjects] = useState([]);
+  const classes = useStyles();
+  console.log("HEY! PROJECTS: ", projects);
 
   useEffect(() => {
     getAllProjectsOnMount();
