@@ -117,7 +117,8 @@ const NewPrj = () => {
     console.log("FORMDATA: ", formData);
     let result = await CapConApi.addProject(formData);
     console.log("RESULT: ", result);
-    if (result.project) {
+    if (result.id) {
+      setFormData(INITIAL_STATE_FORM_DATA);
       history.push("/projects");
     } else {
       setFormErrors(result.error);
