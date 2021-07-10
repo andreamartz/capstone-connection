@@ -132,9 +132,12 @@ const NewPrj = () => {
       <Avatar className={classes.avatar}>
         <AddIcon />
       </Avatar>
-      <Typography component="h1" variant="h5">
-        Add a New Project
-      </Typography>
+      <Box py={4}>
+        <Typography component="h1" variant="h5">
+          Add a New Project
+        </Typography>
+      </Box>
+
       {/* <h1 className="title">Upload an Image</h1> */}
       {/* <Alert msg={errMsg} type="danger" /> */}
       {/* <Alert msg={successMsg} type="success" /> */}
