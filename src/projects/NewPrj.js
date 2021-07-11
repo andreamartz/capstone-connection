@@ -108,8 +108,18 @@ const NewPrj = () => {
     setFormData(data => ({ ...data, [name]: value }));
   }
 
+  const toggleCheckboxValue = (evt, idx, id) => {
+    console.log("evt.target: ", evt.target);
+    let { name, checked } = evt.target;
+    console.log("typeof name: ", typeof name, "name: ", name, "checked: ", checked);
+
+    setFormData(data => ({ ...data, 
+      tags: [...data.tags, data.tags[idx]={...data.tags[idx], "checked": checked}]}));
+
+    console.log("toggleCheckboxValue -> formData: ", formData);
+  }
+
   const handleFileInputChange = (e) => {
-    // const { name, value } = e.target.files[0];
     const file = e.target.files[0];
     console.log("FILE: ", file);
     previewFile(file);
