@@ -14,9 +14,6 @@ code {
     monospace;
 } */
 
-/* CHECK: Delete the bootstrap import and uninstall bootstrap if it won't be used in this project */
-/* @import '~bootstrap/dist/css/bootstrap.css'; */
-
 body {
   background-color: #F8F8F8;
   margin: 0;
