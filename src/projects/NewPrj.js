@@ -53,6 +53,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const INITIAL_STATE_FORM_DATA = {
+  name: "",
+  description: "",
+  image: "",
+  creatorId: "1",
+  tags: [],
+  repoUrl: "",
+  siteUrl: "",
+  feedbackRequest: ""
+};
+
 // CHECK:
 // 1. Fix file input button formatting.
 // 2. Add controlled input for tags (I'm envisioning a group of checkboxes) and add tags to formData and INITIAL_STATE_FORM_DATA
@@ -63,38 +74,42 @@ const useStyles = makeStyles((theme) => ({
 //    c. etc.
 // 5. Add form validations with Material UI Formik (see Net Ninja Material UI tut video #28)
 // 6. Consider pulling handleChange, handleFileInputChange, and handleSubmit into separate helper functions file(s).
+// 7. need htmlFor?
 
 const NewPrj = () => {
   console.debug("NewPrj");
-  
-  const [tags, setTags] = useState([]);
 
-  useEffect(() => {
-    getAllTagsOnMount();
-  }, []); 
-
-  async function getAllTagsOnMount() {
-    console.debug("NewPrj useEffect getAllTagsOnMount");
-    const tags = await CapConApi.getTags();
-    setTags(tags); 
-  }
-  
-  const INITIAL_STATE_FORM_DATA = {
-    name: "",
-    description: "",
-    image: "",
-    creatorId: "1",
-    tags: [],
-    repoUrl: "",
-    siteUrl: "",
-    feedbackRequest: ""
-  };
+  const [formData, setFormData] = useState( INITIAL_STATE_FORM_DATA );
+  const [fileInputState, setFileInputState] = useState('');
+  const [formErrors, setFormErrors] = useState([]);
+    // array of tag objects from database
+  const [dbTags, setDbTags] = useState([]);
 
   const classes = useStyles();
   const history = useHistory();
-  const [fileInputState, setFileInputState] = useState('');
-  const [formData, setFormData] = useState( INITIAL_STATE_FORM_DATA );
-  const [formErrors, setFormErrors] = useState([]);
+  const fileInputRef = useRef();
+
+
+  useEffect(function getTagsOnMount() {
+    console.log("INSIDE USEEFFECT");
+    async function getAllTagsOnMount() {
+      console.debug("NewPrj useEffect getAllTagsOnMount");
+      const dbTags = await CapConApi.getTags();
+      setFormData((current) => ({
+        ...current, 
+        tags: dbTags.map(tag => ({ ...tag, checked: false}))
+      }));
+      // dbTags = dbTags.map(t => ({ ...t, checked: false}));
+      console.log("dbTAGS: ", dbTags);
+      // setFormData(data => ({ ...data, tags: [ ...dbTags ]}));  // THIS IS THE PROBLEM
+      setDbTags(dbTags); 
+    }
+    getAllTagsOnMount();
+  }, []); 
+
+
+  console.log("SHOULD RETURN SPINNER? ", !dbTags ? true : false );
+  if (!dbTags) return <LoadingSpinner />;
 
   console.debug(
     "NewPrj",
@@ -103,29 +118,46 @@ const NewPrj = () => {
   );
 
   /** Update form data field */
-  function handleChange(evt) {
+  const handleChange = (evt) => {
     const { name, value } = evt.target;
     setFormData(data => ({ ...data, [name]: value }));
   }
 
-  const toggleCheckboxValue = (evt, idx, id) => {
+  const toggleCheckboxValue = (evt) => {
+    console.log("EVENT: ", evt);
+    // return;
     console.log("evt.target: ", evt.target);
-    let { name, checked } = evt.target;
+    const { name, checked } = evt.target;
     console.log("typeof name: ", typeof name, "name: ", name, "checked: ", checked);
 
-    setFormData(data => ({ ...data, 
-      tags: [...data.tags, data.tags[idx]={...data.tags[idx], "checked": checked}]}));
+    // set checked status on FormData for the tag that changed
+    setFormData(data => ({...data, 
+      tags: data.tags.map(tag => {
+        if (tag.id === Number(name)) {
+          return { ...tag, checked };
+        } 
+        return tag;
+      })
+    }))
+  };
+    
+    // // if tag checked AND tag is in formData, remove it, otherwise add it
+    // // if checked is true and formData.tags.includes(tagId), remove it
+    // // else add it
+    
+    // setFormData(data => ({ ...data, 
+    //   tags: [...data.tags, data.tags[idx]={...data.tags[idx], "checked": checked}]}));
 
-    console.log("toggleCheckboxValue -> formData: ", formData);
-  }
+    // console.log("toggleCheckboxValue -> formData: ", formData);
+  
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     console.log("FILE: ", file);
-    previewFile(file);
+    updateImageState(file);
   };
 
-  const previewFile = (file) => {
+  const updateImageState = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);   // converts file contents to a base 64 encoded image
     reader.onloadend = () => {
@@ -134,22 +166,25 @@ const NewPrj = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log('submitting');
     e.preventDefault();
-    if (!formData.image) return;
 
-    console.log("FORMDATA: ", formData);
-    let result = await CapConApi.addProject(formData);
-    console.log("RESULT: ", result);
+    const tags = formData.tags
+      .filter(tag => tag.checked)
+      .map(tag => tag.id);
+
+    const project = {...formData, tags};
+
+    const result = await CapConApi.addProject(project);
+    
     if (result.id) {
-      setFormData(INITIAL_STATE_FORM_DATA);
       history.push("/projects");
     } else {
       setFormErrors(result.error);
     }
   };
 
-  const fileInputRef = useRef();
+  if (!dbTags) return <LoadingSpinner />;
+
 
   return (
     <Paper className={classes.paper} elevation={5} component="main">
@@ -207,7 +242,6 @@ const NewPrj = () => {
           variant="outlined"
           value={formData.description}
           fullWidth
-          required
           onChange={handleChange}
         />
         <TextField
@@ -219,10 +253,34 @@ const NewPrj = () => {
           value={formData.feedbackRequest}
           multiline
           fullWidth
-          required
           onChange={handleChange}
         />
+        {dbTags.map((t, idx) => (
+          <FormControlLabel
+            idx={idx}
+            key={t.id}
+            control={
+              <Checkbox 
+                idx={idx}
+                // checked={formData.tags[idx].checked}
+                checked={formData.tags[idx].checked}
+                name={t.id}
+                // onChange={evt => toggleCheckboxValue(evt, idx, t.id)}
+                onChange={toggleCheckboxValue}
+              />
+            }
+            label={t.text}
+          />
+        ))}
+      
         <Box>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => fileInputRef.current.click()}  
+          >
+            Choose File
+          </Button>
           <input
             id="fileInput"
             ref={fileInputRef}
@@ -232,6 +290,7 @@ const NewPrj = () => {
             value={fileInputState}
           />
         </Box>
+
         {/* Preview the selected image */}
         <Box my={2}>
           {formData.image && (
