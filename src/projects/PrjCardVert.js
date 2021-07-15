@@ -31,25 +31,27 @@ const useStyles = makeStyles((theme) => ({
 
 function PrjCardVert({ 
   likeProject,
-  idx,
-  id,
-  name,
-  image,
-  repoUrl,
-  siteUrl,
-  description, 
-  feedbackRequest, 
-  createdAt, 
-  lastModified,
-  prjLikesCount,
-  prjCommentsCount,
-  firstName, 
-  lastName, 
-  photoUrl,
-  tags}) {
+  project
+}) {
 
-  console.debug('PrjCardVert');
-
+  // console.debug('PrjCardVert');
+  const { 
+    id,
+    name,
+    image,
+    repoUrl,
+    siteUrl,
+    description, 
+    feedbackRequest, 
+    createdAt, 
+    lastModified,
+    prjLikesCount,
+    prjCommentsCount,
+    firstName, 
+    lastName, 
+    photoUrl,
+    tags
+  } = project;
   const classes = useStyles();
 
   return (
@@ -59,10 +61,11 @@ function PrjCardVert({
     >
       <CardMedia 
         component="img" 
-        image={image} alt=""
+        image={image} 
+        alt=""
       />
       <CardContent>
-        <Typography component="h3" variant="title">
+        <Typography component="h3" variant="subtitle1">
           {name}
         </Typography>
         <Typography variant="body1">
@@ -74,7 +77,7 @@ function PrjCardVert({
         <Box>
           {tags
           ? tags.map(tag => (
-            <Chip size="small" label={tag.tagText}/> 
+            <Chip key={tag.id} size="small" label={tag.text}/> 
           ))
           : null}
         </Box>
