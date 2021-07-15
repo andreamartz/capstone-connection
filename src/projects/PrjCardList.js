@@ -64,23 +64,8 @@ const PrjCardList = () => {
           {projects.map((p, idx) => (
             <div key={p.id} className={classes.project}>
               <PrjCardVert
+                project={p}
                 likeProject={() => {likeProject(idx)}}
-                idx={idx}
-                id={p.id}
-                name={p.name}
-                image={p.image}
-                repoUrl={p.repoUrl}
-                siteUrl={p.siteUrl}
-                description={p.description}
-                feedbackRequest={p.feedbackRequest}
-                createdAt={p.createdAt}
-                lastModified={p.lastModified}
-                prjLikesCount={p.prjLikesCount}
-                prjCommentsCount={p.prjCommentsCount}
-                firstName={p.creator.firstName}
-                lastName={p.creator.lastName}
-                photoUrl={p.creator.photoUrl}
-                tags={p.tags}
               />
             </div>
           ))}
