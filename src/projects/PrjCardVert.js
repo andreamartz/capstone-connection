@@ -92,7 +92,15 @@ function PrjCardVert({
         <Box>
           {tags
           ? tags.map(tag => (
-            <Chip key={tag.id} size="small" label={tag.text}/> 
+            <span 
+              key={tag.id}
+              className="tag"
+            >
+              <Typography className={tag.text}>
+                {tag.text}
+              </Typography>
+            </span>
+
           ))
           : null}
         </Box>
