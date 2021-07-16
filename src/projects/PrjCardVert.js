@@ -26,7 +26,11 @@ const useStyles = makeStyles((theme) => ({
   }, 
   iconButton: {
     padding: '0'
-  }
+  },
+  large: {
+    width: theme.spacing(6),
+    height: theme.spacing(6),
+  },
 }));
 
 function PrjCardVert({ 
@@ -47,9 +51,7 @@ function PrjCardVert({
     lastModified,
     prjLikesCount,
     prjCommentsCount,
-    firstName, 
-    lastName, 
-    photoUrl,
+    creator,
     tags
   } = project;
   const classes = useStyles();
@@ -95,8 +97,9 @@ function PrjCardVert({
       <Divider variant="middle" className={classes.divider}/>
       <ul>
         <li>
-          <img src='https://via.placeholder.com/75x75?text=user+photo' alt="project creator" />
-          {firstName}{lastName}
+          <Avatar src={creator.photoUrl} className={classes.large} alt="project creator" />
+
+          {creator.firstName}{creator.lastName}
         </li>
       </ul>
       <Divider variant="middle" className={classes.divider}/>
