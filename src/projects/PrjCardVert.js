@@ -13,14 +13,11 @@ import "./PrjCardVert.css";
 
 
 const useStyles = makeStyles((theme) => ({
-  divider: {
-    marginBottom: theme.spacing(2),
-  },
   actions: {
     display: 'flex',
     justifyContent: 'space-between',
     paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2)
+    paddingRight: theme.spacing(2),
   }, 
   iconButton: {
     padding: '0'
