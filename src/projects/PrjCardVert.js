@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
+import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, IconButton, Typography } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -56,14 +57,31 @@ function PrjCardVert({
       elevation={3}
       className="vertical prj-card"
     >
-      <CardMedia 
-        component="img" 
-        image={image} 
-        alt=""
-      />
+      <Link href={`/projects/${id}`}>
+        <CardMedia 
+          component="img" 
+          image={image} 
+          alt=""
+        />
+      </Link>
+
+
       <CardContent>
-        <Typography component="h3" variant="subtitle1">
-          {name}
+        <Typography 
+          component="h3"
+          variant="subtitle1"
+        >
+          <Link href={`/projects/${id}`}>
+            <Box 
+              fontSize="h6.fontSize"
+              fontWeight="fontWeightBold"
+              lineHeight="normal"
+              paddingBottom="1rem"
+            >
+              {name}
+            </Box>
+          </Link>
+
         </Typography>
         <Typography variant="body1">
           {description}
