@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from 'clsx';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -19,9 +20,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
+    marginBottom: theme.spacing(1)
   }, 
   iconButton: {
     padding: '0'
+  },
+  avatar: {
+    marginRight: theme.spacing(2)
   },
   large: {
     width: theme.spacing(6),
@@ -83,30 +88,37 @@ function PrjCardVert({
           </Link>
 
         </Typography>
+
         <Typography variant="body1">
           {description}
         </Typography>
       </CardContent>
 
-      <CardActions className={classes.actions}>
-        <Box>
+      <CardActions 
+        className={classes.actions} 
+      >
+        <Box display="flex">
           {tags
-          ? tags.map(tag => (
-            <span 
-              key={tag.id}
-              className="tag"
-            >
-              <Typography className={tag.text}>
-                {tag.text}
-              </Typography>
-            </span>
-
-          ))
-          : null}
+            ? (
+              <Box display="flex">
+                {tags.map(tag => (
+                  <span
+                    key={tag.id}
+                    className="tag"
+                  >
+                    <Typography className={tag.text}>
+                      {tag.text}
+                    </Typography>
+                  </span>
+                ))}
+              </Box>
+            ) : (
+              null
+            )
+          }
         </Box>
 
         <Box display='flex' align-items='center'>
-          {/* <IconButton aria-label="like" className ={classes.iconButton} onClick={() => {likeProject(idx)}}> */}
           <IconButton aria-label="like" className ={classes.iconButton} onClick={likeProject}>
             <FavoriteBorderIcon/>
           </IconButton>
@@ -115,21 +127,52 @@ function PrjCardVert({
           <Box ml={1}>{prjCommentsCount}</Box>
         </Box>
       </CardActions>
-      <Divider variant="middle" className={classes.divider}/>
-      <ul>
-        <li>
-          <Avatar src={creator.photoUrl} className={classes.large} alt="project creator" />
 
-          {creator.firstName}{creator.lastName}
-        </li>
-      </ul>
-      <Divider variant="middle" className={classes.divider}/>
+      <Divider variant="middle"/>
+
+      <CardContent 
+        display='flex' 
+        justify-content="space-between" 
+        align-items="center"
+      >
+        <Box display='flex' justify-content="space-between">
+          <Avatar 
+            src={creator.photoUrl} 
+            className={clsx(classes.large, classes.avatar)} 
+            alt="project creator" 
+          />
+
+          <Box 
+            display="flex"
+            alignItems="center"
+            fontWeight="fontWeightBold"
+          >
+            {creator.firstName} {creator.lastName}
+          </Box>
+        </Box>
+      </CardContent>
+
+      <Divider variant="middle" />
       <CardContent>
-        <Typography>{feedbackRequest}</Typography>
+        <Typography>
+         {feedbackRequest}
+        </Typography>
       </CardContent>
     </Card>
   );
 }
 
-
 export default PrjCardVert;
+
+          // {/* {tags
+          //   ? tags.map(tag => (
+          //     <span 
+          //       key={tag.id}
+          //       className="tag"
+          //     >
+          //       <Typography className={tag.text}>
+          //         {tag.text}
+          //       </Typography>
+          //     </span>
+          //   ))
+          // : null} */}
