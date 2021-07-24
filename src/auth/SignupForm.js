@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(16),
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingTop: theme.spacing(8),
@@ -37,9 +37,6 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-  },
-  button: {
-    margin: theme.spacing(2)
   }
 }));
 
@@ -118,7 +115,7 @@ const SignupForm = ({ signup }) => {
   // };
 
   return (
-    <Paper className={classes.paper} elevation={5} component="main">
+    <Paper className={classes.paper} elevation={5} component="main" maxWidth="xs">
       <Avatar className={classes.avatar}>
         <AddCircleOutlineOutlinedIcon />
       </Avatar>
@@ -135,20 +132,100 @@ const SignupForm = ({ signup }) => {
           id="username"
           label="Username"
           name="username"
-          value={formData.username}
           onChange={handleChange}
+          type="text"
+          value={formData.username}
+          autoComplete="username"
           autoFocus
         />
-        {formErrors.length
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="password"
+          label="Password"
+          name="password"
+          type="password"
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="firstName"
+          label="First name"
+          name="firstName"
+          type="firstName"
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="lastName"
+          label="Last name"
+          name="lastName"
+          type="lastName"
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          id="email"
+          label="Email address"
+          name="email"
+          type="email"
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          id="bio"
+          label="Bio"
+          name="bio"
+          type="bio"
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="photoUrl"
+          label="URL of avatar"
+          name="photoUrl"
+          type="photoUrl"
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          id="portfolioUrl"
+          label="URL of portfolio site"
+          name="portfolioUrl"
+          type="portfolioUrl"
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          id="gitHubUrl"
+          label="URL of GitHub profile"
+          name="gitHubUrl"
+          type="gitHubUrl"
+        />
+
+        {/* {formErrors.length
           ? <Alert severity="error">This is an error alert — check it out!</Alert>
           : null
-        }
+        } */}
         <Button
           type="submit"
           fullWidth
           variant="contained"
           color="primary"
           className={classes.submit}
+          size="large"
         >
           Sign In
         </Button>
