@@ -1,20 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 import CapConApi from "../api/api";
-import Alert from "../common/Alert";
+// import Alert from "../common/Alert";
+import Alert from '@material-ui/lab/Alert';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/Add';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 // import './SignupForm.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,9 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SignupForm = () => {
-  const classes = useStyles();
-  const history = useHistory();
+const SignupForm = ({ signup }) => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -65,13 +58,25 @@ const SignupForm = () => {
   });
   const [formErrors, setFormErrors] = useState([]);
   // const [fileInputState, setFileInputState] = useState('');
-  const [previewSource, setPreviewSource] = useState('');  // previewSource is the raw string that represents the file
+
+  const classes = useStyles();
+  const history = useHistory();
 
   console.debug(
     "SignupForm",
     "formData=", formData,
     "formErrors", formErrors
   );
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    let result = await signup(formData);
+    if (result.success) {
+      history.push("/projects");
+    } else {
+      setFormErrors(result.errors);
+    }
+  }
 
   /** Update form data field */
   function handleChange(evt) {
@@ -134,6 +139,19 @@ const SignupForm = () => {
           onChange={handleChange}
           autoFocus
         />
+        {formErrors.length
+          ? <Alert severity="error">This is an error alert — check it out!</Alert>
+          : null
+        }
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+        >
+          Sign In
+        </Button>
       </form>
     </Paper>
   );

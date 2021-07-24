@@ -11,7 +11,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, IconButton, Typography } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
+import Tags from '../tags/Tags';
 import "./PrjCardVert.css";
+import "../tags/Tags.css";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,11 +37,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function PrjCardVert({ 
-  likeProject,
+  toggleLikeProject,
   project
 }) {
 
-  // console.debug('PrjCardVert');
+  console.debug('PrjCardVert');
   const { 
     id,
     name,
@@ -50,7 +52,8 @@ function PrjCardVert({
     feedbackRequest, 
     createdAt, 
     lastModified,
-    prjLikesCount,
+    likesCount,
+    currentUsersLikeId,
     prjCommentsCount,
     creator,
     tags
@@ -69,7 +72,6 @@ function PrjCardVert({
           alt=""
         />
       </Link>
-
 
       <CardContent>
         <Typography 
@@ -97,32 +99,17 @@ function PrjCardVert({
       <CardActions 
         className={classes.actions} 
       >
-        <Box display="flex">
-          {tags
-            ? (
-              <Box display="flex">
-                {tags.map(tag => (
-                  <span
-                    key={tag.id}
-                    className="tag"
-                  >
-                    <Typography className={tag.text}>
-                      {tag.text}
-                    </Typography>
-                  </span>
-                ))}
-              </Box>
-            ) : (
-              null
-            )
-          }
-        </Box>
+        <Tags tags={tags} />
 
         <Box display='flex' align-items='center'>
-          <IconButton aria-label="like" className ={classes.iconButton} onClick={likeProject}>
+          <IconButton 
+            aria-label="like" 
+            className={classes.iconButton} 
+            onClick={toggleLikeProject}
+          >
             <FavoriteBorderIcon/>
           </IconButton>
-          <Box mx={1}>{prjLikesCount}</Box>
+          <Box mx={1}>{likesCount}</Box>
           <ModeCommentOutlinedIcon mx={8}/>
           <Box ml={1}>{prjCommentsCount}</Box>
         </Box>
@@ -163,16 +150,3 @@ function PrjCardVert({
 }
 
 export default PrjCardVert;
-
-          // {/* {tags
-          //   ? tags.map(tag => (
-          //     <span 
-          //       key={tag.id}
-          //       className="tag"
-          //     >
-          //       <Typography className={tag.text}>
-          //         {tag.text}
-          //       </Typography>
-          //     </span>
-          //   ))
-          // : null} */}

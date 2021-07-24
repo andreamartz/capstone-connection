@@ -69,11 +69,12 @@ const CommentForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const comment = {...formData, comment};
+    // const comment = {...formData, comment};
 
-    const result = await CapConApi.addProjectComment(comment);
+    const result = await CapConApi.addComment(formData);
     
     if (result.id) {
+      console.log("RESULT OF NEW COMMENT SUBMISSION: ", result);
       history.push("/projects");
     } else {
       setFormErrors(result.error);
@@ -98,7 +99,9 @@ const CommentForm = () => {
           name="comment"
           label="Constructive feedback about project"
           variant="outlined"
-          value={formData.name}
+          value={formData.comment}
+          multiline
+          rows={6}
           fullWidth
           required
           onChange={handleChange}

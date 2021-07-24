@@ -156,7 +156,7 @@ function Navigation({ logout }) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         {displayDesktop()}
       </AppBar>
     </div>

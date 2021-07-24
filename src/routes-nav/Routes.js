@@ -4,12 +4,13 @@ import { Switch, Route, Redirect } from "react-router-dom";
 // import pages to route to here
 import Homepage from "../homepage/Homepage";
 import PrjListPage from "../projects/PrjListPage";
-// import PrjDetailPage from "../projects/PrjDetailPage";
+import PrjDetailPage from "../projects/PrjDetailPage";
+import UserDetailPage from "../users/UserDetailPage";
 
 import NewPrj from "../projects/NewPrj";
 import LoginForm from "../auth/LoginForm";
 // import ProfileForm from "../profiles/ProfileForm";
-// import SignupForm from "../auth/SignupForm";
+import SignupForm from "../auth/SignupForm";
 import PrivateRoute from "./PrivateRoute";
 
 /** Site-wide routes.
@@ -41,6 +42,7 @@ function Routes({ login, signup }) {
 
         <Route exact path="/signup">
           {/* <SignupForm signup={signup} /> */}
+          <SignupForm />
         </Route>
 
         {/* CHECK: Change to PrivateRoute once we have auth */}
@@ -55,12 +57,17 @@ function Routes({ login, signup }) {
 
         {/* CHECK: Change to PrivateRoute once we have auth */}
         <Route exact path="/projects/:id">
-          {/* <PrjDetailPage /> */}
+          <PrjDetailPage />
         </Route>
 
         {/* CHECK: Change to PrivateRoute once we have auth */}
         <Route path="/profile">
           {/* <ProfileForm /> */}
+        </Route>
+
+        {/* CHECK: Change to PrivateRoute once we have auth */}
+        <Route exact path="/users/:username">
+          <UserDetailPage />
         </Route>
 
         <Redirect to="/" />

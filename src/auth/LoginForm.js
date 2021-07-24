@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
+import Alert from '@material-ui/lab/Alert';
 import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,13 +39,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const LoginForm = ({ login }) => {
   const classes = useStyles();
   const [formData, setFormData] = useState({
     username: "",
     password: ""
   });
   const [formErrors, setFormErrors] = useState([]);
+  const history = useHistory();
+
+  /** Handle form submit:
+   * 
+   * Calls login function prop and, if successful, redirect to /projects.
+   */
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let result = await login(formData);
+    if (result.success) {
+      history.push("/projects");
+    } else {
+      setFormErrors(result.errors);
+    }
+  }
+
+  /** Update form data field */
+  const handleChange = async (e) => {
+    const { name, value } = e.target;
+    setFormData(data => ({ ...data, [name]: value }));
+  }
 
   return (
     <Paper className={classes.paper} elevation={5} component="main" maxWidth="xs">
@@ -81,6 +100,10 @@ const Login = () => {
           id="password"
           autoComplete="current-password"
         />
+        {formErrors.length
+          ? <Alert severity="error">This is an error alert — check it out!</Alert>
+          : null
+        }
         <Button
           type="submit"
           fullWidth
@@ -103,4 +126,4 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default LoginForm;

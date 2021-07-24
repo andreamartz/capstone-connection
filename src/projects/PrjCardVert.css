@@ -9,3 +9,19 @@
 .avatar {
   border-radius: 50%
 } */
+
+.tag {
+  margin-right: .65rem;
+}
+.HTML {
+  color: #9c27b0;
+}
+.CSS {
+  color: #ff4025;
+}
+.JS {
+  color: #ff9c2a;
+}
+.API {
+  color: #006400;
+}

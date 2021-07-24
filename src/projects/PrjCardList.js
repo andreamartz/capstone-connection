@@ -56,8 +56,7 @@ const PrjCardList = ({ username }) => {
       const unlike = await CapConApi.removeProjectLike(currentUsersLikeId);
       console.log("UNLIKE: ", unlike);
       if (unlike) {
-        // setProjects([...projects, {...project, likesCount: likesCount--, currentUsersLikeId: null}]);
-        // setProjects([...projects, {...projects[projectIdx], likesCount: likesCount-1, currentUsersLikeId: null}]);
+
         setProjects(currentProjects => {
           const newProjects = [...currentProjects];
           newProjects[projectIdx] = {...newProjects[projectIdx], likesCount: likesCount-1, currentUsersLikeId: null};
@@ -71,15 +70,13 @@ const PrjCardList = ({ username }) => {
       const like = await CapConApi.addProjectLike({projectId, likerId });  // CHECK replace likerId with currentUser.id once we have auth
       console.log("LIKE: ", like);
       if (like) {
-        // setProjects([...projects, {...project, likesCount: likesCount++, currentUsersLikeId: like.id}]);
-        // setProjects([...projects, {...projects[projectIdx], likesCount: likesCount+1, currentUsersLikeId: like.id}]);
+
         setProjects(currentProjects => {
           const newProjects = [...currentProjects];
           newProjects[projectIdx] = {...newProjects[projectIdx], likesCount: likesCount+1, currentUsersLikeId: like.id};
 
           return newProjects;
 
-          // return [...currentProjects, {...currentProjects[projectIdx], likesCount: likesCount+1, currentUsersLikeId: like.id}]
         });
       }
     }
@@ -94,7 +91,7 @@ const PrjCardList = ({ username }) => {
   }
 
   console.log("PROJECTS STATE: ", projects);
-  
+
   return (
     <Container>
 

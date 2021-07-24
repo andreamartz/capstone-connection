@@ -42,28 +42,52 @@ class CapConApi {
   //   return res.user;
   // }
 
+  /** Get a user. */
+
+  static async getUser(username) {
+    let res = await this.request(`users/${username}`);
+    console.log("RES from CapConApi: ", res);
+    return res.user;
+  }
+
   /** Get a list of projects */
   
-  static async getProjects() {
-    let res = await this.request("projects");
+  static async getProjects(params=null) {
+    let res = await this.request("projects", params);
     return res.projects;
+  }
+
+  /** Get a project */
+
+  static async getProject(id) {
+    let res = await this.request(`projects/${id}`);
+    console.log("RES from CapConApi: ", res);
+    return res.project;
   }
 
   /** Add a new project */
 
   static async addProject(data) {
     console.log("DATA SENT: ", data);
-    let res = await this.request("projects/new", data, "post");
+    let res = await this.request("projects", data, "post");
     console.log("RES from CapConApi: ", res);
     return res.project;
   }
+
   /** Like a project */
 
   static async addProjectLike(data) {
     console.log("addProjectLike DATA: ", data);
-    let res = await this.request("project_likes/new", data, "post");
+    let res = await this.request("project_likes/", data, "post");
     console.log("RES: ", res);
     return res.projectLike;
+  }
+
+  /** Unlike a project */
+  
+  static async removeProjectLike(id) {
+    let res = await this.request(`project_likes/${id}`, {},"delete");
+    return res.deleted;
   }
 
   /** Get a list of tags */
@@ -73,6 +97,20 @@ class CapConApi {
     return res.tags;
   }
 
+  /** Add a comment to a project */
+
+  static async addComment(data) {
+    console.log("addComment DATA: ", data);
+    let res = await this.request("project_comments", data, "post");
+    console.log("RES: ", res);
+    return res.projectTags;
+  }
+
+  /** Signup for site. */
+
+  static async signup(data) {
+    let res = await this.request(`auth/register`, data, "post");
+    return res.token;
   }
 
 }

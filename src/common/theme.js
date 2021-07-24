@@ -1,7 +1,8 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+// import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: '#3949ab'
@@ -21,7 +22,8 @@ const theme = createMuiTheme({
     danger: 'orange',
   },
   typography: {
-    fontFamily: 'Roboto Mono, monospace',
+    // fontFamily: 'Roboto Mono, monospace',
+    fontFamily: 'Montserrat, sans-serif',
     fontWeightLight: 400,
     fontWeightRegular: 500,
     fontWeightBold: 600
