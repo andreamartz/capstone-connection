@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import Layout from './common/Layout';
-// import useLocalStorage from "./hooks/useLocalStorage";
+import useLocalStorage from "./hooks/useLocalStorage";
 import Navigation from "./routes-nav/Navigation";
 import Routes from "./routes-nav/Routes";
-// import LoadingSpinner from "./common/LoadingSpinner";
+import CapConApi from "./api/api";
+import LoadingSpinner from "./common/LoadingSpinner";
 import UserContext from "./auth/UserContext";
 import jwt from "jsonwebtoken";
 import './App.css';
@@ -33,15 +34,13 @@ export const TOKEN_STORAGE_ID = "capstone-connections-token";
 function App() {
   const [infoLoaded, setInfoLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-  // CHECK: uncomment once we have auth
-  // const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
+  const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
 
   console.debug(
     "App",
     "infoLoaded=", infoLoaded,
     "currentUser=", currentUser,
-    // CHECK:
-    // "token=", token,
+    "token=", token,
   );
 
   // Load user info from API. Until a user is logged in and they have a token,
@@ -49,39 +48,43 @@ function App() {
   // the value of the token is a dependency for this effect.
 
   // CHECK: uncomment useEffect once we have auth
-  // useEffect(function loadUserInfo() {
-    //  // CHECK:
-    // console.debug("App useEffect loadUserInfo", "token=", token);
+  useEffect(function loadUserInfo() {
+     // CHECK:
+    console.debug("App useEffect loadUserInfo", "token=", token);
 
-    //  // CHECK: uncomment getCurrentUser once we have auth
-    // async function getCurrentUser() {
-    //   if (token) {
-    //     try {
-    //       let { username } = jwt.decode(token);
-    //       // put the token on the Api class so it can use it to call the API.
-    //       CapConApi.token = token;
-    //       let currentUser = await CapConApi.getCurrentUser(username);
-    //       setCurrentUser(currentUser);
-    //     } catch (err) {
-    //       console.error("App loadUserInfo: problem loading", err);
-    //       setCurrentUser(null);
-    //     }
-    //   }
-    //   setInfoLoaded(true);
-    // }
+     // CHECK: uncomment getCurrentUser once we have auth
+    async function getCurrentUser() {
+      if (token) {
+        try {
+          console.log("INSIDE GETCURRENT USER. TOKEN: ", token);
+          let { username } = jwt.decode(token);
+          // put the token on the Api class so it can use it to call the API.
+          CapConApi.token = token;
+          let currentUser = await CapConApi.getCurrentUser(username);
+          console.log("CURRENTUSER: ", currentUser);
+          setCurrentUser(currentUser);
+        } catch (err) {
+          console.error("App loadUserInfo: problem loading", err);
+          setCurrentUser(null);
+        }
+      }
+      setInfoLoaded(true);
+    }
 
     // set infoLoaded to false while async getCurrentUser runs; once the
     // data is fetched (or even if an error happens!), this will be set back
     // to true to control the spinner.
-    // setInfoLoaded(false);
-    // getCurrentUser();
-  // }, [token]);
+    setInfoLoaded(false);
+    getCurrentUser();
+  }, [token]);
 
   /** Handles site-wide logout. */
   function logout() {
+    console.log("Logged in CURRENTUSER: ", currentUser);
     setCurrentUser(null);
+    console.log("Logged out CURRENTUSER: ", currentUser);
     // CHECK: uncomment once we have auth
-    // setToken(null);
+    setToken(null);
   }
 
   /** Handles site-wide signup.
@@ -93,14 +96,14 @@ function App() {
   // CHECK: is this called signup or register in my app?
   async function signup(signupData) {
     // CHECK: uncomment function body once we have auth
-    // try {
-    //   let token = await CapConApi.signup(signupData);
-    //   setToken(token);
-    //   return { success: true };
-    // } catch (errors) {
-    //   console.error("signup failed", errors);
-    //   return { success: false, errors };
-    // }
+    try {
+      let token = await CapConApi.signup(signupData);
+      setToken(token);
+      return { success: true };
+    } catch (errors) {
+      console.error("signup failed", errors);
+      return { success: false, errors };
+    }
   }
 
   /** Handles site-wide login.
@@ -109,16 +112,18 @@ function App() {
    */
   async function login(loginData) {
     // CHECK: Uncomment function body once we have auth
-    // try {
-    //   let token = await CapConApi.login(loginData);
-    //   setToken(token);
-    //   return { success: true };
-    // } catch (errors) {
-    //   console.error("login failed", errors);
-    //   return { success: false, errors };
+    try {
+      let token = await CapConApi.login(loginData);
+      setToken(token);
+      return { success: true };
+    } catch (errors) {
+      console.error("login failed", errors);
+      return { success: false, errors };
+    }
   }
   // CHECK: Uncomment once we have auth
-  // if (!infoLoaded) return <LoadingSpinner />;
+
+  if (!infoLoaded) return <LoadingSpinner />;
 
   return (
       <BrowserRouter>
