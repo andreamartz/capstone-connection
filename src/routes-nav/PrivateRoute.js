@@ -20,9 +20,9 @@ function PrivateRoute({ exact, path, children }) {
   );
 
   // CHECK: Uncomment when we have auth
-  // if (!currentUser) {
-  //   return <Redirect to="/login" />;
-  // }
+  if (!currentUser) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <Route exact={exact} path={path}>
