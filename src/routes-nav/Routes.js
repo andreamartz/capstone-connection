@@ -41,8 +41,7 @@ function Routes({ login, signup }) {
         </Route>
 
         <Route exact path="/signup">
-          {/* <SignupForm signup={signup} /> */}
-          <SignupForm />
+          <SignupForm signup={signup} />
         </Route>
 
         {/* CHECK: Change to PrivateRoute once we have auth */}
