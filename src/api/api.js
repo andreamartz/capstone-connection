@@ -37,10 +37,10 @@ class CapConApi {
 
   /** Get the current user. */
 
-  // static async getCurrentUser(username) {
-  //   let res = await this.request(`users/${username}`);
-  //   return res.user;
-  // }
+  static async getCurrentUser(username) {
+    let res = await this.request(`users/${username}`);
+    return res.user;
+  }
 
   /** Get a user. */
 
