@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import clsx from 'clsx';
 import { useParams } from "react-router-dom";
 import Avatar from '@material-ui/core/Avatar';
@@ -8,14 +8,18 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
+import {Link as MuiLink} from '@material-ui/core';
+import { Link as ReactRouterDomLink } from "react-router-dom";
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CapConApi from "../api/api";
 import LoadingSpinner from "../common/LoadingSpinner";
+import { asyncWrapper } from "../utils";
 import CommentList from "../comments/CommentList";
 import CommentForm from "../comments/CommentForm";
 import PrjCardHoriz from "./PrjCardHoriz";
+import UserContext from "../auth/UserContext";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import "./PrjDetailPage.css";
 
 
@@ -39,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(10)
   },
   button: {
-    borderRadius: '1.2rem'
+    borderRadius: '1.2rem',
+    marginBottom: theme.spacing(2)
   },
   container: {
     paddingLeft: '0',
@@ -69,9 +74,11 @@ const useStyles = makeStyles((theme) => ({
 
 const PrjDetailPage = () => {
   const { id } = useParams();
-  console.debug("PrjDetailPage", "id=", id);
+  console.debug("PrjDetailPage", "project id: ", id);
 
   const [project, setProject] = useState(null);
+  const { currentUser } = useContext(UserContext)
+
 
   useEffect(function getProjectOnMount() {
     console.log("INSIDE USEEFFECT");
@@ -87,23 +94,17 @@ const PrjDetailPage = () => {
 
   const classes = useStyles();
 
-  // async function likeProject(projectId=project.id) {
-  //   const likerId = 4;  // CHECK replace likerId with currentUser.id once we have auth
-  //   const likeData = {likerId, projectId};
-
-  //   const like = await CapConApi.addProjectLike(likeData);  // CHECK replace likerId with currentUser.id once we have auth
-
-  //   console.log("LIKE: ", like);
-
-  //   console.log("PRJLIKESCOUNT: ", project.prjLikesCount);
-
-  //   if (like) {
-  //     setProject({...project, prjLikesCount: project.prjLikesCount++});
-  //   }
-  // }
+  // Breakpoints
+  const theme = useTheme();
+  const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+  const flexDirection = isMatch ? "column" : "row";
+  const justifyContent = isMatch ? "center" : "space-between";
+  const alignItems = isMatch ? "center" : "space-between";
 
   async function toggleLikeProject(projectIdx) {
-    const currentUserId = 3;  // CHECK replace currentUserId with currentUser.id once we have auth
+
+    const currentUserId = currentUser.id;
+
     const likerId = currentUserId;  // CHECK replace likerId with currentUser.id once we have auth
 
     let { id, likesCount, currentUsersLikeId } = project;
@@ -111,20 +112,28 @@ const PrjDetailPage = () => {
 
     // if project already liked by currentUser, unlike it
     if (currentUsersLikeId) {
-      const unlike = await CapConApi.removeProjectLike(currentUsersLikeId);
-      console.log("UNLIKE: ", unlike);
-      if (unlike) {
-
-        setProject({...project, likesCount: likesCount-1, currentUsersLikeId: null});
+      console.log("VERIFY CURRENTUSERSLIKEID NOT NULL - currentUser is: ", currentUsersLikeId);
+      
+      const {data, error} = await asyncWrapper(CapConApi.removeProjectLike(currentUsersLikeId));
+      if (error) {
+        alert("Failed to unlike project. Try again later.");
+        return;
       }
+      console.log("DATA: ", data);
+      if (data) {
+        setProject({...project, likesCount: likesCount-1, currentUsersLikeId: null});
+      };
     } else {
+      console.log("VERIFY CURRENTUSERSLIKEID IS NULL - currentUsersLikeId is: ", currentUsersLikeId);
       // otherwise, like it
-      const like = await CapConApi.addProjectLike({projectId, likerId });  // CHECK replace likerId with currentUser.id once we have auth
-      console.log("LIKE: ", like);
-      if (like) {
-
-        setProject({...project, likesCount: likesCount+1, currentUsersLikeId: like.id});
-        console.log("PROJECT AFTER LIKE: ", project);
+      const {data, error} = await asyncWrapper(CapConApi.addProjectLike({projectId, likerId }));  // CHECK replace likerId with currentUser.id once we have auth
+      if (error) {
+        alert ("Failed to like project. Try again later.");
+        return;
+      }
+      console.log("DATA: ", data);
+      if (data.id) {
+        setProject({...project, likesCount: likesCount+1, currentUsersLikeId: data.id});
       }
     }
   }
@@ -169,22 +178,32 @@ const PrjDetailPage = () => {
             variant="h6" 
             className={clsx(classes.heroTypography, classes.creatorTypography)}
           >
-            {project.creator.firstName.toUpperCase()} {project.creator.lastName.toUpperCase()}
+
+              <ReactRouterDomLink to={`/users/${project.creator.username}`}>
+                <Typography className={clsx(classes.heroTypography, classes.creatorTypography)}>
+                  {project.creator.firstName.toUpperCase()} {project.creator.lastName.toUpperCase()}
+                </Typography>
+              </ReactRouterDomLink>
+
           </Typography>
         </Box>
         <Box
           className={classes.heroTypography}
           display='flex'
-          justifyContent='space-between'
+          flexDirection={flexDirection}
+          justifyContent={justifyContent}
+          alignItems={alignItems}
           width='60%'
           maxWidth="710px"
         >
           <Box
             display='flex'
-            justifyContent='space-between'
-            width='50%'
+            flexDirection={flexDirection}
+            justifyContent={justifyContent}
+            alignItems={alignItems}
+            width='60%'
           >
-            <Link href={project.siteUrl}>
+            <MuiLink href={project.siteUrl} target="_blank" rel="noopener">
               <Button
                 variant="contained"
                 color="primary"
@@ -194,8 +213,8 @@ const PrjDetailPage = () => {
               >
                 Preview Site
               </Button>
-            </Link>
-            <Link href={project.repoUrl}>
+            </MuiLink>
+            <MuiLink href={project.repoUrl} target="_blank" rel="noopener">
               <Button
                 variant="contained"
                 size="large"
@@ -204,7 +223,7 @@ const PrjDetailPage = () => {
               >
                 View Code
               </Button>
-            </Link>
+            </MuiLink>
 
           </Box>
           <div id="like" className={classes.like}>
@@ -244,9 +263,6 @@ const PrjDetailPage = () => {
           </Box>
         </Box>
 
-
-
-
         {project.comments.length ? 
           <Typography
             component="h3"
@@ -272,12 +288,6 @@ const PrjDetailPage = () => {
             }
           </Box>
 
-
-
-
-
-
-
         <Typography
           component="h3"
           variant="h5"
@@ -292,7 +302,7 @@ const PrjDetailPage = () => {
           </Box>
         </Typography>
         <Box>
-          <CommentForm />
+          <CommentForm projectId={project.id} />
         </Box>
 
       </Container>
