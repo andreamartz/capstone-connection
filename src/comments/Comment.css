@@ -1,0 +1,10 @@
+.form {
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+
+.form-container {
+  /* width: 0; */
+  height: 0;
+  overflow: hidden;
+}
