@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import UserContext from "../auth/UserContext";
 import CapConApi from "../api/api";
 
 
@@ -42,11 +43,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const INITIAL_STATE_FORM_DATA = {
-  comment: ""
-};
 
-const CommentForm = () => {
+
+const CommentForm = ({ projectId }) => {
+  const { currentUser } = useContext(UserContext);
+  const INITIAL_STATE_FORM_DATA = {
+    projectId: projectId,
+    commenterId: currentUser.id,
+    comment: ""
+  };
   const [formData, setFormData] = useState( INITIAL_STATE_FORM_DATA );
   const [formErrors, setFormErrors] = useState([]);
 
@@ -92,7 +97,7 @@ const CommentForm = () => {
         </Typography>
       </Box>
 
-      <form onSubmit={handleSubmit} className={classes.form} noValidate>
+      <form onSubmit={handleSubmit} className={classes.form}>
         <TextField
           className={classes.textField}
           type="text"
