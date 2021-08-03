@@ -81,7 +81,7 @@ const PrjDetailPage = () => {
 
 
   useEffect(function getProjectOnMount() {
-    console.log("INSIDE USEEFFECT");
+    console.log("PrjDetailPage, INSIDE USEEFFECT");
     
     async function getProject() {
       console.debug("PrjDetailPage useEffect getProjectOnMount");
@@ -281,7 +281,7 @@ const PrjDetailPage = () => {
           <Box width='80%' mx='auto'>
             {project.comments.length
               ? (
-              <CommentList comments={project.comments} />
+              <CommentList comments={project.comments} projectId = {project.id}/>
               ) : (
               null
               )

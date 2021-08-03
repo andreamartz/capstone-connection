@@ -15,8 +15,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const CommentList = ({ comments }) => {
-  console.debug("CommentList");
+const CommentList = ({ comments, projectId }) => {
   const classes = useStyles();
 
   return (
