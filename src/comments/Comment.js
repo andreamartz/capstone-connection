@@ -29,8 +29,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Comment = ({ comment, projectId }) => {
+const Comment = ({ comment, projectId, idx }) => {
+  console.debug("Comment ", "COMMENT: ", comment);
   const [ formVisible, setFormVisible ] = useState(false);
+  const [ commentState, setCommentState ] = useState(comment);
+
 
   const { currentUser } = useContext(UserContext);
   const classes = useStyles();
@@ -41,7 +44,7 @@ const Comment = ({ comment, projectId }) => {
   const toggleForm = () => {
     setFormVisible(!formVisible);
   }
-
+  
   return (
     <>
       <Box display="flex" justifyContent="space-between" alignItems="center"> 
@@ -62,12 +65,12 @@ const Comment = ({ comment, projectId }) => {
                 className={classes.inline}
                 color="textPrimary"
               >
-                {comment.comment}
+                {commentState.comment}
               </Typography>
             }
           />
         </ListItem>
-        {currentUser.id === comment.commenter.id 
+        {currentUser.id === commenter.id 
         ? <Button variant="contained"
             startIcon={<EditIcon />}
             color="secondary"
@@ -84,7 +87,13 @@ const Comment = ({ comment, projectId }) => {
       </Box> */}
       {formVisible 
         && <Box>
-          <EditCommentForm comment={comment} projectId={projectId} toggleForm={toggleForm}/>
+          <EditCommentForm 
+            commentState={commentState} 
+            projectId={projectId}
+            idx={idx} 
+            setFormVisible={setFormVisible}
+            setCommentState={setCommentState}
+          />
         </Box>
       }
       <Divider />
