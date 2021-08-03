@@ -110,29 +110,65 @@ function Navigation({ logout }) {
     });
   }
 
-  function navDisplay() {
-    if (currentUser && isMatch) {
-      return drawerLoggedInNav();
-    }
-    if (currentUser && !isMatch) {
-      return wideLoggedInNav();
-    }
-    if (!currentUser && isMatch) {
-      return drawerLoggedOutNav();
-    }
-    if (!currentUser && !isMatch) {
-      return wideLoggedOutNav();
-    }
-  }
+  // function navDisplay() {
+  //   if (currentUser && isMatch) {
+  //     return drawerLoggedInNav();
+  //   }
+  //   if (currentUser && !isMatch) {
+  //     return wideLoggedInNav();
+  //   }
+  //   if (!currentUser && isMatch) {
+  //     return drawerLoggedOutNav();
+  //   }
+  //   if (!currentUser && !isMatch) {
+  //     return wideLoggedOutNav();
+  //   }
+  // }
 
   const drawerLoggedInNav = () => {
-    console.log("LOGGEDINNAVDATA: ", loggedInNavData);
+    console.log("drawerLoggedInNav", "LOGGEDINNAVDATA: ", loggedInNavData);
     return (
       <DrawerLoggedIn navData={loggedInNavData} logout={logout}/>
     );
   }
   
-  const wideLoggedInNav = () => {
+  // const wideLoggedInNav = () => {
+  //   return (
+  //     <Toolbar className={classes.toolbar}>
+  //       <div>
+  //         {getWideNavMenuButtons(loggedInNavData)}
+  //         <Button
+  //           onClick={logout}
+  //           color="inherit"
+  //         >
+  //           Logout
+  //         </Button>
+  //       </div>
+  //     </Toolbar>
+  //   )
+  // }
+  
+  const drawerLoggedOutNav = () => {
+    return (
+      <DrawerLoggedOut navData={loggedOutNavData}/>
+    );
+  };
+
+  // const wideLoggedOutNav = () => {
+  //   return (
+  //     <Toolbar className={classes.toolbar}>
+  //       <div>
+  //         {getWideNavMenuButtons(loggedOutNavData)}
+
+  //       </div>
+  //     </Toolbar>
+  //   )
+  // };
+
+  const loggedInNav = () => {
+    if (isMatch) {
+      return (<DrawerLoggedIn navData={loggedInNavData} logout={logout}/>);
+    }
     return (
       <Toolbar className={classes.toolbar}>
         <div>
@@ -145,34 +181,40 @@ function Navigation({ logout }) {
           </Button>
         </div>
       </Toolbar>
-    )
-  }
-  
-  const drawerLoggedOutNav = () => {
-    return (
-      <DrawerLoggedOut navData={loggedOutNavData}/>
     );
   };
 
-  const wideLoggedOutNav = () => {
+  const loggedOutNav = () => {
+    if (isMatch) {
+      return (
+        <DrawerLoggedOut navData={loggedOutNavData} />
+      );
+    }
     return (
       <Toolbar className={classes.toolbar}>
         <div>
           {getWideNavMenuButtons(loggedOutNavData)}
-
         </div>
       </Toolbar>
     )
-  };
+  }
 
   return (
+    // <>
+    //   <AppBar color='primary'>
+    //     <Toolbar>
+    //       {CapstoneConnectionsLogo}
+
+    //       {navDisplay()}
+
+    //     </Toolbar>
+    //   </AppBar>
+    // </>
     <>
-      <AppBar color='primary'>
+      <AppBar color="primary">
         <Toolbar>
           {CapstoneConnectionsLogo}
-
-          {navDisplay()}
-
+          {currentUser ? loggedInNav() : loggedOutNav()}
         </Toolbar>
       </AppBar>
     </>
