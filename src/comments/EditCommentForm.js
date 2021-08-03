@@ -1,16 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from "react-router-dom";
-import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import FeedbackOutlinedIcon from '@material-ui/icons/FeedbackOutlined';
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import UserContext from "../auth/UserContext";
 import CapConApi from "../api/api";
-import "./EditCommentForm.css";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,12 +23,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const EditCommentForm = ({ comment, projectId, toggleForm }) => {
+const EditCommentForm = ({ commentState, projectId, idx, setFormVisible, setCommentState }) => {
   const { currentUser } = useContext(UserContext);
   const INITIAL_STATE_FORM_DATA = {
     projectId: projectId,
     commenterId: currentUser.id,
-    comment: comment.comment
+    comment: commentState.comment
   };
   const [formData, setFormData] = useState( INITIAL_STATE_FORM_DATA );
   const [formErrors, setFormErrors] = useState([]);
@@ -42,7 +38,8 @@ const EditCommentForm = ({ comment, projectId, toggleForm }) => {
 
 
   console.debug(
-    "CommentForm",
+    "EditCommentForm",
+    "COMMENTSTATE: ", commentState,
     "formData=", formData,
     "formErrors", formErrors
   );
@@ -56,27 +53,18 @@ const EditCommentForm = ({ comment, projectId, toggleForm }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await CapConApi.updateComment(formData);
+    const result = await CapConApi.updateComment(commentState.id, formData);
 
     if (result.id) {
       console.log("RESULT OF UPDATING COMMENT: ", result);
-      toggleForm();
+      setFormVisible(false);
+      console.log("commentState BEFORE: ", commentState);
+      setCommentState(commentState => ({...commentState, comment: result.comment}));
+      console.log("commentState AFTER: ", commentState);
     } else {
       setFormErrors(result.error);
     }
   };
-
-    // // const comment = {...formData, comment};
-
-    // const result = await CapConApi.addComment(formData);
-    
-    // if (result.id) {
-    //   console.log("RESULT OF NEW COMMENT SUBMISSION: ", result);
-    //   history.push("/projects");
-    // } else {
-    //   setFormErrors(result.error);
-    // }
-  // };
 
   return (
     <Box>
