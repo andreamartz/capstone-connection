@@ -3,15 +3,31 @@ import { Link, NavLink } from "react-router-dom";
 import UserContext from "../auth/UserContext";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-import MenuIcon from '@material-ui/icons/Menu';
 import "./Navigation.css";
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import DrawerLoggedIn from './DrawerLoggedIn';
+import DrawerLoggedOut from './DrawerLoggedOut';
+
+const useStyles = makeStyles(theme => ({
+  icons: {
+    fontSize: '1.4rem',
+  },
+  iconLogo: {
+    color: 'yellow',
+    fontSize: '3rem',
+  },
+  navLink: {
+    color: '#FFFFFF',
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: "underline",
+    },
+  }
+}));
 
 /** Navigation bar for site. Shows up on every page.
  *
@@ -21,111 +37,44 @@ import Menu from '@material-ui/core/Menu';
  * Rendered by App.
  */
 
-const headersData = [
-  {
-    label: "Projects",
-    href: "/projects"
-  },
-  {
-    label: "My Profile",
-    href: "/profile/:username"
-  }
-]
-
-const useStyles = makeStyles(theme => ({
-  menuButton: {
-    marginRight: theme.spacing(2),
-    fontWeight: 700,
-    marginLeft: theme.spacing(4.75)
-  },
-  logo: {
-    fontWeight: 600,
-    textAlign: "left"
-  },
-  toolbar: {
-    display: "flex",
-    justifyContent: "space-between"
-  }
-}));
 
 function Navigation({ logout }) {
-  // CHECK: uncomment once we have auth
-  // const { currentUser } = useContext(UserContext);
-  // console.debug("Navigation: ", "currentUser=", currentUser);
-
-  // CHECK: uncomment loggedInNav function once we have auth
-  // function loggedInNav() {
-  //   return (
-        // <ul className="navbar-nav ml-auto">
-        //   <li className="nav-item mr-4">
-        //     <NavLink className="nav-link" to="/projects">
-        //       Projects
-        //     </NavLink>
-        //   </li>
-        //   <li className="nav-item mr-4">
-        //     <NavLink className="nav-link" to="/profile">
-        //       Profile
-        //     </NavLink>
-        //   </li>
-        //   <li className="nav-item">
-        //     <Link className="nav-link" to="/" onClick={logout}>
-        //       Log out {currentUser.first_name || currentUser.username}
-        //     </Link>
-        //   </li>
-        // </ul>
-  //   );
-  // }
-  // function loggedOutNav() {
-  //   return (
-  //       <ul className="navbar-nav ml-auto">
-  //         <li className="nav-item mr-4">
-  //           <NavLink className="nav-link" to="/login">
-  //             Login
-  //           </NavLink>
-  //         </li>
-  //         <li className="nav-item mr-4">
-  //           <NavLink className="nav-link" to="/signup">
-  //             Sign Up
-  //           </NavLink>
-  //         </li>
-  //       </ul>
-  //   );
-  // }
-
-  // return (
-  //   <nav className="Navigation navbar navbar-expand-md">
-  //     <Link className="navbar-brand" to="/">
-  //       Capstone Connections
-  //     </Link>
-  //     {/* CHECK: use this only BEFORE we have auth */}
-  //     {/* loggedOutNav(); */}
-  //     {/* CHECK: use this only BEFORE we have auth */}
-  //     {/* loggedInNav(); */}
-  //     {/* CHECK: use this instead once we have auth */}
-  //     {/* {currentUser ? loggedInNav() : loggedOutNav()} */}
-  //   </nav>
-  // );
-
+  // const [anchorEl, setAnchorEl] = useState(null);
+  const [value, setValue] = useState(0);
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const { currentUser } = useContext(UserContext);
+  console.debug("Navigation", "CURRENTUSER: ", currentUser);
+  // const handleOpenMenu = e => {
+  //   setAnchorEl(e.currentTarget);
+  // };
 
-  const displayDesktop = () => {
-    return (
-      <Toolbar className={classes.toolbar}>
-        {CapstoneConnectionsLogo}
-        <div>
-          {getMenuButtons()}
-          <Button
-            onClick={logout}
-            color="inherit"
-          >
-            Logout
-          </Button>
-        </div>
-      </Toolbar>
-    );
-  };
+  // const handleMenuClose = () => {
+  //   setAnchorEl(null);
+  // };
+  // const handleClickTab = (e, newValue) => {
+  //   setValue(newValue);
+  // };
+  const loggedInNavData = [
+    {
+      label: "Projects",
+      href: "/projects"
+    },
+    {
+      label: "My Profile",
+      href: `/users/${currentUser.username}/settings`
+    }
+  ];
+  
+  const loggedOutNavData = [
+    {
+      label: "Login",
+      href: "/login"
+    },
+    {
+      label: "Sign Up",
+      href: "/signup"
+    }
+  ]
 
   const CapstoneConnectionsLogo = (
     <Typography 
@@ -137,55 +86,97 @@ function Navigation({ logout }) {
     </Typography>
   );
 
-  const getMenuButtons = () => {
-    return headersData.map(({ label, href }) => {
+  // Breakpoints
+  const theme = useTheme();
+  const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const getWideNavMenuButtons = (navData) => {
+    return navData.map(({ label, href }) => {
       return (
-        <Button className={classes.menuButton}
-          {...{
-            key: label,
-            color: "inherit",
-            to: href,
-            component: NavLink
-          }}
+        <Button key={label} className={classes.navLink}
+          // {...{
+          //   key: label,
+          //   color: "inherit",
+          //   to: href,
+          //   component: NavLink
+          // }}
         >
-          {label}
+          <NavLink to={href} className={classes.navLink}>
+            {label}
+          </NavLink>
+
         </Button>
       )
     });
   }
 
+  function navDisplay() {
+    if (currentUser && isMatch) {
+      return drawerLoggedInNav();
+    }
+    if (currentUser && !isMatch) {
+      return wideLoggedInNav();
+    }
+    if (!currentUser && isMatch) {
+      return drawerLoggedOutNav();
+    }
+    if (!currentUser && !isMatch) {
+      return wideLoggedOutNav();
+    }
+  }
+
+  const drawerLoggedInNav = () => {
+    console.log("LOGGEDINNAVDATA: ", loggedInNavData);
+    return (
+      <DrawerLoggedIn navData={loggedInNavData} logout={logout}/>
+    );
+  }
+  
+  const wideLoggedInNav = () => {
+    return (
+      <Toolbar className={classes.toolbar}>
+        <div>
+          {getWideNavMenuButtons(loggedInNavData)}
+          <Button
+            onClick={logout}
+            color="inherit"
+          >
+            Logout
+          </Button>
+        </div>
+      </Toolbar>
+    )
+  }
+  
+  const drawerLoggedOutNav = () => {
+    return (
+      <DrawerLoggedOut navData={loggedOutNavData}/>
+    );
+  };
+
+  const wideLoggedOutNav = () => {
+    return (
+      <Toolbar className={classes.toolbar}>
+        <div>
+          {getWideNavMenuButtons(loggedOutNavData)}
+
+        </div>
+      </Toolbar>
+    )
+  };
+
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed">
-        {displayDesktop()}
+    <>
+      <AppBar color='primary'>
+        <Toolbar>
+          {CapstoneConnectionsLogo}
+
+          {navDisplay()}
+
+        </Toolbar>
       </AppBar>
-    </div>
-  );
-  // return (
-  //   <AppBar>
-  //     <Toolbar>
-  //       <IconButton 
-  //         edge="start"
-  //         color="inherit"
-  //         aria-label="menu"
-  //         className={classes.menuButton}
-  //       >
-  //         <MenuIcon />
-  //       </IconButton>
-  //       <Typography 
-  //         variant="h6"
-  //         className={classes.title}
-  //       >
-  //         Capstone Connections
-  //       </Typography>
-  //       <Button color="inherit">
-  //         Signup
-  //       </Button>
-  //     </Toolbar>
-  //   </AppBar>
-  // );
-
-
+    </>
+  )
 }
 
 export default Navigation;
