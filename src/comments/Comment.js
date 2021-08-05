@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import {
   ListItem,
