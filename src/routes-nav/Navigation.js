@@ -1,16 +1,14 @@
 import React, { useContext, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import UserContext from "../auth/UserContext";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import "./Navigation.css";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import DrawerLoggedIn from './DrawerLoggedIn';
-import DrawerLoggedOut from './DrawerLoggedOut';
+
 
 const useStyles = makeStyles(theme => ({
   icons: {
