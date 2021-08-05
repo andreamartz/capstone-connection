@@ -81,6 +81,12 @@ const SignupForm = ({ signup }) => {
     setFormData(data => ({ ...data, [name]: value }));
   }
 
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    console.log("FILE: ", file);
+    updateImageState(file);
+  };
+
   // **************
   // Get handleFileInputChange(e), previewFile(file), handleSubmitFileetc. for image upload from NewPrj after bugs are worked out
   // *************
