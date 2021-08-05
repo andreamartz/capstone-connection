@@ -9,7 +9,7 @@ import UserDetailPage from "../users/UserDetailPage";
 
 import NewPrj from "../projects/NewPrj";
 import LoginForm from "../auth/LoginForm";
-// import ProfileForm from "../profiles/ProfileForm";
+import ProfileForm from "../users/ProfileForm";
 import SignupForm from "../auth/SignupForm";
 import PrivateRoute from "./PrivateRoute";
 
@@ -50,7 +50,7 @@ function Routes({ login, signup }) {
         </Route>
 
         {/* CHECK: Change to PrivateRoute once we have auth */}
-          <Route exact path="/projects/new">
+        <Route exact path="/projects/new">
           <NewPrj />
         </Route>
 
@@ -60,14 +60,14 @@ function Routes({ login, signup }) {
         </Route>
 
         {/* CHECK: Change to PrivateRoute once we have auth */}
-        <Route path="/profile">
-          {/* <ProfileForm /> */}
+        <Route exact path="/users/:username/settings">
+          <ProfileForm />
         </Route>
 
         {/* CHECK: Change to PrivateRoute once we have auth */}
         <Route exact path="/users/:username">
           <UserDetailPage />
-        </Route>
+        </Route> 
 
         <Redirect to="/" />
       </Switch>
