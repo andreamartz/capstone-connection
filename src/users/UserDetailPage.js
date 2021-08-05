@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import clsx from 'clsx';
 import { useParams } from "react-router-dom";
 import Avatar from '@material-ui/core/Avatar';
@@ -6,12 +6,15 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import EditIcon from '@material-ui/icons/Edit';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import Link from '@material-ui/core/Link';
+import {Link as MuiLink} from '@material-ui/core';
+import { Link as ReactRouterDomLink } from "react-router-dom";
 import PrjCardList from '../projects/PrjCardList';
 import { makeStyles } from '@material-ui/core/styles';
 import CapConApi from "../api/api";
 import LoadingSpinner from "../common/LoadingSpinner";
+import UserContext from "../auth/UserContext";
 import "./UserDetailPage.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,6 +53,9 @@ const UserDetailPage = () => {
   console.debug("UserDetailPage", "username=", username);
 
   const [user, setUser] = useState(null);
+
+  const { currentUser } = useContext(UserContext);
+
 
   useEffect(() => {
     async function getUserOnMount() {
@@ -93,6 +99,14 @@ const UserDetailPage = () => {
           >
             {user.firstName} {user.lastName}
           </Typography>
+          {currentUser.id === user.id
+            ? <ReactRouterDomLink to={`/users/${user.username}/settings`}>
+              <Button size="small" variant="contained" color="primary" startIcon={<EditIcon />}className={clsx(classes.heroTypography, classes.button)}>
+                Edit Profile
+              </Button>
+            </ReactRouterDomLink>
+            : null
+          }
         </Box>
 
         <Typography 
@@ -115,7 +129,7 @@ const UserDetailPage = () => {
             width='50%'
             mx='auto'
           >
-            <Link href={user.portfolioUrl} target="_blank" rel="noopener">
+            <MuiLink href={user.portfolioUrl} target="_blank" rel="noopener">
               <Button
                 variant="contained"
                 color="primary"
@@ -125,17 +139,17 @@ const UserDetailPage = () => {
               >
                 Portfolio
               </Button>
-            </Link>
-            <Link href={user.gitHubUrl} target="_blank" rel="noopener">
+            </MuiLink>
+            <MuiLink href={user.gitHubUrl} target="_blank" rel="noopener">
               <Button
                 variant="contained"
                 size="large"
                 className={classes.button}
-                endIcon={<OpenInNewIcon />}  
+                endIcon={<OpenInNewIcon />} 
               >
                 GitHub
               </Button>
-            </Link>
+            </MuiLink>
           </Box>
 
         </Box>
