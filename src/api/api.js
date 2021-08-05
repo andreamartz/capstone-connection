@@ -103,7 +103,25 @@ class CapConApi {
     console.log("addComment DATA: ", data);
     let res = await this.request("project_comments", data, "post");
     console.log("RES: ", res);
-    return res.projectTags;
+    console.log("RES.COMMENT: ", res.comment);
+    return res.comment;
+  }
+
+  /** Edit a comment about a project */
+
+  static async updateComment(commentId, data) {
+    console.log("updateComment DATA: ", data);
+    const res = await this.request(`project_comments/${commentId}`, data, "patch");
+    console.log("RES: ", res);
+    console.log("RES.COMMENT: ", res.comment);
+    return res.comment;
+  }
+
+  /** Get token for login from username, password. */
+
+  static async login(data) {
+    let res = await this.request(`auth/token`, data, "post");
+    return res.token;
   }
 
   /** Signup for site. */
@@ -113,6 +131,12 @@ class CapConApi {
     return res.token;
   }
 
+  /** Update user profile */
+
+  static async updateProfile(userId, data) {
+    const res = await this.request(`users/${userId}`, data, "patch");
+    return res.user;
+  }
 }
 
 export default CapConApi;
