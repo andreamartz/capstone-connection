@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import CapConApi from "../api/api";
 import LoadingSpinner from "../common/LoadingSpinner";
+import AlertDisplay from '../common/AlertDisplay';
 import Checkbox from '@material-ui/core/Checkbox';
 // import Alert from "../common/Alert";
 import Avatar from '@material-ui/core/Avatar';
@@ -13,11 +14,12 @@ import AddIcon from '@material-ui/icons/Add';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import UserContext from "../auth/UserContext";
 import './NewPrj.css';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(16),
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingTop: theme.spacing(8),
@@ -38,44 +40,46 @@ const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-  button: {
-    margin: theme.spacing(2)
+  submit: {
+    margin: theme.spacing(3, 0, 2),
   },
   textField: {
     marginBottom: theme.spacing(2)
   }
 }));
 
-const INITIAL_STATE_FORM_DATA = {
-  name: "",
-  description: "",
-  image: "",
-  creatorId: "1",
-  tags: [],
-  repoUrl: "",
-  siteUrl: "",
-  feedbackRequest: ""
-};
+
 
 // CHECK:
-// 1. Fix file input button formatting.
-// 2. Add controlled input for tags (I'm envisioning a group of checkboxes) and add tags to formData and INITIAL_STATE_FORM_DATA
-// 3. Replace hard-coded creatorId in formData (once we have auth) with currentUser's id (somehow???)
-// 4. Add error handling with formErrors state (?? - or is this only for auth forms??)
+// 1. Add error handling with formErrors state (?? - or is this only for auth forms??)
 //    a. missing required fields
 //    b. input too long/too short/wrong format
 //    c. etc.
-// 5. Add form validations with Material UI Formik (see Net Ninja Material UI tut video #28)
-// 6. Consider pulling handleChange, handleFileInputChange, and handleSubmit into separate helper functions file(s).
-// 7. need htmlFor?
+// 2. Add form validations with Material UI Formik (see Net Ninja Material UI tut video #28)
+// 3. Consider pulling handleChange, handleFileInputChange, and handleSubmit into separate helper functions file(s).
+// 4. need htmlFor?
 
 const NewPrj = () => {
+  const { currentUser } = useContext(UserContext);
+
+  // CHECK: replace hard-coded creatorId once we have auth
+  const INITIAL_STATE_FORM_DATA = {
+    name: "",
+    description: "",
+    image: "",
+    creatorId: currentUser.id,
+    tags: [],
+    repoUrl: "",
+    siteUrl: "",
+    feedbackRequest: ""
+  };
+
   console.debug("NewPrj");
 
   const [formData, setFormData] = useState( INITIAL_STATE_FORM_DATA );
   const [fileInputState, setFileInputState] = useState('');
   const [formErrors, setFormErrors] = useState([]);
-    // array of tag objects from database
+  // array of tag objects from database
   const [dbTags, setDbTags] = useState([]);
 
   const classes = useStyles();
@@ -193,7 +197,7 @@ const NewPrj = () => {
       {/* <h1 className="title">Upload an Image</h1> */}
       {/* <Alert msg={errMsg} type="danger" /> */}
       {/* <Alert msg={successMsg} type="success" /> */}
-      <form onSubmit={handleSubmit} className={classes.form} noValidate>
+      <form onSubmit={handleSubmit} className={classes.form}>
         <TextField
           className={classes.textField}
           type="text"
@@ -213,7 +217,6 @@ const NewPrj = () => {
           variant="outlined"
           value={formData.repoUrl}
           fullWidth
-          required
           onChange={handleChange}
         />
         <TextField
@@ -266,22 +269,31 @@ const NewPrj = () => {
           />
         ))}
       
-        <Box>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => fileInputRef.current.click()}  
-          >
-            Choose File
-          </Button>
-          <input
-            id="fileInput"
-            ref={fileInputRef}
-            type="file"
-            name="image"
-            onChange={handleFileInputChange}
-            value={fileInputState}
-          />
+        <Box mt={2} mb={4}>
+          <Box display="flex" alignItems="center">
+            <Box mr={2}>
+              <Typography className={classes.typography}>
+                Photo to represent project
+              </Typography>
+            </Box>
+
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => fileInputRef.current.click()}  
+            >
+              Choose File
+            </Button>
+            <input
+              id="fileInput"
+              ref={fileInputRef}
+              type="file"
+              name="image"
+              onChange={handleFileInputChange}
+              value={fileInputState}
+            />            
+          </Box>
+
         </Box>
 
         {/* Preview the selected image */}
@@ -294,11 +306,17 @@ const NewPrj = () => {
             />
           )}
         </Box>
+        {formErrors.length
+          ? <AlertDisplay severity="error" messages= {formErrors} />
+          : null
+        }
         <Button
           className={classes.button}
           variant="contained"
           color="primary"
           type="submit"
+          fullWidth
+          size="large"
         >
           Submit
         </Button>
