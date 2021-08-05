@@ -45,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(15),
     height: theme.spacing(15),
+  },
+  heroBio: {
+    paddingRight: theme.spacing(3),
+    paddingLeft: theme.spacing(3)
   }
 }));
 
@@ -112,7 +116,7 @@ const UserDetailPage = () => {
         <Typography 
           component="h2" 
           variant="h5"
-          className={clsx(classes.heroTypography, classes.title)}
+          className={clsx(classes.heroTypography, classes.title, classes.heroBio)}
         >
           {user.bio}
         </Typography>
