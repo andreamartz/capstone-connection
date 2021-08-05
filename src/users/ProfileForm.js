@@ -282,7 +282,7 @@ const ProfileForm = () => {
           className={classes.submit}
           size="large"
         >
-          Sign Up
+          Submit
         </Button>
       </form>
     </Paper>
