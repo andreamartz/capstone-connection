@@ -47,11 +47,11 @@ const SignupForm = ({ signup }) => {
     password: "",
     firstName: "",
     lastName: "",
-    email: "",
-    bio: "",
+    email: null,
+    bio: null,
     photoUrl: "",
-    portfolioUrl: "",
-    gitHubUrl: ""
+    portfolioUrl: null,
+    gitHubUrl: null
   });
   const [formErrors, setFormErrors] = useState([]);
   // const [fileInputState, setFileInputState] = useState('');
