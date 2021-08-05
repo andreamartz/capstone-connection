@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Masonry from 'react-masonry-css';
 import { Container } from '@material-ui/core';
 import LoadingSpinner from "../common/LoadingSpinner";
 import PrjCardVert from './PrjCardVert';
 import CapConApi from "../api/api";
+import UserContext from "../auth/UserContext";
 import { makeStyles } from '@material-ui/core/styles';
+import { asyncWrapper } from "../utils";
 import "./PrjCardList.css";
 
 // See Springboard React Video #6 Forms-Passing Data Up
@@ -28,6 +30,8 @@ const PrjCardList = ({ username }) => {
   console.debug("PrjCardList");
 
   const [projects, setProjects] = useState([]);
+  const { currentUser } = useContext(UserContext)
+  console.debug("PrjCardList, CURRENTUSER: ", currentUser);
   const classes = useStyles();
 
   useEffect(() => {
@@ -43,8 +47,10 @@ const PrjCardList = ({ username }) => {
 
 
   async function toggleLikeProject(projectIdx) {
-    console.log("PROJECT INDEX: ", projectIdx);
-    const currentUserId = 3;  // CHECK replace currentUserId with currentUser.id once we have auth
+    console.log("PrjCardList toggleLikeProject PROJECT INDEX: ", projectIdx);
+
+    const currentUserId = currentUser.id;
+    
     const likerId = currentUserId;  // CHECK replace likerId with currentUser.id once we have auth
     const project = projects[projectIdx];
     console.log("PROJECT: ", project);
@@ -53,9 +59,13 @@ const PrjCardList = ({ username }) => {
 
     // if project already liked by currentUser, unlike it
     if (currentUsersLikeId) {
-      const unlike = await CapConApi.removeProjectLike(currentUsersLikeId);
-      console.log("UNLIKE: ", unlike);
-      if (unlike) {
+      const {data, error} = await asyncWrapper(CapConApi.removeProjectLike(currentUsersLikeId));
+      if (error) {
+        alert("Failed to unlike project. Try again later.");
+        return;
+      }
+      console.log("DATA: ", data);
+      if (data) {
 
         setProjects(currentProjects => {
           const newProjects = [...currentProjects];
@@ -67,13 +77,17 @@ const PrjCardList = ({ username }) => {
       }
     } else {
       // otherwise, like it
-      const like = await CapConApi.addProjectLike({projectId, likerId });  // CHECK replace likerId with currentUser.id once we have auth
-      console.log("LIKE: ", like);
-      if (like) {
+      const {data, error} = await asyncWrapper(CapConApi.addProjectLike({projectId, likerId }));  // CHECK replace likerId with currentUser.id once we have auth
+      if (error) {
+        alert ("Failed to like project. Try again later.");
+        return;
+      }
+      console.log("DATA: ", data);
+      if (data.id) {
 
         setProjects(currentProjects => {
           const newProjects = [...currentProjects];
-          newProjects[projectIdx] = {...newProjects[projectIdx], likesCount: likesCount+1, currentUsersLikeId: like.id};
+          newProjects[projectIdx] = {...newProjects[projectIdx], likesCount: likesCount+1, currentUsersLikeId: data.id};
 
           return newProjects;
 
@@ -112,7 +126,7 @@ const PrjCardList = ({ username }) => {
             ))}
           </Masonry>
         ) : (
-          <p>Sorry, no results were found!</p>
+          <p>Sorry, no projects were found!</p>
         )
       }    
     </Container>
