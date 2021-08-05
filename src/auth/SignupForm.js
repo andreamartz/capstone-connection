@@ -1,8 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 import CapConApi from "../api/api";
-// import Alert from "../common/Alert";
-import Alert from '@material-ui/lab/Alert';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -10,7 +8,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/Add';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-// import './SignupForm.css';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
