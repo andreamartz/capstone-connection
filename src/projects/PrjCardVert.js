@@ -72,7 +72,7 @@ function PrjCardVert({
           alt=""
         />
       </Link>
-
+      <Divider variant="fullWidth" />
       <CardContent>
         <Typography 
           component="h3"
