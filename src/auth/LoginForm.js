@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(16),
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingTop: theme.spacing(8),
@@ -40,12 +40,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginForm = ({ login }) => {
-  const classes = useStyles();
   const [formData, setFormData] = useState({
     username: "",
     password: ""
   });
   const [formErrors, setFormErrors] = useState([]);
+  
+  console.debug(
+    "LoginForm",
+    "login=", typeof login,
+    "formData=", formData,
+    "formErrors", formErrors,
+  );
+
+  const classes = useStyles();
   const history = useHistory();
 
   /** Handle form submit:
@@ -55,7 +63,7 @@ const LoginForm = ({ login }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let result = await login(formData);
+    const result = await login(formData);
     if (result.success) {
       history.push("/projects");
     } else {
@@ -70,23 +78,28 @@ const LoginForm = ({ login }) => {
   }
 
   return (
-    <Paper className={classes.paper} elevation={5} component="main" maxWidth="xs">
+    <Paper className={classes.paper} elevation={5} component="main" maxwidth="xs">
       <Avatar className={classes.avatar}>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
-      <form className={classes.form} noValidate>
+      <form className={classes.form} 
+        onSubmit={handleSubmit} 
+      >
         <TextField
           variant="outlined"
           margin="normal"
           required
           fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
+          id="username"
+          label="Username"
+          name="username"
+          onChange={handleChange}
+          type="text"
+          value={formData.username}
+          autoComplete="username"
           autoFocus
         />
         <TextField
@@ -94,22 +107,24 @@ const LoginForm = ({ login }) => {
           margin="normal"
           required
           fullWidth
+          id="password"
           name="password"
           label="Password"
+          onChange={handleChange}
           type="password"
-          id="password"
-          autoComplete="current-password"
+          value={formData.password}
         />
-        {formErrors.length
+        {/* {formErrors.length
           ? <Alert severity="error">This is an error alert — check it out!</Alert>
           : null
-        }
+        } */}
         <Button
           type="submit"
           fullWidth
           variant="contained"
           color="primary"
           className={classes.submit}
+          size="large"
         >
           Sign In
         </Button>
