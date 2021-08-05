@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const SignupForm = ({ signup }) => {
+  const [fileInputState, setFileInputState] = useState('');
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -54,10 +55,10 @@ const SignupForm = ({ signup }) => {
     gitHubUrl: null
   });
   const [formErrors, setFormErrors] = useState([]);
-  // const [fileInputState, setFileInputState] = useState('');
 
   const classes = useStyles();
   const history = useHistory();
+  const fileInputRef = useRef();
 
   console.debug(
     "SignupForm",
@@ -85,6 +86,17 @@ const SignupForm = ({ signup }) => {
     const file = e.target.files[0];
     console.log("FILE: ", file);
     updateImageState(file);
+  };
+
+  const updateImageState = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);   // converts file contents to a base 64 encoded image
+
+    reader.onloadend = () => {
+      setFormData(data => ({ ...data, photoUrl: reader.result }));
+      console.log("FORMDATA: ", formData);
+    };
+    
   };
 
   // **************
@@ -121,15 +133,17 @@ const SignupForm = ({ signup }) => {
   // };
 
   return (
-    <Paper className={classes.paper} elevation={5} component="main" maxWidth="xs">
+    <Paper className={classes.paper} elevation={5} component="main">
       <Avatar className={classes.avatar}>
         <AddCircleOutlineOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
         Signup
       </Typography>
-      {/* <form onSubmit={handleSubmit} className={classes.form} noValidate> */}
-      <form className={classes.form} noValidate>
+
+      <form className={classes.form} 
+        onSubmit={handleSubmit}
+      >
         <TextField
           variant="outlined"
           margin="normal"
@@ -152,7 +166,9 @@ const SignupForm = ({ signup }) => {
           id="password"
           label="Password"
           name="password"
+          onChange={handleChange}
           type="password"
+          value={formData.password}
         />
         <TextField
           variant="outlined"
@@ -162,7 +178,9 @@ const SignupForm = ({ signup }) => {
           id="firstName"
           label="First name"
           name="firstName"
+          onChange={handleChange}
           type="firstName"
+          value={formData.firstName}
         />
         <TextField
           variant="outlined"
@@ -172,7 +190,9 @@ const SignupForm = ({ signup }) => {
           id="lastName"
           label="Last name"
           name="lastName"
+          onChange={handleChange}
           type="lastName"
+          value={formData.lastName}
         />
         <TextField
           variant="outlined"
@@ -181,7 +201,9 @@ const SignupForm = ({ signup }) => {
           id="email"
           label="Email address"
           name="email"
+          onChange={handleChange}
           type="email"
+          value={formData.email}
         />
         <TextField
           variant="outlined"
@@ -190,18 +212,50 @@ const SignupForm = ({ signup }) => {
           id="bio"
           label="Bio"
           name="bio"
+          onChange={handleChange}
           type="bio"
+          value={formData.bio}
         />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="photoUrl"
-          label="URL of avatar"
-          name="photoUrl"
-          type="photoUrl"
-        />
+        <Box my={2}>
+          <Box display="flex" alignItems="center">
+            <Box mr={2}>
+              <Typography className={classes.typography}>
+                Photo or avatar image<sup>*</sup>
+              </Typography>
+            </Box>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => fileInputRef.current.click()}
+            >
+              Choose File 
+            </Button>
+            <Box id="photoUrl-container">
+              <input
+                variant="outlined"
+                margin="normal"
+                id="photoUrl"
+                ref={fileInputRef}
+                label="URL of avatar"
+                name="photoUrl"
+                onChange={handleFileInputChange}
+                type="file"
+                value={fileInputState}
+              />
+            </Box>
+          </Box>
+        </Box>
+        {/* Preview the selected image */}
+        <Box my={2}>
+          {formData.photoUrl && (
+            <img
+              src={formData.photoUrl}
+              alt="chosen"
+              style={{ height: '300px' }}
+            />
+          )}
+        </Box>
+
         <TextField
           variant="outlined"
           margin="normal"
@@ -209,7 +263,9 @@ const SignupForm = ({ signup }) => {
           id="portfolioUrl"
           label="URL of portfolio site"
           name="portfolioUrl"
+          onChange={handleChange}
           type="portfolioUrl"
+          value={formData.portfolioUrl}
         />
         <TextField
           variant="outlined"
@@ -218,13 +274,15 @@ const SignupForm = ({ signup }) => {
           id="gitHubUrl"
           label="URL of GitHub profile"
           name="gitHubUrl"
+          onChange={handleChange}
           type="gitHubUrl"
+          value={formData.gitHubUrl}
         />
 
-        {/* {formErrors.length
-          ? <Alert severity="error">This is an error alert — check it out!</Alert>
+        {formErrors.length
+          ? <AlertDisplay severity="error" messages={formErrors} />
           : null
-        } */}
+        }
         <Button
           type="submit"
           fullWidth
@@ -233,7 +291,7 @@ const SignupForm = ({ signup }) => {
           className={classes.submit}
           size="large"
         >
-          Sign In
+          Sign Up
         </Button>
       </form>
     </Paper>
