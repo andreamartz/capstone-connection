@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import "./Navigation.css";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-
+import DrawerNavigation from './DrawerNavigation';
 
 const useStyles = makeStyles(theme => ({
   icons: {
@@ -23,8 +23,12 @@ const useStyles = makeStyles(theme => ({
     textDecoration: 'none',
     '&:hover': {
       textDecoration: "underline",
-    },
-  }
+    }
+  },
+  // toolbar: {
+  //   display: "flex",
+  //   justifyContent: "space-between"
+  // }
 }));
 
 /** Navigation bar for site. Shows up on every page.
@@ -52,27 +56,46 @@ function Navigation({ logout }) {
   // const handleClickTab = (e, newValue) => {
   //   setValue(newValue);
   // };
-  const loggedInNavData = [
-    {
+
+  const navData = currentUser?.username
+    ? [{
       label: "Projects",
       href: "/projects"
-    },
-    {
-      label: "My Profile",
-      href: `/users/${currentUser.username}/settings`
-    }
-  ];
-  
-  const loggedOutNavData = [
-    {
+      },
+      {
+        label: "My Profile",
+        href: `/users/${currentUser.username}/settings`
+      }]
+    : [{
       label: "Login",
       href: "/login"
     },
     {
       label: "Sign Up",
       href: "/signup"
-    }
-  ]
+    }]
+  ;
+  // const loggedInNavData = [
+  //   {
+  //     label: "Projects",
+  //     href: "/projects"
+  //   },
+  //   {
+  //     label: "My Profile",
+  //     href: `/users/${currentUser.username}/settings`
+  //   }
+  // ];
+  
+  // const loggedOutNavData = [
+  //   {
+  //     label: "Login",
+  //     href: "/login"
+  //   },
+  //   {
+  //     label: "Sign Up",
+  //     href: "/signup"
+  //   }
+  // ]
 
   const CapstoneConnectionsLogo = (
     <Typography 
@@ -91,14 +114,7 @@ function Navigation({ logout }) {
   const getWideNavMenuButtons = (navData) => {
     return navData.map(({ label, href }) => {
       return (
-        <Button key={label} className={classes.navLink}
-          // {...{
-          //   key: label,
-          //   color: "inherit",
-          //   to: href,
-          //   component: NavLink
-          // }}
-        >
+        <Button key={label} className={classes.navLink}>
           <NavLink to={href} className={classes.navLink}>
             {label}
           </NavLink>
@@ -108,75 +124,22 @@ function Navigation({ logout }) {
     });
   }
 
-  // function navDisplay() {
-  //   if (currentUser && isMatch) {
-  //     return drawerLoggedInNav();
-  //   }
-  //   if (currentUser && !isMatch) {
-  //     return wideLoggedInNav();
-  //   }
-  //   if (!currentUser && isMatch) {
-  //     return drawerLoggedOutNav();
-  //   }
-  //   if (!currentUser && !isMatch) {
-  //     return wideLoggedOutNav();
-  //   }
-  // }
-
-  const drawerLoggedInNav = () => {
-    console.log("drawerLoggedInNav", "LOGGEDINNAVDATA: ", loggedInNavData);
-    return (
-      <DrawerLoggedIn navData={loggedInNavData} logout={logout}/>
-    );
-  }
-  
-  // const wideLoggedInNav = () => {
-  //   return (
-  //     <Toolbar className={classes.toolbar}>
-  //       <div>
-  //         {getWideNavMenuButtons(loggedInNavData)}
-  //         <Button
-  //           onClick={logout}
-  //           color="inherit"
-  //         >
-  //           Logout
-  //         </Button>
-  //       </div>
-  //     </Toolbar>
-  //   )
-  // }
-  
-  const drawerLoggedOutNav = () => {
-    return (
-      <DrawerLoggedOut navData={loggedOutNavData}/>
-    );
-  };
-
-  // const wideLoggedOutNav = () => {
-  //   return (
-  //     <Toolbar className={classes.toolbar}>
-  //       <div>
-  //         {getWideNavMenuButtons(loggedOutNavData)}
-
-  //       </div>
-  //     </Toolbar>
-  //   )
-  // };
-
   const loggedInNav = () => {
     if (isMatch) {
-      return (<DrawerLoggedIn navData={loggedInNavData} logout={logout}/>);
+      return (<DrawerNavigation navData={navData} logout={logout}/>);
     }
     return (
       <Toolbar className={classes.toolbar}>
         <div>
-          {getWideNavMenuButtons(loggedInNavData)}
-          <Button
-            onClick={logout}
-            color="inherit"
-          >
-            Logout
-          </Button>
+          {getWideNavMenuButtons(navData)}
+          <NavLink to="/" onClick={logout} className={classes.navLink}>
+            <Button
+              color="inherit"
+            >
+              Logout
+            </Button>
+          </NavLink>
+
         </div>
       </Toolbar>
     );
@@ -185,34 +148,25 @@ function Navigation({ logout }) {
   const loggedOutNav = () => {
     if (isMatch) {
       return (
-        <DrawerLoggedOut navData={loggedOutNavData} />
+        <DrawerNavigation navData={navData} />
       );
     }
     return (
       <Toolbar className={classes.toolbar}>
         <div>
-          {getWideNavMenuButtons(loggedOutNavData)}
+          {getWideNavMenuButtons(navData)}
         </div>
       </Toolbar>
     )
   }
 
   return (
-    // <>
-    //   <AppBar color='primary'>
-    //     <Toolbar>
-    //       {CapstoneConnectionsLogo}
-
-    //       {navDisplay()}
-
-    //     </Toolbar>
-    //   </AppBar>
-    // </>
     <>
       <AppBar color="primary">
         <Toolbar>
           {CapstoneConnectionsLogo}
           {currentUser ? loggedInNav() : loggedOutNav()}
+          {/* {loggedOutNav()} */}
         </Toolbar>
       </AppBar>
     </>
