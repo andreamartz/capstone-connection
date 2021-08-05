@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext } from 'react';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import UserContext from "../auth/UserContext";
 import CapConApi from "../api/api";
@@ -34,8 +32,6 @@ const EditCommentForm = ({ commentState, projectId, idx, setFormVisible, setComm
   const [formErrors, setFormErrors] = useState([]);
 
   const classes = useStyles();
-  const history = useHistory();
-
 
   console.debug(
     "EditCommentForm",
