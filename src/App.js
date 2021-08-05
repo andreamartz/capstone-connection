@@ -61,7 +61,7 @@ function App() {
           // put the token on the Api class so it can use it to call the API.
           CapConApi.token = token;
           let currentUser = await CapConApi.getCurrentUser(username);
-          console.log("CURRENTUSER: ", currentUser);
+          console.log("App", "CURRENTUSER: ", currentUser, "TOKEN: ", token);
           setCurrentUser(currentUser);
         } catch (err) {
           console.error("App loadUserInfo: problem loading", err);
