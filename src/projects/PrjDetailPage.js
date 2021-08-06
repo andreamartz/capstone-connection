@@ -179,7 +179,7 @@ const PrjDetailPage = () => {
             className={clsx(classes.heroTypography, classes.creatorTypography)}
           >
 
-              <ReactRouterDomLink to={`/users/${project.creator.username}`}>
+              <ReactRouterDomLink to={`/users/${project.creator.id}`}>
                 <Typography className={clsx(classes.heroTypography, classes.creatorTypography)}>
                   {project.creator.firstName.toUpperCase()} {project.creator.lastName.toUpperCase()}
                 </Typography>

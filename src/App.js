@@ -57,10 +57,10 @@ function App() {
       if (token) {
         try {
           console.log("INSIDE GETCURRENT USER. TOKEN: ", token);
-          let { username } = jwt.decode(token);
+          let { id } = jwt.decode(token);
           // put the token on the Api class so it can use it to call the API.
           CapConApi.token = token;
-          let currentUser = await CapConApi.getCurrentUser(username);
+          let currentUser = await CapConApi.getUser(id);
           console.log("App", "CURRENTUSER: ", currentUser, "TOKEN: ", token);
           setCurrentUser(currentUser);
         } catch (err) {

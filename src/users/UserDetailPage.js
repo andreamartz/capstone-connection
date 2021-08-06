@@ -53,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const UserDetailPage = () => {
-  const { username } = useParams();
-  console.debug("UserDetailPage", "username=", username);
+  const { id } = useParams();
+  console.debug("UserDetailPage", "username=", id);
 
   const [user, setUser] = useState(null);
 
@@ -64,13 +64,13 @@ const UserDetailPage = () => {
   useEffect(() => {
     async function getUserOnMount() {
       console.debug("UserDetailPage useEffect getUserOnMount");
-      const user = await CapConApi.getUser(username);
+      const user = await CapConApi.getUser(id);
       console.log("USER FROM USER DETAIL PAGE: ", user);
       setUser(user);
     }
 
     getUserOnMount();
-  }, [username]); 
+  }, [id]); 
 
   const classes = useStyles();
 
@@ -173,7 +173,7 @@ const UserDetailPage = () => {
           </Box>
         </Typography>
 
-        <PrjCardList username={username}/>
+        <PrjCardList userId={id}/>
       </Container>
     </>
   );

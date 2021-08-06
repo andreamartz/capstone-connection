@@ -65,7 +65,7 @@ function Routes({ login, signup }) {
         </Route>
 
         {/* CHECK: Change to PrivateRoute once we have auth */}
-        <Route exact path="/users/:username">
+        <Route exact path="/users/:id">
           <UserDetailPage />
         </Route> 
 

@@ -37,23 +37,23 @@ class CapConApi {
 
   /** Get the current user. */
 
-  static async getCurrentUser(username) {
-    let res = await this.request(`users/${username}`);
-    return res.user;
-  }
+  // static async getCurrentUser(username) {
+  //   let res = await this.request(`users/${username}`);
+  //   return res.user;
+  // }
 
   /** Get a user. */
 
-  static async getUser(username) {
-    let res = await this.request(`users/${username}`);
+  static async getUser(id) {
+    let res = await this.request(`users/${id}`);
     console.log("RES from CapConApi: ", res);
     return res.user;
   }
 
   /** Get a list of projects */
   
-  static async getProjects(params=null) {
-    let res = await this.request("projects", params);
+  static async getProjects(searchParams=null) {
+    let res = await this.request("projects", searchParams);
     return res.projects;
   }
 

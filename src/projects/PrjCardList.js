@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PrjCardList = ({ username }) => {
+const PrjCardList = ({ userId }) => {
   console.debug("PrjCardList");
 
   const [projects, setProjects] = useState([]);
@@ -37,13 +37,13 @@ const PrjCardList = ({ username }) => {
   useEffect(() => {
     async function getAllProjectsOnMount() {
       console.debug("PrjCardList useEffect getAllProjectsOnMount");
-      const projects = await CapConApi.getProjects({ username });
+      const projects = await CapConApi.getProjects({ userId });
 
       setProjects(projects);
     }
 
     getAllProjectsOnMount();
-  }, [username]); 
+  }, [userId]); 
 
 
   async function toggleLikeProject(projectIdx) {
