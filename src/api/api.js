@@ -50,6 +50,14 @@ class CapConApi {
     return res.user;
   }
 
+  /** Get a user's projects */
+
+  static async getUserProjects(userId) {
+    const res = await this.request(`users/${userId}/projects`);
+    console.log("RES from CapConApi: ", res);
+    return res.projects;
+  }
+
   /** Get a list of projects */
   
   static async getProjects(searchParams=null) {

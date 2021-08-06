@@ -37,7 +37,10 @@ const PrjCardList = ({ userId }) => {
   useEffect(() => {
     async function getAllProjectsOnMount() {
       console.debug("PrjCardList useEffect getAllProjectsOnMount");
-      const projects = await CapConApi.getProjects({ userId });
+      const projects = userId 
+        ? (await CapConApi.getUserProjects(userId))
+        : (await CapConApi.getProjects());
+      // const projects = await CapConApi.getUserProjects(userId);
 
       setProjects(projects);
     }
