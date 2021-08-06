@@ -104,7 +104,6 @@ const PrjDetailPage = () => {
   async function toggleLikeProject(projectIdx) {
 
     const currentUserId = currentUser.id;
-
     const likerId = currentUserId;  // CHECK replace likerId with currentUser.id once we have auth
 
     let { id, likesCount, currentUsersLikeId } = project;
@@ -114,7 +113,7 @@ const PrjDetailPage = () => {
     if (currentUsersLikeId) {
       console.log("VERIFY CURRENTUSERSLIKEID NOT NULL - currentUser is: ", currentUsersLikeId);
       
-      const {data, error} = await asyncWrapper(CapConApi.removeProjectLike(currentUsersLikeId));
+      const {data, error} = await asyncWrapper(CapConApi.removeProjectLike({ projectId, currentUsersLikeId }));
       if (error) {
         alert("Failed to unlike project. Try again later.");
         return;
@@ -126,7 +125,7 @@ const PrjDetailPage = () => {
     } else {
       console.log("VERIFY CURRENTUSERSLIKEID IS NULL - currentUsersLikeId is: ", currentUsersLikeId);
       // otherwise, like it
-      const {data, error} = await asyncWrapper(CapConApi.addProjectLike({projectId, likerId }));  // CHECK replace likerId with currentUser.id once we have auth
+      const {data, error} = await asyncWrapper(CapConApi.addProjectLike({ projectId, likerId }));  // CHECK replace likerId with currentUser.id once we have auth
       if (error) {
         alert ("Failed to like project. Try again later.");
         return;

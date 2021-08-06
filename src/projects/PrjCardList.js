@@ -62,7 +62,7 @@ const PrjCardList = ({ userId }) => {
 
     // if project already liked by currentUser, unlike it
     if (currentUsersLikeId) {
-      const {data, error} = await asyncWrapper(CapConApi.removeProjectLike(currentUsersLikeId));
+      const {data, error} = await asyncWrapper(CapConApi.removeProjectLike({ projectId, currentUsersLikeId }));
       if (error) {
         alert("Failed to unlike project. Try again later.");
         return;
@@ -80,7 +80,7 @@ const PrjCardList = ({ userId }) => {
       }
     } else {
       // otherwise, like it
-      const {data, error} = await asyncWrapper(CapConApi.addProjectLike({projectId, likerId }));  // CHECK replace likerId with currentUser.id once we have auth
+      const {data, error} = await asyncWrapper(CapConApi.addProjectLike({ projectId, likerId }));  // CHECK replace likerId with currentUser.id once we have auth
       if (error) {
         alert ("Failed to like project. Try again later.");
         return;

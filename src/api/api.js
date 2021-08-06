@@ -85,16 +85,18 @@ class CapConApi {
   /** Like a project */
 
   static async addProjectLike(data) {
-    console.log("addProjectLike DATA: ", data);
-    let res = await this.request("project_likes/", data, "post");
-    console.log("RES: ", res);
+    console.log("addProjectLike DATA: :, data");
+    const { projectId } = data;
+    const res = await this.request(`projects/${projectId}/likes`, data, "post");
     return res.projectLike;
   }
 
   /** Unlike a project */
   
-  static async removeProjectLike(id) {
-    let res = await this.request(`project_likes/${id}`, {},"delete");
+  static async removeProjectLike(data) {
+    const { projectId, currentUsersLikeId } = data;
+    console.log("PROJECTID: ", projectId, "CURRENTUSERSLIKEID: ", currentUsersLikeId, "DATA: ", data);
+    const res = await this.request(`projects/${projectId}/likes/${currentUsersLikeId}`, data, "delete");
     return res.deleted;
   }
 
