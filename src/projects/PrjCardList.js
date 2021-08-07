@@ -30,6 +30,7 @@ const PrjCardList = ({ userId }) => {
   console.debug("PrjCardList");
   
   const [projects, setProjects] = useState([]);
+  const [showSearch, setShowSearch] = useState(true);
 
   const classes = useStyles();
 
@@ -39,8 +40,14 @@ const PrjCardList = ({ userId }) => {
       const projects = userId 
         ? (await CapConApi.getUserProjects(userId))
         : (await CapConApi.getProjects());
-
+      
       setProjects(projects);
+
+      if (userId) {
+        setShowSearch(false);
+      } else {
+        setShowSearch(true);
+      }
     }
 
     getAllProjectsOnMount();
@@ -113,7 +120,7 @@ const PrjCardList = ({ userId }) => {
 
   return (
     <Container>
-      <SearchForm search={search} />
+      {showSearch && <SearchForm search={search} />}
       {projects.length 
         ? (
           <Masonry
