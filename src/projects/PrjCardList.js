@@ -16,6 +16,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/** Show project cards.
+ * 
+ * On mount, loads projects from API:
+ *   * loads all projects if no userId
+ *   * loads user's projects if userId
+ *  
+ */ 
+
 const PrjCardList = ({ userId }) => {
   console.debug("PrjCardList");
 
