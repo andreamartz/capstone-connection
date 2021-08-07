@@ -27,7 +27,7 @@ function PrjListPage() {
       >
         Community Capstones
       </Typography>
-      <PrjCardList username={null}/>
+      <PrjCardList userId={null}></PrjCardList>
     </>
   );
 }
