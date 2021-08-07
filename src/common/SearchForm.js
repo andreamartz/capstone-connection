@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 /** Search form 
  * 
- * Appears on PrjList so that projects shown can be filtered.
+ * Appears above PrjCardList so that projects shown can be filtered.
  * 
 */
 
@@ -31,7 +31,6 @@ const SearchForm = ({ search }) => {
   const [formErrors, setFormErrors] = useState([]);
 
   console.debug("SearchForm",
-    "search=", typeof search,
     "searchTerm=", searchTerm,
     "formErrors", formErrors
   );
@@ -44,7 +43,7 @@ const SearchForm = ({ search }) => {
     // prevent accidentally searching just spaces
     evt.preventDefault();
     search(searchTerm.trim() || undefined);
-    setSearchTerm(searchTerm.trim());
+    setSearchTerm("");
   };
 
   /** Update form field as user types */
@@ -66,7 +65,7 @@ const SearchForm = ({ search }) => {
           variant="contained"
           color="primary"
         >
-          Search
+          Search by Tag
         </Button>
       </form>
     </Paper>

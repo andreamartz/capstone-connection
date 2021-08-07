@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Masonry from 'react-masonry-css';
 import { Container } from '@material-ui/core';
 import LoadingSpinner from "../common/LoadingSpinner";
+import SearchForm from '../common/SearchForm';
 import PrjCardVert from './PrjCardVert';
 import CapConApi from "../api/api";
 import UserContext from "../auth/UserContext";
@@ -25,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
  */ 
 
 const PrjCardList = ({ userId }) => {
+  const { currentUser } = useContext(UserContext);
   console.debug("PrjCardList");
-
+  
   const [projects, setProjects] = useState([]);
-  const { currentUser } = useContext(UserContext)
-  console.debug("PrjCardList, CURRENTUSER: ", currentUser);
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -38,7 +39,6 @@ const PrjCardList = ({ userId }) => {
       const projects = userId 
         ? (await CapConApi.getUserProjects(userId))
         : (await CapConApi.getProjects());
-      // const projects = await CapConApi.getUserProjects(userId);
 
       setProjects(projects);
     }
@@ -46,6 +46,10 @@ const PrjCardList = ({ userId }) => {
     getAllProjectsOnMount();
   }, [userId]); 
 
+  const search = async (tagText) => {
+    const projects = await CapConApi.getProjects(tagText);
+    setProjects(projects);
+  };
 
   async function toggleLikeProject(projectIdx) {
     console.log("PrjCardList toggleLikeProject PROJECT INDEX: ", projectIdx);
@@ -109,7 +113,7 @@ const PrjCardList = ({ userId }) => {
 
   return (
     <Container>
-
+      <SearchForm search={search} />
       {projects.length 
         ? (
           <Masonry
