@@ -12,26 +12,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(16),
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    paddingTop: theme.spacing(8),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
-    height: '60vh',
-    width: '22rem',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.warning.main,
-  },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    display: 'flex'
+  },
+  textField: {
+    flexGrow: '1'
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -73,21 +59,24 @@ const SearchForm = ({ search }) => {
   }
 
   return (
-    <Paper className={classes.paper} elevation={5} component="form" maxwidth="md">
-      <form className={classes.form} onSubmit={handleSubmit}>
-        <TextField name="searchTerm"
+    <Paper className={classes.paper} elevation={5}>
+      <form className={classes.form} 
+        onSubmit={handleSubmit}>
+        <TextField className={classes.textField}
+          name="searchTerm"
           onChange={handleChange}
-          value={searchTerm}>
-        </TextField>
+          value={searchTerm}
+          variant="outlined"
+        />
         <Button type="submit"
-        variant="contained">
+          variant="contained"
+          color="primary"
+        >
           Search
         </Button>
-
       </form>
-
     </Paper>
-  )
+  );
 }
 
 export default SearchForm;
