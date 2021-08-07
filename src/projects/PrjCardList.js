@@ -9,16 +9,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { asyncWrapper } from "../utils";
 import "./PrjCardList.css";
 
-// See Springboard React Video #6 Forms-Passing Data Up
-// CHECK:
-// 1. Add state for like counts on all projects (with an id for each like?/project?).
-// 2. Create a function that will:
-//    a. update the database with another like for the appropriate object.
-//    b. check if the database update was successful, and, if so,...
-//    c. update the likes state.
-// 3. Pass that function down to PrjCardVert
-// 4. Find a way to UNlike a project
-
 const useStyles = makeStyles((theme) => ({
   project: {
     marginTop: theme.spacing(3),
