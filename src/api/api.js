@@ -60,8 +60,9 @@ class CapConApi {
 
   /** Get a list of projects */
   
-  static async getProjects(tagText=null) {
-    let res = await this.request("projects", { tagText });
+  static async getProjects(tagText, sortVariable) {
+    const res = await this.request("projects", { tagText, sortVariable });
+
     return res.projects;
   }
 
