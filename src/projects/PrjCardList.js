@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
+import Box from '@material-ui/core/Box';
 import Masonry from 'react-masonry-css';
 import { Container } from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import LoadingSpinner from "../common/LoadingSpinner";
-import SearchForm from '../common/SearchForm';
+import SearchForm from './SearchForm';
+import SortForm from './SortForm';
 import PrjCardVert from './PrjCardVert';
 import CapConApi from "../api/api";
 import UserContext from "../auth/UserContext";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { asyncWrapper } from "../utils";
 import "./PrjCardList.css";
 
@@ -15,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3)
   },
+  searchForm: {
+    flexGrow: '1'
+  }
 }));
 
 /** Show project cards.
@@ -30,7 +36,8 @@ const PrjCardList = ({ userId }) => {
   console.debug("PrjCardList");
   
   const [projects, setProjects] = useState([]);
-  const [showSearch, setShowSearch] = useState(true);
+  const [sortVariable, setSortVariable] = useState('');
+  const [showSearchAndSort, setShowSearchAndSort] = useState(false);
 
   const classes = useStyles();
 
@@ -39,24 +46,38 @@ const PrjCardList = ({ userId }) => {
       console.debug("PrjCardList useEffect getAllProjectsOnMount");
       const projects = userId 
         ? (await CapConApi.getUserProjects(userId))
-        : (await CapConApi.getProjects());
-      
+        : (await CapConApi.getProjects(null, sortVariable));
       setProjects(projects);
 
       if (userId) {
-        setShowSearch(false);
+        setShowSearchAndSort(false);
       } else {
-        setShowSearch(true);
+        setShowSearchAndSort(true);
       }
     }
 
     getAllProjectsOnMount();
-  }, [userId]); 
+  }, [userId, sortVariable]); 
+
+  // Breakpoints
+  const theme = useTheme();
+  const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+  const flexDirection = isMatch ? "column" : "row";
+  const justifyContent = isMatch ? "center" : "space-between";
+  const alignItems = isMatch ? "flex-start" : "space-between";
+  const marginBottom = isMatch ? 10 : 1;
 
   const search = async (tagText) => {
-    const projects = await CapConApi.getProjects(tagText);
+    const projects = await CapConApi.getProjects(tagText, null);
     setProjects(projects);
   };
+
+  const sort = async (sortVariable) => {
+    console.log("SORTVARIABLE: ", sortVariable, "PROJECTS BEFORE SORT: ", projects);
+    const sortedProjects = await CapConApi.getProjects(null, sortVariable);
+    console.log("PROJECTS AFTER SORT: ", sortedProjects);
+    setProjects(sortedProjects);
+  }
 
   async function toggleLikeProject(projectIdx) {
     console.log("PrjCardList toggleLikeProject PROJECT INDEX: ", projectIdx);
@@ -78,13 +99,11 @@ const PrjCardList = ({ userId }) => {
       }
       console.log("DATA: ", data);
       if (data) {
-
         setProjects(currentProjects => {
           const newProjects = [...currentProjects];
           newProjects[projectIdx] = {...newProjects[projectIdx], likesCount: likesCount-1, currentUsersLikeId: null};
 
           return newProjects;
-          
         });
       }
     } else {
@@ -96,13 +115,11 @@ const PrjCardList = ({ userId }) => {
       }
       console.log("DATA: ", data);
       if (data.id) {
-
         setProjects(currentProjects => {
           const newProjects = [...currentProjects];
           newProjects[projectIdx] = {...newProjects[projectIdx], likesCount: likesCount+1, currentUsersLikeId: data.id};
 
           return newProjects;
-
         });
       }
     }
@@ -120,7 +137,17 @@ const PrjCardList = ({ userId }) => {
 
   return (
     <Container>
-      {showSearch && <SearchForm search={search} />}
+      <Box display='flex'
+        flexDirection={flexDirection}
+        justifyContent={justifyContent}
+        alignItems={alignItems}
+      >
+        {showSearchAndSort && <SearchForm className={classes.searchForm} search={search} />}
+        <Box mb={marginBottom}>
+          {showSearchAndSort && <SortForm sort={sort} sortVariable={sortVariable} setSortVariable={setSortVariable}/>}
+        </Box>
+      </Box>
+
       {projects.length 
         ? (
           <Masonry
