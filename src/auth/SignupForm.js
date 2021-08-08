@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Formik, Field, Form, useFormik } from 'formik';
 import { useHistory } from "react-router-dom";
 import CapConApi from "../api/api";
 import Avatar from '@material-ui/core/Avatar';
@@ -10,7 +11,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import './SignupForm.css';
-import AlertDisplay from '../common/AlertDisplay';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,47 +40,81 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const emailRegex = /\b[\w.-]+@[\w.-]+.\w{2,4}\b/i;
+const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/;
+const urlProtocolRegex = /^https?:\/\//;
+
+const validate = values => {
+  const errors = {};
+
+  if (!values.username) {
+    errors.username = 'Required';
+  } else if (values.username.length < 8) {
+    errors.username = 'Must be at least 8 characters';
+  } else if (values.username.length > 25) {
+    errors.username = 'Must be at most 25 characters';
+  }
+
+  if (!values.password) {
+    errors.password = 'Required';
+  }
+
+  if (!values.firstName) {
+    errors.firstName = 'Required';
+  }
+
+  if (!values.lastName) {
+    errors.lastName = 'Required';
+  }
+
+  if (values.email && !emailRegex.test(values.email)) {
+    errors.email = 'Invalid email address';
+  }
+
+  if (values.portfolioUrl && !urlProtocolRegex.test(values.portfolioUrl)) {
+    errors.portfolioUrl = 'URL must begin with http:// or https://'
+  } else if (values.portfolioUrl && !urlRegex.test(values.portfolioUrl)) {
+    errors.portfolioUrl = 'Invalid URL'
+  } 
+
+  if (values.gitHubUrl && !urlProtocolRegex.test(values.gitHubUrl)) {
+    errors.gitHubUrl = 'URL must begin with http:// or https://'
+  } else if (values.gitHubUrl && !urlRegex.test(values.gitHubUrl)) {
+    errors.gitHubUrl = 'Invalid URL'
+  }
+
+  return errors;
+};
+
 
 const SignupForm = ({ signup }) => {
   const [fileInputState, setFileInputState] = useState('');
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    email: null,
-    bio: null,
-    photoUrl: "",
-    portfolioUrl: null,
-    gitHubUrl: null
+  const [fileData, setFileData] = useState({ fileName: '' });
+
+  let fileEncodedString;
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      bio: null,
+      photoUrl: '',
+      portfolioUrl: null,
+      gitHubUrl: null
+    }, validate,
+    onSubmit: async values => {
+      const formData = {...values, photoUrl: fileData.fileName}
+      console.log("FILEENCODEDSTRING: ", fileEncodedString);
+      const result = await signup(formData);
+    }
   });
-  const [formErrors, setFormErrors] = useState([]);
 
   const classes = useStyles();
   const history = useHistory();
   const fileInputRef = useRef();
-
-  console.debug(
-    "SignupForm",
-    "formData=", formData,
-    "formErrors", formErrors
-  );
-
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
-    let result = await signup(formData);
-    if (result.success) {
-      history.push("/projects");
-    } else {
-      setFormErrors(result.errors);
-    }
-  }
-
-  /** Update form data field */
-  function handleChange(evt) {
-    const { name, value } = evt.target;
-    setFormData(data => ({ ...data, [name]: value }));
-  }
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
@@ -93,44 +127,12 @@ const SignupForm = ({ signup }) => {
     reader.readAsDataURL(file);   // converts file contents to a base 64 encoded image
 
     reader.onloadend = () => {
-      setFormData(data => ({ ...data, photoUrl: reader.result }));
-      console.log("FORMDATA: ", formData);
+      // setFormData(data => ({ ...data, photoUrl: reader.result }));
+      // fileEncodedString = reader.result;
+      setFileData(fileData => ({ ...fileData, fileName: reader.result}))
     };
     
   };
-
-  // **************
-  // Get handleFileInputChange(e), previewFile(file), handleSubmitFileetc. for image upload from NewPrj after bugs are worked out
-  // *************
-  // const handleFileInputChange = (e) => {
-  //   const file = e.target.files[0];
-  //   setFormData(data => ({ ...data, photoUrl: file }));
-    
-  //   previewFile(file);
-  // };
-
-  // const previewFile = (file) => {
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(file);  
-  //   reader.onloadend = () => {
-  //     setPreviewSource(reader.result);
-  //   };
-  // };
-
-  // const handleSubmitFile = async (e) => {
-  //   console.log('submitting');
-  //   e.preventDefault();
-  //   if (!previewSource) return;
-  //   console.log("PREVIEWSOURCE: ", previewSource);
-  //   let result = await CapConApi.addProject(formData);
-  //   if (result.success) {
-  //     history.push("/projects");
-  //   } else {
-  //     setFormErrors(result.errors);
-  //   }
-
-  //   // uploadImage(previewSource);
-  // };
 
   return (
     <Paper className={classes.paper} elevation={5} component="main">
@@ -142,57 +144,58 @@ const SignupForm = ({ signup }) => {
       </Typography>
 
       <form className={classes.form} 
-        onSubmit={handleSubmit}
+        onSubmit={formik.handleSubmit}
       >
         <TextField
           variant="outlined"
           margin="normal"
-          required
           fullWidth
           id="username"
           label="Username"
           name="username"
-          onChange={handleChange}
-          type="text"
-          value={formData.username}
-          autoComplete="username"
-          autoFocus
+          onChange={formik.handleChange}
+          value={formik.values.username}
+          error={formik.touched.username && Boolean(formik.errors.username)}
+          helperText={formik.touched.username && formik.errors.username}
         />
         <TextField
           variant="outlined"
           margin="normal"
-          required
           fullWidth
           id="password"
           label="Password"
           name="password"
-          onChange={handleChange}
+          onChange={formik.handleChange}
           type="password"
-          value={formData.password}
+          value={formik.values.password}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
         />
         <TextField
           variant="outlined"
           margin="normal"
-          required
           fullWidth
           id="firstName"
           label="First name"
           name="firstName"
-          onChange={handleChange}
+          onChange={formik.handleChange}
           type="firstName"
-          value={formData.firstName}
+          value={formik.values.firstName}
+          error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+          helperText={formik.touched.firstName && formik.errors.firstName}
         />
         <TextField
           variant="outlined"
           margin="normal"
-          required
           fullWidth
           id="lastName"
           label="Last name"
           name="lastName"
-          onChange={handleChange}
+          onChange={formik.handleChange}
           type="lastName"
-          value={formData.lastName}
+          value={formik.values.lastName}
+          error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+          helperText={formik.touched.lastName && formik.errors.lastName}
         />
         <TextField
           variant="outlined"
@@ -201,9 +204,11 @@ const SignupForm = ({ signup }) => {
           id="email"
           label="Email address"
           name="email"
-          onChange={handleChange}
+          onChange={formik.handleChange}
           type="email"
-          value={formData.email}
+          value={formik.values.email}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
         />
         <TextField
           variant="outlined"
@@ -212,9 +217,9 @@ const SignupForm = ({ signup }) => {
           id="bio"
           label="Bio"
           name="bio"
-          onChange={handleChange}
+          onChange={formik.handleChange}
           type="bio"
-          value={formData.bio}
+          value={formik.values.bio}
         />
         <Box my={2}>
           <Box display="flex" alignItems="center">
@@ -247,9 +252,9 @@ const SignupForm = ({ signup }) => {
         </Box>
         {/* Preview the selected image */}
         <Box my={2}>
-          {formData.photoUrl && (
+          {fileData.fileName && (
             <img
-              src={formData.photoUrl}
+              src={fileData.fileName}
               alt="chosen"
               style={{ height: '300px' }}
             />
@@ -263,9 +268,11 @@ const SignupForm = ({ signup }) => {
           id="portfolioUrl"
           label="URL of portfolio site"
           name="portfolioUrl"
-          onChange={handleChange}
+          onChange={formik.handleChange}
           type="portfolioUrl"
-          value={formData.portfolioUrl}
+          value={formik.values.portfolioUrl}
+          error={formik.touched.portfolioUrl && Boolean(formik.errors.portfolioUrl)}
+          helperText={formik.touched.portfolioUrl && formik.errors.portfolioUrl}
         />
         <TextField
           variant="outlined"
@@ -274,15 +281,17 @@ const SignupForm = ({ signup }) => {
           id="gitHubUrl"
           label="URL of GitHub profile"
           name="gitHubUrl"
-          onChange={handleChange}
+          onChange={formik.handleChange}
           type="gitHubUrl"
-          value={formData.gitHubUrl}
+          value={formik.values.gitHubUrl}
+          error={formik.touched.gitHubUrl && Boolean(formik.errors.gitHubUrl)}
+          helperText={formik.touched.gitHubUrl && formik.errors.gitHubUrl}
         />
 
-        {formErrors.length
+        {/* {formErrors.length
           ? <AlertDisplay severity="error" messages={formErrors} />
           : null
-        }
+        } */}
         <Button
           type="submit"
           fullWidth
