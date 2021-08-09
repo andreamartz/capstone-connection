@@ -47,12 +47,7 @@ function App() {
   // this should not run. It only needs to re-run when a user logs out, so
   // the value of the token is a dependency for this effect.
 
-  // CHECK: uncomment useEffect once we have auth
   useEffect(function loadUserInfo() {
-     // CHECK:
-    console.debug("App useEffect loadUserInfo", "token=", token);
-
-     // CHECK: uncomment getCurrentUser once we have auth
     async function getCurrentUser() {
       if (token) {
         try {
@@ -83,7 +78,6 @@ function App() {
     console.log("Logged in CURRENTUSER: ", currentUser);
     setCurrentUser(null);
     console.log("Logged out CURRENTUSER: ", currentUser);
-    // CHECK: uncomment once we have auth
     setToken(null);
   }
 
@@ -93,9 +87,8 @@ function App() {
    *
    * Make sure you await this function and check its return value!
    */
-  // CHECK: is this called signup or register in my app?
+
   async function signup(signupData) {
-    // CHECK: uncomment function body once we have auth
     try {
       let token = await CapConApi.signup(signupData);
       setToken(token);
@@ -111,7 +104,6 @@ function App() {
    * Make sure you await this function and check its return value!
    */
   async function login(loginData) {
-    // CHECK: Uncomment function body once we have auth
     try {
       let token = await CapConApi.login(loginData);
       setToken(token);
@@ -121,7 +113,6 @@ function App() {
       return { success: false, errors };
     }
   }
-  // CHECK: Uncomment once we have auth
 
   if (!infoLoaded) return <LoadingSpinner />;
 
