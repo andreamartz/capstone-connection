@@ -13,9 +13,8 @@ import UserContext from "../auth/UserContext";
  */
 
 function Homepage() {
-  // CHECK: uncomment { currentUser } once we have auth
-  // const { currentUser } = useContext(UserContext);
-  // console.debug("Homepage", "currentUser=", currentUser);
+  const { currentUser } = useContext(UserContext);
+  console.debug("Homepage", "currentUser=", currentUser);
 
   return (
     <div className="Homepage">
