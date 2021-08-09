@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import Box from '@material-ui/core/Box';
 import Masonry from 'react-masonry-css';
-import { Container } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import CapConApi from "../api/api";
 import LoadingSpinner from "../common/LoadingSpinner";
+import PrjCardVert from './PrjCardVert';
 import SearchForm from './SearchForm';
 import SortForm from './SortForm';
-import PrjCardVert from './PrjCardVert';
-import CapConApi from "../api/api";
 import UserContext from "../auth/UserContext";
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { asyncWrapper } from "../utils";
 import "./PrjCardList.css";
 
