@@ -46,7 +46,7 @@ class CapConApi {
 
   static async getUser(id) {
     let res = await this.request(`users/${id}`);
-    console.log("RES from CapConApi: ", res);
+
     return res.user;
   }
 
@@ -54,7 +54,6 @@ class CapConApi {
 
   static async getUserProjects(userId) {
     const res = await this.request(`users/${userId}/projects`);
-    console.log("RES from CapConApi: ", res);
     return res.projects;
   }
 
@@ -70,7 +69,6 @@ class CapConApi {
 
   static async getProject(id) {
     let res = await this.request(`projects/${id}`);
-    console.log("RES from CapConApi: ", res);
     return res.project;
   }
 
@@ -86,7 +84,6 @@ class CapConApi {
   /** Like a project */
 
   static async addProjectLike(data) {
-    console.log("addProjectLike DATA: :, data");
     const { projectId } = data;
     const res = await this.request(`projects/${projectId}/likes`, data, "post");
     return res.projectLike;
@@ -96,7 +93,6 @@ class CapConApi {
   
   static async removeProjectLike(data) {
     const { projectId, currentUsersLikeId } = data;
-    console.log("PROJECTID: ", projectId, "CURRENTUSERSLIKEID: ", currentUsersLikeId, "DATA: ", data);
     const res = await this.request(`projects/${projectId}/likes/${currentUsersLikeId}`, data, "delete");
     return res.deleted;
   }
@@ -111,20 +107,14 @@ class CapConApi {
   /** Add a comment to a project */
 
   static async addComment(data) {
-    console.log("addComment DATA: ", data);
     let res = await this.request("project_comments", data, "post");
-    console.log("RES: ", res);
-    console.log("RES.COMMENT: ", res.comment);
     return res.comment;
   }
 
   /** Edit a comment about a project */
 
   static async updateComment(commentId, data) {
-    console.log("updateComment DATA: ", data);
     const res = await this.request(`project_comments/${commentId}`, data, "patch");
-    console.log("RES: ", res);
-    console.log("RES.COMMENT: ", res.comment);
     return res.comment;
   }
 
