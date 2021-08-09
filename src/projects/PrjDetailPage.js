@@ -74,19 +74,13 @@ const useStyles = makeStyles((theme) => ({
 
 const PrjDetailPage = () => {
   const { id } = useParams();
-  console.debug("PrjDetailPage", "project id: ", id);
 
   const [project, setProject] = useState(null);
   const { currentUser } = useContext(UserContext)
 
-
   useEffect(function getProjectOnMount() {
-    console.log("PrjDetailPage, INSIDE USEEFFECT");
-    
     async function getProject() {
-      console.debug("PrjDetailPage useEffect getProjectOnMount");
       let project = await CapConApi.getProject(id);
-      console.log("PROJECT: ", project);
       setProject(project);
     }
     getProject();
@@ -102,35 +96,29 @@ const PrjDetailPage = () => {
   const alignItems = isMatch ? "center" : "space-between";
 
   async function toggleLikeProject(projectIdx) {
-
     const currentUserId = currentUser.id;
-    const likerId = currentUserId;  // CHECK replace likerId with currentUser.id once we have auth
+    const likerId = currentUserId;
 
     let { id, likesCount, currentUsersLikeId } = project;
     const projectId = id;
 
     // if project already liked by currentUser, unlike it
     if (currentUsersLikeId) {
-      console.log("VERIFY CURRENTUSERSLIKEID NOT NULL - currentUser is: ", currentUsersLikeId);
-      
       const {data, error} = await asyncWrapper(CapConApi.removeProjectLike({ projectId, currentUsersLikeId }));
       if (error) {
         alert("Failed to unlike project. Try again later.");
         return;
       }
-      console.log("DATA: ", data);
       if (data) {
         setProject({...project, likesCount: likesCount-1, currentUsersLikeId: null});
       };
     } else {
-      console.log("VERIFY CURRENTUSERSLIKEID IS NULL - currentUsersLikeId is: ", currentUsersLikeId);
       // otherwise, like it
       const {data, error} = await asyncWrapper(CapConApi.addProjectLike({ projectId, likerId }));  // CHECK replace likerId with currentUser.id once we have auth
       if (error) {
         alert ("Failed to like project. Try again later.");
         return;
       }
-      console.log("DATA: ", data);
       if (data.id) {
         setProject({...project, likesCount: likesCount+1, currentUsersLikeId: data.id});
       }
@@ -154,7 +142,6 @@ const PrjDetailPage = () => {
         >
           {project.name}
         </Typography>
-      
         <Box 
           display='flex' 
           alignItems='center' 
@@ -177,9 +164,9 @@ const PrjDetailPage = () => {
             variant="h6" 
             className={clsx(classes.heroTypography, classes.creatorTypography)}
           >
-
               <ReactRouterDomLink to={`/users/${project.creator.id}`}>
-                <Typography className={clsx(classes.heroTypography, classes.creatorTypography)}>
+                <Typography className={clsx(classes.heroTypography, classes.creatorTypography)}
+                >
                   {project.creator.firstName.toUpperCase()} {project.creator.lastName.toUpperCase()}
                 </Typography>
               </ReactRouterDomLink>
@@ -223,7 +210,6 @@ const PrjDetailPage = () => {
                 View Code
               </Button>
             </MuiLink>
-
           </Box>
           <div id="like" className={classes.like}>
             <IconButton 
@@ -261,7 +247,6 @@ const PrjDetailPage = () => {
             </Typography>
           </Box>
         </Box>
-
         {project.comments.length ? 
           <Typography
             component="h3"
@@ -286,7 +271,6 @@ const PrjDetailPage = () => {
               )
             }
           </Box>
-
         <Typography
           component="h3"
           variant="h5"
@@ -303,9 +287,7 @@ const PrjDetailPage = () => {
         <Box>
           <CommentForm projectId={project.id} />
         </Box>
-
       </Container>
-
     </>
   );
 }
