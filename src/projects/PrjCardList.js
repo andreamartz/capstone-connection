@@ -33,8 +33,6 @@ const useStyles = makeStyles((theme) => ({
 
 const PrjCardList = ({ userId }) => {
   const { currentUser } = useContext(UserContext);
-  console.debug("PrjCardList");
-  
   const [projects, setProjects] = useState([]);
   const [sortVariable, setSortVariable] = useState('');
   const [showSearchAndSort, setShowSearchAndSort] = useState(false);
@@ -43,19 +41,16 @@ const PrjCardList = ({ userId }) => {
 
   useEffect(() => {
     async function getAllProjectsOnMount() {
-      console.debug("PrjCardList useEffect getAllProjectsOnMount");
       const projects = userId 
         ? (await CapConApi.getUserProjects(userId))
         : (await CapConApi.getProjects(null, sortVariable));
       setProjects(projects);
-
       if (userId) {
         setShowSearchAndSort(false);
       } else {
         setShowSearchAndSort(true);
       }
     }
-
     getAllProjectsOnMount();
   }, [userId, sortVariable]); 
 
@@ -80,11 +75,8 @@ const PrjCardList = ({ userId }) => {
   }
 
   async function toggleLikeProject(projectIdx) {
-    console.log("PrjCardList toggleLikeProject PROJECT INDEX: ", projectIdx);
-
     const currentUserId = currentUser.id;
-    
-    const likerId = currentUserId;  // CHECK replace likerId with currentUser.id once we have auth
+    const likerId = currentUserId;  
     const project = projects[projectIdx];
     console.log("PROJECT: ", project);
     let { id, likesCount, currentUsersLikeId } = project;
