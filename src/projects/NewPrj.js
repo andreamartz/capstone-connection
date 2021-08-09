@@ -48,21 +48,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-
 // CHECK:
-// 1. Add error handling with formErrors state (?? - or is this only for auth forms??)
-//    a. missing required fields
-//    b. input too long/too short/wrong format
-//    c. etc.
-// 2. Add form validations with Material UI Formik (see Net Ninja Material UI tut video #28)
-// 3. Consider pulling handleChange, handleFileInputChange, and handleSubmit into separate helper functions file(s).
-// 4. need htmlFor?
+// 1. Add form validations with Material UI Formik (see Net Ninja Material UI tut video #28)
+// 2. Consider pulling handleChange, handleFileInputChange, and handleSubmit into separate helper functions file(s).
 
 const NewPrj = () => {
   const { currentUser } = useContext(UserContext);
 
-  // CHECK: replace hard-coded creatorId once we have auth
   const INITIAL_STATE_FORM_DATA = {
     name: "",
     description: "",
@@ -74,45 +66,27 @@ const NewPrj = () => {
     feedbackRequest: ""
   };
 
-  console.debug("NewPrj");
-
   const [formData, setFormData] = useState( INITIAL_STATE_FORM_DATA );
   const [fileInputState, setFileInputState] = useState('');
   const [formErrors, setFormErrors] = useState([]);
-  // array of tag objects from database
   const [dbTags, setDbTags] = useState([]);
-
   const classes = useStyles();
   const history = useHistory();
   const fileInputRef = useRef();
 
-
   useEffect(function getTagsOnMount() {
-    console.log("INSIDE USEEFFECT");
     async function getAllTagsOnMount() {
-      console.debug("NewPrj useEffect getAllTagsOnMount");
       const dbTags = await CapConApi.getTags();
       setFormData((current) => ({
         ...current, 
         tags: dbTags.map(tag => ({ ...tag, checked: false}))
       }));
-      // dbTags = dbTags.map(t => ({ ...t, checked: false}));
-      console.log("dbTAGS: ", dbTags);
-      // setFormData(data => ({ ...data, tags: [ ...dbTags ]}));  // THIS IS THE PROBLEM
       setDbTags(dbTags); 
     }
     getAllTagsOnMount();
   }, []); 
 
-
-  console.log("SHOULD RETURN SPINNER? ", !dbTags ? true : false );
   if (!dbTags) return <LoadingSpinner />;
-
-  console.debug(
-    "NewPrj",
-    "formData=", formData,
-    "formErrors", formErrors
-  );
 
   /** Update form data field */
   const handleChange = (evt) => {
@@ -121,11 +95,7 @@ const NewPrj = () => {
   }
 
   const toggleCheckboxValue = (evt) => {
-    console.log("EVENT: ", evt);
-    // return;
-    console.log("evt.target: ", evt.target);
     const { name, checked } = evt.target;
-    console.log("typeof name: ", typeof name, "name: ", name, "checked: ", checked);
 
     // set checked status on FormData for the tag that changed
     setFormData(data => ({...data, 
@@ -138,19 +108,8 @@ const NewPrj = () => {
     }))
   };
     
-    // // if tag checked AND tag is in formData, remove it, otherwise add it
-    // // if checked is true and formData.tags.includes(tagId), remove it
-    // // else add it
-    
-    // setFormData(data => ({ ...data, 
-    //   tags: [...data.tags, data.tags[idx]={...data.tags[idx], "checked": checked}]}));
-
-    // console.log("toggleCheckboxValue -> formData: ", formData);
-  
-
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
-    console.log("FILE: ", file);
     updateImageState(file);
   };
 
@@ -164,13 +123,10 @@ const NewPrj = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const tags = formData.tags
       .filter(tag => tag.checked)
       .map(tag => tag.id);
-
     const project = {...formData, tags};
-
     const result = await CapConApi.addProject(project);
     
     if (result.id) {
@@ -181,7 +137,6 @@ const NewPrj = () => {
   };
 
   if (!dbTags) return <LoadingSpinner />;
-
 
   return (
     <Paper className={classes.paper} elevation={5} component="main">
@@ -194,9 +149,6 @@ const NewPrj = () => {
         </Typography>
       </Box>
 
-      {/* <h1 className="title">Upload an Image</h1> */}
-      {/* <Alert msg={errMsg} type="danger" /> */}
-      {/* <Alert msg={successMsg} type="success" /> */}
       <form onSubmit={handleSubmit} className={classes.form}>
         <TextField
           className={classes.textField}
@@ -258,17 +210,14 @@ const NewPrj = () => {
             control={
               <Checkbox 
                 idx={idx}
-                // checked={formData.tags[idx].checked}
                 checked={formData.tags[idx].checked}
                 name={t.id}
-                // onChange={evt => toggleCheckboxValue(evt, idx, t.id)}
                 onChange={toggleCheckboxValue}
               />
             }
             label={t.text}
           />
         ))}
-      
         <Box mt={2} mb={4}>
           <Box display="flex" alignItems="center">
             <Box mr={2}>
@@ -276,7 +225,6 @@ const NewPrj = () => {
                 Photo to represent project
               </Typography>
             </Box>
-
             <Button
               variant="outlined"
               color="primary"
@@ -293,7 +241,6 @@ const NewPrj = () => {
               value={fileInputState}
             />            
           </Box>
-
         </Box>
 
         {/* Preview the selected image */}
