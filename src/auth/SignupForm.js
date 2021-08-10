@@ -35,6 +35,14 @@ const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
+  photoUrl: {
+    filter: 'alpha(opacity=0)',
+    opacity: 0
+  },
+  photoUrlContainer: {
+    width: 0,
+    overflow: 'hidden'
+  },
   submit: {
     margin: theme.spacing(3, 0, 2),
   }
@@ -235,11 +243,12 @@ const SignupForm = ({ signup }) => {
             >
               Choose File 
             </Button>
-            <Box id="photoUrl-container">
+            <Box className={classes.photoUrlContainer}>
               <input
                 variant="outlined"
                 margin="normal"
                 id="photoUrl"
+                className={classes.photoUrl}
                 ref={fileInputRef}
                 label="URL of avatar"
                 name="photoUrl"
