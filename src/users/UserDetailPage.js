@@ -54,25 +54,18 @@ const useStyles = makeStyles((theme) => ({
 
 const UserDetailPage = () => {
   const { id } = useParams();
-  console.debug("UserDetailPage", "username=", id);
-
   const [user, setUser] = useState(null);
-
   const { currentUser } = useContext(UserContext);
 
+  const classes = useStyles();
 
   useEffect(() => {
     async function getUserOnMount() {
-      console.debug("UserDetailPage useEffect getUserOnMount");
       const user = await CapConApi.getUser(id);
-      console.log("USER FROM USER DETAIL PAGE: ", user);
       setUser(user);
     }
-
     getUserOnMount();
   }, [id]); 
-
-  const classes = useStyles();
 
   if (!user) return <LoadingSpinner />;
 
