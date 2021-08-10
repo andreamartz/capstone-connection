@@ -80,7 +80,7 @@ const PrjDetailPage = () => {
 
   useEffect(function getProjectOnMount() {
     async function getProject() {
-      let project = await CapConApi.getProject(id);
+      const project = await CapConApi.getProject(id);
       setProject(project);
     }
     getProject();
