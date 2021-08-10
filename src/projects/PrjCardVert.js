@@ -6,7 +6,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
-import Link from '@material-ui/core/Link';
+import { Link as MuiLink } from '@material-ui/core';
+import { Link as ReactRouterDomLink } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, IconButton, Typography } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -65,20 +66,20 @@ function PrjCardVert({
       elevation={3}
       className="vertical prj-card"
     >
-      <Link href={`/projects/${id}`}>
+      <MuiLink href={`/projects/${id}`}>
         <CardMedia 
           component="img" 
           image={image} 
           alt=""
         />
-      </Link>
+      </MuiLink>
       <Divider variant="fullWidth" />
       <CardContent>
         <Typography 
           component="h3"
           variant="subtitle1"
         >
-          <Link href={`/projects/${id}`}>
+          <MuiLink href={`/projects/${id}`}>
             <Box 
               fontSize="h6.fontSize"
               fontWeight="fontWeightBold"
@@ -87,7 +88,7 @@ function PrjCardVert({
             >
               {name}
             </Box>
-          </Link>
+          </MuiLink>
 
         </Typography>
 
@@ -133,8 +134,10 @@ function PrjCardVert({
             display="flex"
             alignItems="center"
             fontWeight="fontWeightBold"
+              <ReactRouterDomLink 
           >
             {creator.firstName} {creator.lastName}
+              </ReactRouterDomLink>
           </Box>
         </Box>
       </CardContent>
