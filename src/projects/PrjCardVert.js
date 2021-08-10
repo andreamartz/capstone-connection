@@ -35,6 +35,13 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(6),
     height: theme.spacing(6),
   },
+  creatorName: {
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: "underline",
+    },
+    fontWeight: 'bold'
+  }
 }));
 
 function PrjCardVert({ 
@@ -47,14 +54,9 @@ function PrjCardVert({
     id,
     name,
     image,
-    repoUrl,
-    siteUrl,
     description, 
     feedbackRequest, 
-    createdAt, 
-    lastModified,
     likesCount,
-    currentUsersLikeId,
     prjCommentsCount,
     creator,
     tags
@@ -129,15 +131,20 @@ function PrjCardVert({
             className={clsx(classes.large, classes.avatar)} 
             alt="project creator" 
           />
-
           <Box 
             display="flex"
             alignItems="center"
             fontWeight="fontWeightBold"
-              <ReactRouterDomLink 
+            className={classes.creatorName}
           >
-            {creator.firstName} {creator.lastName}
+            <Typography>
+              <ReactRouterDomLink 
+                className={classes.creatorName} 
+                to={`/users/${creator.id}`}
+              >
+                {creator.firstName} {creator.lastName}
               </ReactRouterDomLink>
+            </Typography>
           </Box>
         </Box>
       </CardContent>
