@@ -10,7 +10,7 @@ import PrjCardVert from './PrjCardVert';
 import SearchForm from './SearchForm';
 import SortForm from './SortForm';
 import UserContext from "../auth/UserContext";
-import { asyncWrapper } from "../utils";
+import { asyncWrapper, toggleLikeProject } from "../utils";
 import "./PrjCardList.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -74,49 +74,6 @@ const PrjCardList = ({ userId }) => {
     setProjects(sortedProjects);
   }
 
-  async function toggleLikeProject(projectIdx) {
-    const currentUserId = currentUser.id;
-    const likerId = currentUserId;  
-    const project = projects[projectIdx];
-    console.log("PROJECT: ", project);
-    let { id, likesCount, currentUsersLikeId } = project;
-    const projectId = id;
-
-    // if project already liked by currentUser, unlike it
-    if (currentUsersLikeId) {
-      const {data, error} = await asyncWrapper(CapConApi.removeProjectLike({ projectId, currentUsersLikeId }));
-      if (error) {
-        alert("Failed to unlike project. Try again later.");
-        return;
-      }
-      console.log("DATA: ", data);
-      if (data) {
-        setProjects(currentProjects => {
-          const newProjects = [...currentProjects];
-          newProjects[projectIdx] = {...newProjects[projectIdx], likesCount: likesCount-1, currentUsersLikeId: null};
-
-          return newProjects;
-        });
-      }
-    } else {
-      // otherwise, like it
-      const {data, error} = await asyncWrapper(CapConApi.addProjectLike({ projectId, likerId }));  // CHECK replace likerId with currentUser.id once we have auth
-      if (error) {
-        alert ("Failed to like project. Try again later.");
-        return;
-      }
-      console.log("DATA: ", data);
-      if (data.id) {
-        setProjects(currentProjects => {
-          const newProjects = [...currentProjects];
-          newProjects[projectIdx] = {...newProjects[projectIdx], likesCount: likesCount+1, currentUsersLikeId: data.id};
-
-          return newProjects;
-        });
-      }
-    }
-  }
-
   if (!projects) return <LoadingSpinner />;
 
   const breakpoints = {
@@ -133,6 +90,7 @@ const PrjCardList = ({ userId }) => {
         flexDirection={flexDirection}
         justifyContent={justifyContent}
         alignItems={alignItems}
+        mb={5}
       >
         {showSearchAndSort && <SearchForm className={classes.searchForm} search={search} />}
         <Box mb={marginBottom}>
@@ -151,7 +109,7 @@ const PrjCardList = ({ userId }) => {
               <div key={p.id} className={classes.project}>
                 <PrjCardVert
                   project={p}
-                  toggleLikeProject={() => {toggleLikeProject(idx)}}
+                  toggleLikeProject={() => {toggleLikeProject(idx, currentUser, projects, setProjects)}}
                 />
               </div>
             ))}
