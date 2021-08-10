@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
 
 import Layout from './common/Layout';
 import useLocalStorage from "./hooks/useLocalStorage";
@@ -117,20 +116,17 @@ function App() {
   if (!infoLoaded) return <LoadingSpinner />;
 
   return (
-      <BrowserRouter>
-        <Layout>
-          <UserContext.Provider
-            value={{ currentUser, setCurrentUser }}
-          >
-            <div className="App">
-              <Navigation logout={logout} />
-              <Routes login={login} signup={signup} />
-            </div>
-          </UserContext.Provider>
-        </Layout>
-      </BrowserRouter>
+    <Layout>
+      <UserContext.Provider
+        value={{ currentUser, setCurrentUser }}
+      >
+        <div className="App">
+          <Navigation logout={logout} />
+          <Routes login={login} signup={signup} />
+        </div>
+      </UserContext.Provider>
+    </Layout>
   );
 }
-
 
 export default App;
