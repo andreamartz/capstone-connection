@@ -105,7 +105,7 @@ const SignupForm = ({ signup }) => {
       password: '',
       firstName: '',
       lastName: '',
-      email: '',
+      email: null,
       bio: null,
       photoUrl: '',
       portfolioUrl: null,
@@ -137,7 +137,6 @@ const SignupForm = ({ signup }) => {
       // fileEncodedString = reader.result;
       setFileData(fileData => ({ ...fileData, fileName: reader.result}))
     };
-    
   };
 
   return (
