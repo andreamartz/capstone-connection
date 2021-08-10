@@ -25,7 +25,7 @@ class CapConApi {
     } catch (err) {
       console.error("ERR: ", err);
       console.error("API Error:", err.response);
-      let message = err.response.data.error.message;
+      const message = err.response.data.error.message;
       console.log("MESSAGE: ", message);
       throw Array.isArray(message) ? message : [message];
     }
@@ -38,14 +38,14 @@ class CapConApi {
   /** Get the current user. */
 
   // static async getCurrentUser(username) {
-  //   let res = await this.request(`users/${username}`);
+  //   const res = await this.request(`users/${username}`);
   //   return res.user;
   // }
 
   /** Get a user. */
 
   static async getUser(id) {
-    let res = await this.request(`users/${id}`);
+    const res = await this.request(`users/${id}`);
 
     return res.user;
   }
@@ -68,7 +68,7 @@ class CapConApi {
   /** Get a project */
 
   static async getProject(id) {
-    let res = await this.request(`projects/${id}`);
+    const res = await this.request(`projects/${id}`);
     return res.project;
   }
 
@@ -100,14 +100,14 @@ class CapConApi {
   /** Get a list of tags */
 
   static async getTags() {
-    let res = await this.request("tags");
+    const res = await this.request("tags");
     return res.tags;
   }
 
   /** Add a comment to a project */
 
   static async addComment(data) {
-    let res = await this.request("project_comments", data, "post");
+    const res = await this.request("project_comments", data, "post");
     return res.comment;
   }
 
@@ -121,14 +121,14 @@ class CapConApi {
   /** Get token for login from username, password. */
 
   static async login(data) {
-    let res = await this.request(`auth/token`, data, "post");
+    const res = await this.request(`auth/token`, data, "post");
     return res.token;
   }
 
   /** Signup for site. */
 
   static async signup(data) {
-    let res = await this.request(`auth/register`, data, "post");
+    const res = await this.request(`auth/register`, data, "post");
     return res.token;
   }
 
