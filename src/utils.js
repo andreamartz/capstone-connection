@@ -50,5 +50,60 @@ const toggleLikeProject = async (projectIdx, currentUser, projects, setProjects)
   }
 };
 
+const pgTimeToDate = (pgDate) => {
+  console.log("PGDATE: ", pgDate);
+  const newDateMM = pgDate.substring(5, 7);
+  const newDateDD = pgDate.substring(8, 10);
+  const newDateYYYY = pgDate.substring(0, 4);
+
+  const newDateDay = +newDateDD;
+  const newDateYear = +newDateYYYY;
+  
+  let newDateMonth;
+  switch (newDateMM) {
+    case '01':
+      newDateMonth = 'January';
+      break;
+    case '02':
+      newDateMonth = 'February';
+      break;
+    case '03':
+      newDateMonth = 'March';
+      break;
+    case '04':
+      newDateMonth = 'April';
+      break;
+    case '05':
+      newDateMonth = 'May';
+      break;
+    case '06':
+      newDateMonth = 'June';
+      break;
+    case '07':
+      newDateMonth = 'July';
+      break;
+    case '08':
+      newDateMonth = 'August';
+      break;
+    case '09':
+      newDateMonth = 'September';
+      break;
+    case '10':
+      newDateMonth = 'October';
+      break;
+    case '11':
+      newDateMonth = 'November';
+      break;
+    case '12':
+      newDateMonth = 'December';
+      break;
+    default:
+      newDateMonth = '';
+  }
+
+  return `${newDateMonth} ${newDateDay}, ${newDateYear}`;
+}
+
 export { asyncWrapper,
-         toggleLikeProject };
+         toggleLikeProject,
+         pgTimeToDate };
