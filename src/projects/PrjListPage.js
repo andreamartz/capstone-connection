@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function PrjListPage() {
+const PrjListPage = () => {
   const classes = useStyles();
 
   return (
@@ -27,7 +27,7 @@ function PrjListPage() {
       >
         Community Capstones
       </Typography>
-      <PrjCardList userId={null}></PrjCardList>
+      <PrjCardList userId={null} />
     </>
   );
 }
