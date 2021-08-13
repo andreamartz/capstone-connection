@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -23,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
 const SortForm = ({ sort, sortVariable, setSortVariable }) => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
-  const history = useHistory();
 
   const handleChange = async (event) => {
     setSortVariable(sortVariable => event.target.value);
