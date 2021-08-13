@@ -34,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 const PrjCardList = ({ userId }) => {
   const { currentUser } = useContext(UserContext);
   const [projects, setProjects] = useState([]);
+
+  const [searchTerm, setSearchTerm] = useState('');
   const [sortVariable, setSortVariable] = useState('');
   const [showSearchAndSort, setShowSearchAndSort] = useState(false);
 
@@ -43,7 +45,7 @@ const PrjCardList = ({ userId }) => {
     async function getAllProjectsOnMount() {
       const projects = userId 
         ? (await CapConApi.getUserProjects(userId))
-        : (await CapConApi.getProjects(null, sortVariable));
+        : (await CapConApi.getProjects(searchTerm, sortVariable));
       setProjects(projects);
       if (userId) {
         setShowSearchAndSort(false);
@@ -52,7 +54,7 @@ const PrjCardList = ({ userId }) => {
       }
     }
     getAllProjectsOnMount();
-  }, [userId, sortVariable]); 
+  }, [userId, sortVariable, searchTerm]); 
 
   // Breakpoints
   const theme = useTheme();
@@ -62,8 +64,8 @@ const PrjCardList = ({ userId }) => {
   const alignItems = isMatch ? "flex-start" : "space-between";
   const marginBottom = isMatch ? 10 : 1;
 
-  const search = async (tagText) => {
-    const projects = await CapConApi.getProjects(tagText, null);
+  const search = async () => {
+    const projects = await CapConApi.getProjects(searchTerm, sortVariable);
     setProjects(projects);
   };
 
@@ -92,7 +94,7 @@ const PrjCardList = ({ userId }) => {
         alignItems={alignItems}
         mb={5}
       >
-        {showSearchAndSort && <SearchForm className={classes.searchForm} search={search} />}
+        {showSearchAndSort && <SearchForm className={classes.searchForm} search={search} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />}
         <Box mb={marginBottom}>
           {showSearchAndSort && <SortForm sort={sort} sortVariable={sortVariable} setSortVariable={setSortVariable}/>}
         </Box>

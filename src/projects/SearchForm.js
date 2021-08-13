@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
+  box: {
     width: '100%',
     marginRight: theme.spacing(2)
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    display: 'flex'
+    display: 'flex',
   },
   textField: {
-    flexGrow: '1'
+    flexGrow: '1',
+    boxShadow: theme.spacing(5)
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -27,10 +27,9 @@ const useStyles = makeStyles((theme) => ({
  * 
 */
 
-const SearchForm = ({ search }) => {
+const SearchForm = ({ search, searchTerm, setSearchTerm }) => {
   console.debug("SearchForm", "searchFor=", typeof search);
 
-  const [searchTerm, setSearchTerm] = useState("");
   const [formErrors, setFormErrors] = useState([]);
 
   console.debug("SearchForm",
@@ -40,37 +39,23 @@ const SearchForm = ({ search }) => {
 
   const classes = useStyles();
 
-  /** Tell parent component to do the filtering */
-  const handleSubmit = (evt) => {
-    // prevent accidentally searching just spaces
-    evt.preventDefault();
-    search(searchTerm.trim() || undefined);
-    setSearchTerm("");
-  };
-
-  /** Update form field as user types */
+  /** Update state, form field value as user types */
   const handleChange = (evt) => {
-    setSearchTerm(evt.target.value);
+    setSearchTerm((evt.target.value.trim()));
   }
 
   return (
-    <Paper className={classes.paper} elevation={5}>
-      <form className={classes.form} 
-        onSubmit={handleSubmit}>
+    <Box className={classes.box}>
+      <form className={classes.form} >
         <TextField className={classes.textField}
           name="searchTerm"
           onChange={handleChange}
+          placeholder="Search by tag"
           value={searchTerm}
           variant="outlined"
         />
-        <Button type="submit"
-          variant="contained"
-          color="primary"
-        >
-          Search by Tag
-        </Button>
       </form>
-    </Paper>
+    </Box>
   );
 }
 
