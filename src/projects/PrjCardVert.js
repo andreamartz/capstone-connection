@@ -13,6 +13,7 @@ import { Avatar, IconButton, Typography } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
 import Tags from '../tags/Tags';
+import { pgTimeToDate } from '../utils';
 import "./PrjCardVert.css";
 import "../tags/Tags.css";
 
@@ -27,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
   }, 
   iconButton: {
     padding: '0'
+  },
+  date: {
+    fontSize: theme.spacing(1.5)
   },
   avatar: {
     marginRight: theme.spacing(2)
@@ -56,17 +60,20 @@ function PrjCardVert({
     image,
     description, 
     feedbackRequest, 
+    createdAt, 
     likesCount,
     prjCommentsCount,
     creator,
     tags
   } = project;
+
+  const dateCreated = pgTimeToDate(createdAt);
+
   const classes = useStyles();
 
   return (
     <Card 
       elevation={3}
-      className="vertical prj-card"
     >
       <MuiLink href={`/projects/${id}`}>
         <CardMedia 
@@ -77,6 +84,16 @@ function PrjCardVert({
       </MuiLink>
       <Divider variant="fullWidth" />
       <CardContent>
+        <Box mb={2}>
+          <Typography
+            component="h3"
+            variant="subtitle2"
+            className={classes.date}
+          >
+            Created: {dateCreated}
+          </Typography>
+        </Box>
+
         <Typography 
           component="h3"
           variant="subtitle1"
