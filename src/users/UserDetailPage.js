@@ -25,7 +25,9 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(12),
     paddingBottom: theme.spacing(12),
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundSize: 'cover',
+    backgroundPosition: 'top center'
   },
   heroTypography: {
     color: '#fff'
@@ -74,8 +76,6 @@ const UserDetailPage = () => {
       <Box 
         className={classes.hero} 
         style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(https://res.cloudinary.com/wahmof2/image/upload/v1626811212/Untitled_design.png)`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'top center' 
         }}
       >
         <Box 
