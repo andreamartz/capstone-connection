@@ -20,6 +20,7 @@ import CommentForm from "../comments/CommentForm";
 import PrjCardHoriz from "./PrjCardHoriz";
 import UserContext from "../auth/UserContext";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { toggleLikeProject } from "../utils";
 import "./PrjDetailPage.css";
 
 
@@ -76,7 +77,6 @@ const useStyles = makeStyles((theme) => ({
 
 const PrjDetailPage = () => {
   const { id } = useParams();
-
   const [projectState, setProjectState] = useState([]);
   const { currentUser } = useContext(UserContext)
 
@@ -98,48 +98,6 @@ const PrjDetailPage = () => {
   const flexDirection = isSmallScreen ? "column" : "row";
   const justifyContent = isSmallScreen ? "center" : "space-between";
   const alignItems = isSmallScreen ? "center" : "space-between";
-
-  async function toggleLikeProject() {
-    const currentUserId = currentUser.id;
-    const likerId = currentUserId;
-
-    let { id, likesCount, currentUsersLikeId } = projectState[0];
-    console.log("PROJECT[0] IN PRJDETAILPAGE: ", projectState[0]);
-
-    const projectId = id;
-
-    // if project already liked by currentUser, unlike it
-    if (currentUsersLikeId) {
-      const {data, error} = await asyncWrapper(CapConApi.removeProjectLike({ projectId, currentUsersLikeId }));
-      if (error) {
-        alert("Failed to unlike project. Try again later.");
-        return;
-      }
-      if (data) {
-        setProjectState(currentProjectState => {
-          const newProjectState = [...currentProjectState];
-          newProjectState[0] = {...newProjectState[0], likesCount: likesCount-1, currentUsersLikeId: null};
-
-          return newProjectState;
-        });
-      };
-    } else {
-      // otherwise, like it
-      const {data, error} = await asyncWrapper(CapConApi.addProjectLike({ projectId, likerId })); 
-      if (error) {
-        alert ("Failed to like project. Try again later.");
-        return;
-      }
-      if (data.id) {
-        setProjectState(currentProjectState => {
-          const newProjectState = [...currentProjectState];
-          newProjectState[0] = {...newProjectState[0], likesCount: likesCount+1, currentUsersLikeId: data.id};
-
-          return newProjectState;
-        });
-      }
-    }
-  }
 
   if (projectState.length === 0) return <LoadingSpinner />;
 
@@ -228,7 +186,7 @@ const PrjDetailPage = () => {
             <IconButton 
               aria-label="like" 
               className ={classes.iconButton} 
-              onClick={() => {toggleLikeProject(projectState[0].id)}}
+              onClick={() => {toggleLikeProject(0, currentUser, projectState, setProjectState )}}
             >
               <FavoriteBorderIcon/>
             </IconButton>
