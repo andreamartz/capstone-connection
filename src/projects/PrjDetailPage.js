@@ -90,10 +90,10 @@ const PrjDetailPage = () => {
 
   // Breakpoints
   const theme = useTheme();
-  const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
-  const flexDirection = isMatch ? "column" : "row";
-  const justifyContent = isMatch ? "center" : "space-between";
-  const alignItems = isMatch ? "center" : "space-between";
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const flexDirection = isSmallScreen ? "column" : "row";
+  const justifyContent = isSmallScreen ? "center" : "space-between";
+  const alignItems = isSmallScreen ? "center" : "space-between";
 
   async function toggleLikeProject(projectIdx) {
     const currentUserId = currentUser.id;
