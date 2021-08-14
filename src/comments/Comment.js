@@ -81,9 +81,6 @@ const Comment = ({ comment, projectId, idx }) => {
         : null
         }
       </Box>
-      {/* <Box className={ formVisible ? null : "form-container" }>
-        <EditCommentForm comment={comment} projectId={projectId} className={ formVisible ? null : "form" } />
-      </Box> */}
       {formVisible 
         && <Box>
           <EditCommentForm 
@@ -99,6 +96,5 @@ const Comment = ({ comment, projectId, idx }) => {
     </>
   );
 }
-
 
 export default Comment;

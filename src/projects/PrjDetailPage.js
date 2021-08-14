@@ -114,7 +114,7 @@ const PrjDetailPage = () => {
       };
     } else {
       // otherwise, like it
-      const {data, error} = await asyncWrapper(CapConApi.addProjectLike({ projectId, likerId }));  // CHECK replace likerId with currentUser.id once we have auth
+      const {data, error} = await asyncWrapper(CapConApi.addProjectLike({ projectId, likerId })); 
       if (error) {
         alert ("Failed to like project. Try again later.");
         return;

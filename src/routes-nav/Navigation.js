@@ -40,21 +40,9 @@ const useStyles = makeStyles(theme => ({
 
 
 const Navigation = ({ logout }) => {
-  // const [anchorEl, setAnchorEl] = useState(null);
-  const [value, setValue] = useState(0);
   const classes = useStyles();
   const { currentUser } = useContext(UserContext);
   console.debug("Navigation", "CURRENTUSER: ", currentUser);
-  // const handleOpenMenu = e => {
-  //   setAnchorEl(e.currentTarget);
-  // };
-
-  // const handleMenuClose = () => {
-  //   setAnchorEl(null);
-  // };
-  // const handleClickTab = (e, newValue) => {
-  //   setValue(newValue);
-  // };
 
   const navData = currentUser?.username
     ? [{

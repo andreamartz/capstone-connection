@@ -51,7 +51,6 @@ const toggleLikeProject = async (projectIdx, currentUser, projects, setProjects)
 };
 
 const pgTimeToDate = (pgDate) => {
-  console.log("PGDATE: ", pgDate);
   const newDateMM = pgDate.substring(5, 7);
   const newDateDD = pgDate.substring(8, 10);
   const newDateYYYY = pgDate.substring(0, 4);

@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
 const CommentForm = ({ projectId }) => {
   const { currentUser } = useContext(UserContext);
   const INITIAL_STATE_FORM_DATA = {
@@ -54,10 +53,8 @@ const CommentForm = ({ projectId }) => {
   };
   const [formData, setFormData] = useState( INITIAL_STATE_FORM_DATA );
   const [formErrors, setFormErrors] = useState([]);
-
   const classes = useStyles();
   const history = useHistory();
-
 
   console.debug(
     "CommentForm",
