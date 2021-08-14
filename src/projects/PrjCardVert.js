@@ -48,10 +48,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function PrjCardVert({ 
-  toggleLikeProject,
+const PrjCardVert = ({ 
+  toggleLike,
   project
-}) {
+}) => {
 
   console.debug('PrjCardVert');
   const { 
@@ -125,7 +125,7 @@ function PrjCardVert({
           <IconButton 
             aria-label="like" 
             className={classes.iconButton} 
-            onClick={toggleLikeProject}
+            onClick={toggleLike}
           >
             <FavoriteBorderIcon/>
           </IconButton>
