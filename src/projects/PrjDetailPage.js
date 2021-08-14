@@ -31,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(14),
     paddingBottom: theme.spacing(14),
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundSize: 'cover',
+    backgroundPosition: 'top center'
   },
   heroTypography: {
     color: '#fff'
@@ -130,10 +132,8 @@ const PrjDetailPage = () => {
   return (
     <>
       <Box 
-        className={classes.hero} 
-        style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${project.image})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'top center' }}
+        className={clsx(classes.hero, "PrjDetailPage--backgroundImage")}
+        style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${project.image })`}}
       >
         <Typography 
           component="h1" 
