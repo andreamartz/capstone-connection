@@ -97,7 +97,7 @@ const PrjDetailPage = () => {
   const justifyContent = isSmallScreen ? "center" : "space-between";
   const alignItems = isSmallScreen ? "center" : "space-between";
 
-  async function toggleLikeProject(projectIdx) {
+  async function toggleLikeProject() {
     const currentUserId = currentUser.id;
     const likerId = currentUserId;
 
