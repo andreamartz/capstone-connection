@@ -10,12 +10,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
 const CommentList = ({ comments, projectId }) => {
   console.log("CommentList", "comments= ", comments);
   const classes = useStyles();
-  // const [ commentsState, setCommentsState ] = useState(comments);
-  // console.log("COMMENTSSTATE: ", commentsState);
 
   return (
     <List className={classes.root}>
@@ -24,9 +21,7 @@ const CommentList = ({ comments, projectId }) => {
           key={comment.id}
           projectId={projectId}
           comment={comment}
-          // commentsState={commentsState}
           idx={idx}
-          // setCommentsState={setCommentsState}
         />
       ))}
     </List>
