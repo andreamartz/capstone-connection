@@ -77,16 +77,18 @@ const useStyles = makeStyles((theme) => ({
 const PrjDetailPage = () => {
   const { id } = useParams();
 
-  const [project, setProject] = useState(null);
+  const [projectState, setProjectState] = useState([]);
   const { currentUser } = useContext(UserContext)
 
   useEffect(function getProjectOnMount() {
     async function getProject() {
       const project = await CapConApi.getProject(id);
-      setProject(project);
+      setProjectState([ project ]);
     }
     getProject();
   }, [id]); 
+
+  console.log("PROJECT IN PRJDETAILPAGE: ", projectState);
 
   const classes = useStyles();
 
@@ -101,7 +103,9 @@ const PrjDetailPage = () => {
     const currentUserId = currentUser.id;
     const likerId = currentUserId;
 
-    let { id, likesCount, currentUsersLikeId } = project;
+    let { id, likesCount, currentUsersLikeId } = projectState[0];
+    console.log("PROJECT[0] IN PRJDETAILPAGE: ", projectState[0]);
+
     const projectId = id;
 
     // if project already liked by currentUser, unlike it
@@ -112,7 +116,12 @@ const PrjDetailPage = () => {
         return;
       }
       if (data) {
-        setProject({...project, likesCount: likesCount-1, currentUsersLikeId: null});
+        setProjectState(currentProjectState => {
+          const newProjectState = [...currentProjectState];
+          newProjectState[0] = {...newProjectState[0], likesCount: likesCount-1, currentUsersLikeId: null};
+
+          return newProjectState;
+        });
       };
     } else {
       // otherwise, like it
@@ -122,25 +131,30 @@ const PrjDetailPage = () => {
         return;
       }
       if (data.id) {
-        setProject({...project, likesCount: likesCount+1, currentUsersLikeId: data.id});
+        setProjectState(currentProjectState => {
+          const newProjectState = [...currentProjectState];
+          newProjectState[0] = {...newProjectState[0], likesCount: likesCount+1, currentUsersLikeId: data.id};
+
+          return newProjectState;
+        });
       }
     }
   }
 
-  if (!project) return <LoadingSpinner />;
+  if (projectState.length === 0) return <LoadingSpinner />;
 
   return (
     <>
       <Box 
         className={clsx(classes.hero, "PrjDetailPage--backgroundImage")}
-        style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${project.image })`}}
+        style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${projectState[0].image })`}}
       >
         <Typography 
           component="h1" 
           variant="h3"
           className={clsx(classes.heroTypography, classes.title)}
         >
-          {project.name}
+          {projectState[0].name}
         </Typography>
         <Box 
           display='flex' 
@@ -155,7 +169,7 @@ const PrjDetailPage = () => {
             Created by
           </Typography>
           <Avatar
-            src={project.creator.photoUrl}
+            src={projectState[0].creator.photoUrl}
             className={clsx(classes.large, classes.heroAvatar)}
             alt="project creator"
           />
@@ -164,10 +178,10 @@ const PrjDetailPage = () => {
             variant="h6" 
             className={clsx(classes.heroTypography, classes.creatorTypography)}
           >
-            <ReactRouterDomLink to={`/users/${project.creator.id}`}>
+            <ReactRouterDomLink to={`/users/${projectState[0].creator.id}`}>
               <Typography className={clsx(classes.heroTypography, classes.creatorTypography)}
               >
-                {project.creator.firstName.toUpperCase()} {project.creator.lastName.toUpperCase()}
+                {projectState[0].creator.firstName.toUpperCase()} {projectState[0].creator.lastName.toUpperCase()}
               </Typography>
             </ReactRouterDomLink>
           </Typography>
@@ -188,7 +202,7 @@ const PrjDetailPage = () => {
             alignItems={alignItems}
             width='60%'
           >
-            <MuiLink href={project.siteUrl} target="_blank" rel="noopener">
+            <MuiLink href={projectState[0].siteUrl} target="_blank" rel="noopener">
               <Button
                 variant="contained"
                 color="primary"
@@ -199,7 +213,7 @@ const PrjDetailPage = () => {
                 Preview Site
               </Button>
             </MuiLink>
-            <MuiLink href={project.repoUrl} target="_blank" rel="noopener">
+            <MuiLink href={projectState[0].repoUrl} target="_blank" rel="noopener">
               <Button
                 variant="contained"
                 size="large"
@@ -214,17 +228,17 @@ const PrjDetailPage = () => {
             <IconButton 
               aria-label="like" 
               className ={classes.iconButton} 
-              onClick={() => {toggleLikeProject(project.id)}}
+              onClick={() => {toggleLikeProject(projectState[0].id)}}
             >
               <FavoriteBorderIcon/>
             </IconButton>
-            <Box mx={1}>{project.likesCount}</Box>
+            <Box mx={1}>{projectState[0].likesCount}</Box>
           </div>
         </Box>
       </Box>
       <Container className={classes.container}>
         <Box mx='auto' width='80%'>
-          <PrjCardHoriz project={project} />
+          <PrjCardHoriz project={projectState[0]} />
         </Box>
         <Box mx='auto' width='80%'>
           <Box
@@ -236,17 +250,17 @@ const PrjDetailPage = () => {
               component="h3"
               variant="h5"
             >
-              {`${project.creator.firstName}'s feedback request for the community`.toUpperCase()}
+              {`${projectState[0].creator.firstName}'s feedback request for the community`.toUpperCase()}
             </Typography>
           </Box>
           <Box
           >
             <Typography>
-              {project.feedbackRequest}
+              {projectState[0].feedbackRequest}
             </Typography>
           </Box>
         </Box>
-        {project.comments.length ? 
+        {projectState[0].comments.length ? 
           <Typography
             component="h3"
             variant="h5"
@@ -262,9 +276,9 @@ const PrjDetailPage = () => {
           </Typography>
         : null} 
           <Box width='80%' mx='auto'>
-            {project.comments.length
+            {projectState[0].comments.length
               ? (
-              <CommentList comments={project.comments} projectId = {project.id}/>
+              <CommentList comments={projectState[0].comments} projectId = {projectState[0].id}/>
               ) : (
               null
               )
@@ -284,7 +298,7 @@ const PrjDetailPage = () => {
           </Box>
         </Typography>
         <Box>
-          <CommentForm projectId={project.id} />
+          <CommentForm projectId={projectState.id} />
         </Box>
       </Container>
     </>
