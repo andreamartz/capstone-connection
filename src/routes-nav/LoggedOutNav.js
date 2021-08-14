@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { NavLink } from "react-router-dom";
 import Toolbar from '@material-ui/core/Toolbar';
 import DrawerNavigation from './DrawerNavigation';
-import GetWideNavMenuButtons from "./GetWideNavMenuButtons";
+import WideNavMenu from "./WideNavMenu";
 
 
 const LoggedOutNav = ({ navData, classes, isMatch }) => {
@@ -15,7 +15,7 @@ const LoggedOutNav = ({ navData, classes, isMatch }) => {
   return (
     <Toolbar className={classes.toolbar}>
       <div>
-        <GetWideNavMenuButtons navData={navData} classes={classes} />
+        <WideNavMenu navData={navData} classes={classes} />
       </div>
     </Toolbar>
   );
