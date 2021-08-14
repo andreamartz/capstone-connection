@@ -6,8 +6,8 @@ import DrawerNavigation from './DrawerNavigation';
 import WideNavMenu from "./WideNavMenu";
 
 
-const LoggedOutNav = ({ navData, classes, isMatch }) => {
-  if (isMatch) {
+const LoggedOutNav = ({ navData, classes, isSmallScreen }) => {
+  if (isSmallScreen) {
     return (
       <DrawerNavigation navData={navData} />
     );

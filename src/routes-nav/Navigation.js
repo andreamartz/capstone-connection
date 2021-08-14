@@ -95,7 +95,7 @@ const Navigation = ({ logout }) => {
 
   // Breakpoints
   const theme = useTheme();
-  const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <>
@@ -103,8 +103,8 @@ const Navigation = ({ logout }) => {
         <Toolbar>
           {CapstoneConnectionsLogo}
           {currentUser 
-            ? <LoggedInNav navData={navData} classes={classes} isMatch={isMatch} logout={logout} />
-            : <LoggedOutNav navData={navData} classes={classes} isMatch={isMatch} />}
+            ? <LoggedInNav navData={navData} classes={classes} isSmallScreen={isSmallScreen} logout={logout} />
+            : <LoggedOutNav navData={navData} classes={classes} isSmallScreen={isSmallScreen} />}
         </Toolbar>
       </AppBar>
     </>
