@@ -25,7 +25,8 @@ class CapConApi {
     } catch (err) {
       console.error("ERR: ", err);
       console.error("API Error:", err.response);
-      const message = err.response.data.error.message;
+      // const message = err.response.data.error.message;
+      const message = err.message;
       console.log("MESSAGE: ", message);
       // throw Array.isArray(message) ? message : [message];
     }
