@@ -110,7 +110,7 @@ const PrjCardList = ({ userId }) => {
               <div key={p.id} className={classes.project}>
                 <PrjCardVert
                   project={p}
-                  toggleLikeProject={() => {toggleLikeProject(idx, currentUser, projects, setProjects)}}
+                  toggleLike={() => {toggleLikeProject(idx, currentUser, projects, setProjects)}}
                 />
               </div>
             ))}
