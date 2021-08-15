@@ -10,7 +10,7 @@ import PrjCardVert from './PrjCardVert';
 import SearchForm from './SearchForm';
 import SortForm from './SortForm';
 import UserContext from "../auth/UserContext";
-import { asyncWrapper, toggleLikeProject } from "../utils";
+import { toggleLikeProject } from "../utils";
 import "./PrjCardList.css";
 
 const useStyles = makeStyles((theme) => ({
