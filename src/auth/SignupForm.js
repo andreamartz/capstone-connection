@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import {  useFormik } from 'formik';
-import { useHistory } from "react-router-dom";
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -122,7 +121,6 @@ const SignupForm = ({ signup }) => {
   });
 
   const classes = useStyles();
-  const history = useHistory();
   const fileInputRef = useRef();
 
   const handleFileInputChange = (e) => {
