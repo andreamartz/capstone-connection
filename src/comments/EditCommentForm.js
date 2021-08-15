@@ -89,7 +89,6 @@ const EditCommentForm = ({ commentState, projectId, idx, setFormVisible, setComm
         </Button>
       </form>
     </Box>
-
   );
 }
 

@@ -32,8 +32,6 @@ const Comment = ({ comment, projectId, idx }) => {
   console.debug("Comment ", "COMMENT: ", comment);
   const [ formVisible, setFormVisible ] = useState(false);
   const [ commentState, setCommentState ] = useState(comment);
-
-
   const { currentUser } = useContext(UserContext);
   const classes = useStyles();
 

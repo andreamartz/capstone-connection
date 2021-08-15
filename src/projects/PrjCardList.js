@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 const PrjCardList = ({ userId }) => {
   const { currentUser } = useContext(UserContext);
   const [projects, setProjects] = useState([]);
-
   const [searchTerm, setSearchTerm] = useState('');
   const [sortVariable, setSortVariable] = useState('');
   const [showSearchAndSort, setShowSearchAndSort] = useState(false);
