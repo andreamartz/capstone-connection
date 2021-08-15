@@ -25,7 +25,7 @@ const EditCommentForm = ({ commentState, projectId, idx, setFormVisible, setComm
   const { currentUser } = useContext(UserContext);
   const INITIAL_STATE_FORM_DATA = {
     projectId: projectId,
-    commenterId: currentUser.id,
+    userId: currentUser.id,
     comment: commentState.comment
   };
   const [formData, setFormData] = useState( INITIAL_STATE_FORM_DATA );
