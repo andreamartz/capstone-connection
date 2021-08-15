@@ -1,8 +1,26 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
+import { MemoryRouter } from 'react-router-dom';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders App', () => {
+  const { getByText } = render((
+    <MemoryRouter initialEntries={['/projects']}>
+      <App />
+    </MemoryRouter>
+  ));
+  expect(getByText('Capstone Connections')).toBeInTheDocument();
+});
+
+test('navbar links', () => {
+  const { getByText } = render((
+    <MemoryRouter initialEntries={['/']}>
+      <App />
+    </MemoryRouter>
+  ));
+  expect(getByText("The community that connects with and supports you!")).toBeInTheDocument();
+
+  const link = getByText('Projects');
+  fireEvent.click(link);
+  expect(getByText('Sort projects by')).toBeInTheDocument();
 });
