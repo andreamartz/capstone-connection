@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileForm = () => {
   const { currentUser } = useContext(UserContext);
-  // const [fileInputState, setFileInputState] = useState('');
   const [formData, setFormData] = useState({
     password: "",
     firstName: currentUser.firstName,
@@ -89,7 +88,7 @@ const ProfileForm = () => {
     try { 
       updatedUser = await CapConApi.updateProfile(currentUser.id, profileData);
       console.log("UPDATEDUSER: ", updatedUser);
-      history.push(`/users/${username}`);
+      history.push(`/users/${currentUser.id}`);
     } catch(errors) {
       setFormErrors(errors);
       return;
@@ -103,21 +102,6 @@ const ProfileForm = () => {
     const { name, value } = evt.target;
     setFormData(data => ({ ...data, [name]: value }));
   }
-
-  // const handleFileInputChange = (e) => {
-  //   const file = e.target.files[0];
-  //   console.log("FILE: ", file);
-  //   updateImageState(file);
-  // };
-
-  // const updateImageState = (file) => {
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(file);   // converts file contents to a base 64 encoded image
-  //   reader.onloadend = () => {
-  //     setFormData(data => ({ ...data, photoUrl: reader.result }));
-  //   };
-  // };
-
   return (
     <Paper className={classes.paper} elevation={5} component="main">
       <Avatar className={classes.icon}>
@@ -204,45 +188,6 @@ const ProfileForm = () => {
           type="bio"
           value={formData.bio}
         />
-        {/* <Box my={2}>
-          <Box display="flex" alignItems="center">
-            <Box mr={2}>
-              <Typography className={classes.typography}>
-                Photo or avatar image<sup>*</sup>
-              </Typography>
-            </Box>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => fileInputRef.current.click()}
-            >
-              Choose File 
-            </Button>
-            <input
-              variant="outlined"
-              margin="normal"
-              required
-              id="photoUrl"
-              ref={fileInputRef}
-              label="URL of avatar"
-              name="photoUrl"
-              onChange={handleFileInputChange}
-              type="file"
-              value={fileInputState}
-            />
-          </Box>
-        </Box> */}
-        {/* Preview the selected image */}
-        {/* <Box my={2}>
-          {formData.photoUrl && (
-            <img
-              src={formData.photoUrl}
-              alt="chosen"
-              style={{ height: '300px' }}
-            />
-          )}
-        </Box> */}
-
         <TextField
           variant="outlined"
           margin="normal"
