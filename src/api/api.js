@@ -85,7 +85,7 @@ class CapConApi {
   /** Unlike a project */
   
   static async removeProjectLike(data) {
-    const { projectId, currentUsersLikeId } = data;
+    const { projectId, currentUsersLikeId, userId } = data;
     const res = await this.request(`projects/${projectId}/likes/${currentUsersLikeId}`, data, "delete");
     return res.deleted;
   }
