@@ -35,13 +35,6 @@ class CapConApi {
   // Individual API routes
   // ------------------------------
 
-  /** Get the current user. */
-
-  // static async getCurrentUser(username) {
-  //   const res = await this.request(`users/${username}`);
-  //   return res.user;
-  // }
-
   /** Get a user. */
 
   static async getUser(id) {
