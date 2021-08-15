@@ -17,7 +17,8 @@ const toggleLikeProject = async (projectIdx, currentUser, projects, setProjects)
 
   // if project already liked by currentUser, unlike it
   if (currentUsersLikeId) {
-    const {data, error} = await asyncWrapper(CapConApi.removeProjectLike({ projectId, currentUsersLikeId }));
+    const userId = currentUserId;
+    const {data, error} = await asyncWrapper(CapConApi.removeProjectLike({ projectId, currentUsersLikeId, userId }));
     if (error) {
       alert("Failed to unlike project. Try again later.");
       return;
