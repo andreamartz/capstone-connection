@@ -25,7 +25,7 @@ function PrivateRoute({ exact, path, children }) {
 
   return (
     <Route exact={exact} path={path}>
-       {children}
+      {children}
     </Route>
   );
 }
