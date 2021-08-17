@@ -1,12 +1,9 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-
-// import pages to route to here
 import Homepage from "../homepage/Homepage";
 import PrjListPage from "../projects/PrjListPage";
 import PrjDetailPage from "../projects/PrjDetailPage";
 import UserDetailPage from "../users/UserDetailPage";
-
 import NewPrj from "../projects/NewPrj";
 import LoginForm from "../auth/LoginForm";
 import ProfileForm from "../users/ProfileForm";
@@ -23,7 +20,7 @@ import PrivateRoute from "./PrivateRoute";
 
 function Routes({ login, signup }) {
   return (
-    <div className="pt-5">
+    <div>
       <Switch>
 
         <Route exact path="/">
@@ -38,30 +35,25 @@ function Routes({ login, signup }) {
           <SignupForm signup={signup} />
         </Route>
 
-        {/* CHECK: Change to PrivateRoute once we have auth */}
-        <Route exact path="/projects">
+        <PrivateRoute exact path="/projects">
           <PrjListPage />
-        </Route>
+        </PrivateRoute>
 
-        {/* CHECK: Change to PrivateRoute once we have auth */}
-        <Route exact path="/projects/new">
+        <PrivateRoute exact path="/projects/new">
           <NewPrj />
-        </Route>
+        </PrivateRoute>
 
-        {/* CHECK: Change to PrivateRoute once we have auth */}
-        <Route exact path="/projects/:id">
+        <PrivateRoute exact path="/projects/:id">
           <PrjDetailPage />
-        </Route>
+        </PrivateRoute>
 
-        {/* CHECK: Change to PrivateRoute once we have auth */}
-        <Route exact path="/users/:username/settings">
+        <PrivateRoute exact path="/users/:username/settings">
           <ProfileForm />
-        </Route>
+        </PrivateRoute>
 
-        {/* CHECK: Change to PrivateRoute once we have auth */}
-        <Route exact path="/users/:id">
+        <PrivateRoute exact path="/users/:id">
           <UserDetailPage />
-        </Route> 
+        </PrivateRoute> 
 
         <Redirect to="/" />
       </Switch>
