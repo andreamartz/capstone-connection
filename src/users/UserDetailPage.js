@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CapConApi from "../api/api";
 import LoadingSpinner from "../common/LoadingSpinner";
 import UserContext from "../auth/UserContext";
+import PageNotFound404 from "../common/PageNotFound404";
 import "./UserDetailPage.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -64,12 +65,12 @@ const UserDetailPage = () => {
   useEffect(() => {
     async function getUserOnMount() {
       const user = await CapConApi.getUser(id);
-      setUser(user);
+      if (user) setUser(user);
     }
     getUserOnMount();
   }, [id]); 
 
-  if (!user) return <LoadingSpinner />;
+  if (!user) return <PageNotFound404 />;
 
   return (
     <>
