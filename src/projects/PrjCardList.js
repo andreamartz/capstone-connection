@@ -63,17 +63,17 @@ const PrjCardList = ({ userId }) => {
   const alignItems = isSmallScreen ? "flex-start" : "space-between";
   const marginBottom = isSmallScreen ? 10 : 1;
 
-  const search = async () => {
-    const projects = await CapConApi.getProjects(searchTerm, sortVariable);
-    setProjects(projects);
-  };
+  // const search = async () => {
+  //   const projects = await CapConApi.getProjects(searchTerm, sortVariable);
+  //   setProjects(projects);
+  // };
 
-  const sort = async (sortVariable) => {
-    console.log("SORTVARIABLE: ", sortVariable, "PROJECTS BEFORE SORT: ", projects);
-    const sortedProjects = await CapConApi.getProjects(null, sortVariable);
-    console.log("PROJECTS AFTER SORT: ", sortedProjects);
-    setProjects(sortedProjects);
-  }
+  // const sort = async (sortVariable) => {
+  //   console.log("SORTVARIABLE: ", sortVariable, "PROJECTS BEFORE SORT: ", projects);
+  //   const sortedProjects = await CapConApi.getProjects(null, sortVariable);
+  //   console.log("PROJECTS AFTER SORT: ", sortedProjects);
+  //   setProjects(sortedProjects);
+  // }
 
   if (!projects) return <LoadingSpinner />;
 
@@ -93,9 +93,14 @@ const PrjCardList = ({ userId }) => {
         alignItems={alignItems}
         mb={5}
       >
-        {showSearchAndSort && <SearchForm className={classes.searchForm} search={search} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />}
+        {/* {showSearchAndSort && <SearchForm className={classes.searchForm} search={search} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />}
         <Box mb={marginBottom}>
-          {showSearchAndSort && <SortForm sort={sort} sortVariable={sortVariable} setSortVariable={setSortVariable}/>}
+          {showSearchAndSort && <SortForm sort={sort} sortVariable={sortVariable} setSortVariable={setSortVariable}/>} */}
+
+        {showSearchAndSort && <SearchForm className={classes.searchForm}  searchTerm={searchTerm} setSearchTerm={setSearchTerm} />}
+      <Box mb={marginBottom}>
+        {showSearchAndSort && <SortForm sortVariable={sortVariable} setSortVariable={setSortVariable}/>}
+
         </Box>
       </Box>
 
