@@ -41,7 +41,7 @@ class CapConApi {
   static async getUser(id) {
     const res = await this.request(`users/${id}`);
 
-    return res.user;
+    return res?.user;
   }
 
   /** Get a user's projects */
@@ -63,7 +63,7 @@ class CapConApi {
 
   static async getProject(id) {
     const res = await this.request(`projects/${id}`);
-    return res.project;
+    return res?.project;
   }
 
   /** Add a new project */
@@ -89,6 +89,14 @@ class CapConApi {
     const { projectId, currentUsersLikeId, userId } = data;
     const res = await this.request(`projects/${projectId}/likes/${currentUsersLikeId}`, data, "delete");
     return res.deleted;
+  }
+
+  /** Add a new tag 
+   * data = { text }
+  */
+  static async addTag(data) {
+    const res = await this.request(`tags`, data, "post");
+    return res.tagText;
   }
 
   /** Get a list of tags */
