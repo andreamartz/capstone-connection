@@ -3,15 +3,18 @@ import { render } from "@testing-library/react";
 import LoginForm from "./LoginForm";
 import { MemoryRouter } from "react-router";
 
-it('renders without crashing', () => {
-  render(<LoginForm />)
+describe("Smoke test", () => {
+  test('it renders without crashing', () => {
+    render(<LoginForm />)
+  })
 });
+
 
 it("matches snapshot", function () {
   const { asFragment } = render(
-      <MemoryRouter>
-        <LoginForm />
-      </MemoryRouter>,
+    <MemoryRouter>
+      <LoginForm />
+    </MemoryRouter>
   );
   expect(asFragment()).toMatchSnapshot();
 });

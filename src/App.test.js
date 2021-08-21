@@ -19,8 +19,4 @@ test('navbar links', () => {
     </MemoryRouter>
   ));
   expect(getByText("The community that connects with and supports you!")).toBeInTheDocument();
-
-  const link = getByText('Projects');
-  fireEvent.click(link);
-  expect(getByText('Sort projects by')).toBeInTheDocument();
 });
