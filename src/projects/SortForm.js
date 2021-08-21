@@ -25,7 +25,7 @@ const SortForm = ({ sort, sortVariable, setSortVariable }) => {
 
   const handleChange = async (event) => {
     setSortVariable(sortVariable => event.target.value);
-    await sort(sortVariable);
+    // await sort(sortVariable);
   };
 
   const handleClose = () => {
