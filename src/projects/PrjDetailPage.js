@@ -19,6 +19,7 @@ import CommentList from "../comments/CommentList";
 import CommentForm from "../comments/CommentForm";
 import PrjCardHoriz from "./PrjCardHoriz";
 import UserContext from "../auth/UserContext";
+import PageNotFound404 from "../common/PageNotFound404";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { toggleLikeProject } from "../utils";
 import "./PrjDetailPage.css";
@@ -83,7 +84,7 @@ const PrjDetailPage = () => {
   useEffect(function getProjectOnMount() {
     async function getProject() {
       const project = await CapConApi.getProject(id);
-      setProjectState([ project ]);
+      if (project) setProjectState([ project ]);
     }
     getProject();
   }, [id]); 
@@ -99,7 +100,9 @@ const PrjDetailPage = () => {
   const justifyContent = isSmallScreen ? "center" : "space-between";
   const alignItems = isSmallScreen ? "center" : "space-between";
 
-  if (projectState.length === 0) return <LoadingSpinner />;
+  // if (projectState.length === 0) return <LoadingSpinner />;
+  if (projectState.length === 0) return <PageNotFound404 />;
+
 
   return (
     <>
