@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import {  useFormik } from 'formik';
+import { useFormik } from 'formik';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.warning.main,
   },
   userAvatar: {
-    height: '300px'
+    height: '300px',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -37,22 +37,23 @@ const useStyles = makeStyles((theme) => ({
   },
   photoUrl: {
     filter: 'alpha(opacity=0)',
-    opacity: 0
+    opacity: 0,
   },
   photoUrlContainer: {
     width: 0,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-  }
+  },
 }));
 
 const emailRegex = /\b[\w.-]+@[\w.-]+.\w{2,4}\b/i;
-const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/;
+const urlRegex =
+  /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/;
 const urlProtocolRegex = /^https?:\/\//;
 
-const validate = values => {
+const validate = (values) => {
   const errors = {};
 
   if (!values.username) {
@@ -80,23 +81,22 @@ const validate = values => {
   }
 
   if (values.portfolioUrl && !urlProtocolRegex.test(values.portfolioUrl)) {
-    errors.portfolioUrl = 'URL must begin with http:// or https://'
+    errors.portfolioUrl = 'URL must begin with http:// or https://';
   } else if (values.portfolioUrl && !urlRegex.test(values.portfolioUrl)) {
-    errors.portfolioUrl = 'Invalid URL'
-  } 
+    errors.portfolioUrl = 'Invalid URL';
+  }
 
   if (values.gitHubUrl && !urlProtocolRegex.test(values.gitHubUrl)) {
-    errors.gitHubUrl = 'URL must begin with http:// or https://'
+    errors.gitHubUrl = 'URL must begin with http:// or https://';
   } else if (values.gitHubUrl && !urlRegex.test(values.gitHubUrl)) {
-    errors.gitHubUrl = 'Invalid URL'
+    errors.gitHubUrl = 'Invalid URL';
   }
 
   return errors;
 };
 
-
 const SignupForm = ({ signup }) => {
-  const [fileInputState, setFileInputState] = useState('');
+  // const [fileInputState, setFileInputState] = useState('');
   const [fileData, setFileData] = useState({ fileName: '' });
 
   let fileEncodedString;
@@ -111,13 +111,14 @@ const SignupForm = ({ signup }) => {
       bio: null,
       photoUrl: '',
       portfolioUrl: null,
-      gitHubUrl: null
-    }, validate,
-    onSubmit: async values => {
-      const formData = {...values, photoUrl: fileData.fileName}
-      console.log("FILEENCODEDSTRING: ", fileEncodedString);
+      gitHubUrl: null,
+    },
+    validate,
+    onSubmit: async (values) => {
+      const formData = { ...values, photoUrl: fileData.fileName };
+      console.log('FILEENCODEDSTRING: ', fileEncodedString);
       const result = await signup(formData);
-    }
+    },
   });
 
   const classes = useStyles();
@@ -125,18 +126,18 @@ const SignupForm = ({ signup }) => {
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
-    console.log("FILE: ", file);
+    console.log('FILE: ', file);
     updateImageState(file);
   };
 
   const updateImageState = (file) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file);   // converts file contents to a base 64 encoded image
+    reader.readAsDataURL(file); // converts file contents to a base 64 encoded image
 
     reader.onloadend = () => {
       // setFormData(data => ({ ...data, photoUrl: reader.result }));
       // fileEncodedString = reader.result;
-      setFileData(fileData => ({ ...fileData, fileName: reader.result}))
+      setFileData((fileData) => ({ ...fileData, fileName: reader.result }));
     };
   };
 
@@ -149,9 +150,7 @@ const SignupForm = ({ signup }) => {
         Signup
       </Typography>
 
-      <form className={classes.form} 
-        onSubmit={formik.handleSubmit}
-      >
+      <form className={classes.form} onSubmit={formik.handleSubmit}>
         <TextField
           variant="outlined"
           margin="normal"
@@ -239,7 +238,7 @@ const SignupForm = ({ signup }) => {
               color="primary"
               onClick={() => fileInputRef.current.click()}
             >
-              Choose File 
+              Choose File
             </Button>
             <Box className={classes.photoUrlContainer}>
               <input
@@ -252,7 +251,8 @@ const SignupForm = ({ signup }) => {
                 name="photoUrl"
                 onChange={handleFileInputChange}
                 type="file"
-                value={fileInputState}
+                // value={fileInputState}
+                value=""
               />
             </Box>
           </Box>
@@ -278,7 +278,9 @@ const SignupForm = ({ signup }) => {
           onChange={formik.handleChange}
           type="portfolioUrl"
           value={formik.values.portfolioUrl}
-          error={formik.touched.portfolioUrl && Boolean(formik.errors.portfolioUrl)}
+          error={
+            formik.touched.portfolioUrl && Boolean(formik.errors.portfolioUrl)
+          }
           helperText={formik.touched.portfolioUrl && formik.errors.portfolioUrl}
         />
         <TextField
@@ -312,6 +314,6 @@ const SignupForm = ({ signup }) => {
       </form>
     </Paper>
   );
-}
+};
 
 export default SignupForm;
