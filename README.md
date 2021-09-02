@@ -34,8 +34,11 @@ Learning to code is hard. Learning to do it by yourself or as part of a remote c
 ## Standard User Flow
 
 1. A user creates an account by going to the sign up page OR logs in if they have already created an account. Either way, the user is signed in.
+
 2. The first page the user sees after signing in is the projects page.
+
 3. On the projects page, the user sees a list of project "cards" from all users and can use the search form at the top to filter projects by tag name or sort projects.
+
 4. From the projects page, on any project card, a user can
 
 - click the heart icon to like/unlike a project,
