@@ -6,8 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
-import { Link as MuiLink } from '@material-ui/core';
-import { Link as ReactRouterDomLink } from "react-router-dom";
+import { Link as ReactRouterDomLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, IconButton, Typography } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -72,16 +71,10 @@ const PrjCardVert = ({
   const classes = useStyles();
 
   return (
-    <Card 
-      elevation={3}
-    >
-      <MuiLink href={`/projects/${id}`}>
-        <CardMedia 
-          component="img" 
-          image={image} 
-          alt=""
-        />
-      </MuiLink>
+    <Card elevation={3}>
+      <ReactRouterDomLink to={`/projects/${id}`}>
+        <CardMedia component="img" image={image} alt="" />
+      </ReactRouterDomLink>
       <Divider variant="fullWidth" />
       <CardContent>
         <Box mb={2}>
@@ -94,12 +87,9 @@ const PrjCardVert = ({
           </Typography>
         </Box>
 
-        <Typography 
-          component="h3"
-          variant="subtitle1"
-        >
-          <MuiLink href={`/projects/${id}`}>
-            <Box 
+        <Typography component="h3" variant="subtitle1">
+          <ReactRouterDomLink to={`/projects/${id}`}>
+            <Box
               fontSize="h6.fontSize"
               fontWeight="fontWeightBold"
               lineHeight="normal"
@@ -107,8 +97,7 @@ const PrjCardVert = ({
             >
               {name}
             </Box>
-          </MuiLink>
-
+          </ReactRouterDomLink>
         </Typography>
 
         <Typography variant="body1">
