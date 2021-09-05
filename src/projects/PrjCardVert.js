@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import clsx from 'clsx';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
@@ -13,9 +13,8 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
 import Tags from '../tags/Tags';
 import { pgTimeToDate } from '../utils';
-import "./PrjCardVert.css";
-import "../tags/Tags.css";
-
+import './PrjCardVert.css';
+import '../tags/Tags.css';
 
 const useStyles = makeStyles((theme) => ({
   actions: {
@@ -23,16 +22,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    marginBottom: theme.spacing(1)
-  }, 
+    marginBottom: theme.spacing(1),
+  },
   iconButton: {
-    padding: '0'
+    padding: '0',
   },
   date: {
-    fontSize: theme.spacing(1.5)
+    fontSize: theme.spacing(1.5),
   },
   avatar: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   large: {
     width: theme.spacing(6),
@@ -41,29 +40,25 @@ const useStyles = makeStyles((theme) => ({
   creatorName: {
     textDecoration: 'none',
     '&:hover': {
-      textDecoration: "underline",
+      textDecoration: 'underline',
     },
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 }));
 
-const PrjCardVert = ({ 
-  toggleLike,
-  project
-}) => {
-
+const PrjCardVert = ({ toggleLike, project }) => {
   console.debug('PrjCardVert');
-  const { 
+  const {
     id,
     name,
     image,
-    description, 
-    feedbackRequest, 
-    createdAt, 
+    description,
+    feedbackRequest,
+    createdAt,
     likesCount,
     prjCommentsCount,
     creator,
-    tags
+    tags,
   } = project;
 
   const dateCreated = pgTimeToDate(createdAt);
@@ -100,52 +95,48 @@ const PrjCardVert = ({
           </ReactRouterDomLink>
         </Typography>
 
-        <Typography variant="body1">
-          {description}
-        </Typography>
+        <Typography variant="body1">{description}</Typography>
       </CardContent>
 
-      <CardActions 
-        className={classes.actions} 
-      >
+      <CardActions className={classes.actions}>
         <Tags tags={tags} />
 
-        <Box display='flex' align-items='center'>
-          <IconButton 
-            aria-label="like" 
-            className={classes.iconButton} 
+        <Box display="flex" align-items="center">
+          <IconButton
+            aria-label="like"
+            className={classes.iconButton}
             onClick={toggleLike}
           >
-            <FavoriteBorderIcon/>
+            <FavoriteBorderIcon />
           </IconButton>
           <Box mx={1}>{likesCount}</Box>
-          <ModeCommentOutlinedIcon mx={8}/>
+          <ModeCommentOutlinedIcon mx={8} />
           <Box ml={1}>{prjCommentsCount}</Box>
         </Box>
       </CardActions>
 
-      <Divider variant="middle"/>
+      <Divider variant="middle" />
 
-      <CardContent 
-        display='flex' 
-        justify-content="space-between" 
+      <CardContent
+        display="flex"
+        justify-content="space-between"
         align-items="center"
       >
-        <Box display='flex' justify-content="space-between">
-          <Avatar 
-            src={creator.photoUrl} 
-            className={clsx(classes.large, classes.avatar)} 
-            alt="project creator" 
+        <Box display="flex" justify-content="space-between">
+          <Avatar
+            src={creator.photoUrl}
+            className={clsx(classes.large, classes.avatar)}
+            alt="project creator"
           />
-          <Box 
+          <Box
             display="flex"
             alignItems="center"
             fontWeight="fontWeightBold"
             className={classes.creatorName}
           >
             <Typography>
-              <ReactRouterDomLink 
-                className={classes.creatorName} 
+              <ReactRouterDomLink
+                className={classes.creatorName}
                 to={`/users/${creator.id}`}
               >
                 {creator.firstName} {creator.lastName}
@@ -157,12 +148,10 @@ const PrjCardVert = ({
 
       <Divider variant="middle" />
       <CardContent>
-        <Typography>
-         {feedbackRequest}
-        </Typography>
+        <Typography>{feedbackRequest}</Typography>
       </CardContent>
     </Card>
   );
-}
+};
 
 export default PrjCardVert;
