@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from 'react';
 import clsx from 'clsx';
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -8,57 +8,54 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import IconButton from '@material-ui/core/IconButton';
-import {Link as MuiLink} from '@material-ui/core';
-import { Link as ReactRouterDomLink } from "react-router-dom";
+import { Link as MuiLink } from '@material-ui/core';
+import { Link as ReactRouterDomLink } from 'react-router-dom';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import CapConApi from "../api/api";
-import LoadingSpinner from "../common/LoadingSpinner";
-import { asyncWrapper } from "../utils";
-import CommentList from "../comments/CommentList";
-import CommentForm from "../comments/CommentForm";
-import PrjCardHoriz from "./PrjCardHoriz";
-import UserContext from "../auth/UserContext";
-import PageNotFound404 from "../common/PageNotFound404";
+import CapConApi from '../api/api';
+import CommentList from '../comments/CommentList';
+import CommentForm from '../comments/CommentForm';
+import PrjCardHoriz from './PrjCardHoriz';
+import UserContext from '../auth/UserContext';
+import PageNotFound404 from '../common/PageNotFound404';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { toggleLikeProject } from "../utils";
-import "./PrjDetailPage.css";
-
+import { toggleLikeProject } from '../utils';
+import './PrjDetailPage.css';
 
 const useStyles = makeStyles((theme) => ({
   hero: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop:'4rem',
+    marginTop: '4rem',
     paddingTop: theme.spacing(14),
     paddingBottom: theme.spacing(14),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundSize: 'cover',
-    backgroundPosition: 'top center'
+    backgroundPosition: 'top center',
   },
   heroTypography: {
-    color: '#fff'
+    color: '#fff',
   },
   creatorTypography: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   title: {
-    marginBottom: theme.spacing(10)
+    marginBottom: theme.spacing(10),
   },
   button: {
     borderRadius: '1.2rem',
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   container: {
     paddingLeft: '0',
     paddingRight: '0',
     maxWidth: 'lg',
-    margin: 'auto'
+    margin: 'auto',
   },
   heroAvatar: {
     marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   iconButton: {
     padding: '0',
@@ -70,59 +67,59 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(6),
   },
   like: {
-    backgroundColor: "e0e0e0",
+    backgroundColor: 'e0e0e0',
     display: 'flex',
     alignItems: 'center',
-  }
+  },
 }));
 
 const PrjDetailPage = () => {
   const { id } = useParams();
   const [projectState, setProjectState] = useState([]);
-  const { currentUser } = useContext(UserContext)
+  const { currentUser } = useContext(UserContext);
 
-  useEffect(function getProjectOnMount() {
-    async function getProject() {
-      const project = await CapConApi.getProject(id);
-      if (project) setProjectState([ project ]);
-    }
-    getProject();
-  }, [id]); 
+  useEffect(
+    function getProjectOnMount() {
+      async function getProject() {
+        const project = await CapConApi.getProject(id);
+        if (project) setProjectState([project]);
+      }
+      getProject();
+    },
+    [id]
+  );
 
-  console.log("PROJECT IN PRJDETAILPAGE: ", projectState);
+  console.log('PROJECT IN PRJDETAILPAGE: ', projectState);
 
   const classes = useStyles();
 
   // Breakpoints
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const flexDirection = isSmallScreen ? "column" : "row";
-  const justifyContent = isSmallScreen ? "center" : "space-between";
-  const alignItems = isSmallScreen ? "center" : "space-between";
+  const flexDirection = isSmallScreen ? 'column' : 'row';
+  const justifyContent = isSmallScreen ? 'center' : 'space-between';
+  const alignItems = isSmallScreen ? 'center' : 'space-between';
 
   // if (projectState.length === 0) return <LoadingSpinner />;
   if (projectState.length === 0) return <PageNotFound404 />;
 
-
   return (
     <>
-      <Box 
-        className={clsx(classes.hero, "PrjDetailPage--backgroundImage")}
-        style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${projectState[0].image })`}}
+      <Box
+        className={clsx(classes.hero, 'PrjDetailPage--backgroundImage')}
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${projectState[0].image})`,
+        }}
       >
-        <Typography 
-          component="h1" 
+        <Typography
+          component="h1"
           variant="h3"
           className={clsx(classes.heroTypography, classes.title)}
         >
           {projectState[0].name}
         </Typography>
-        <Box 
-          display='flex' 
-          alignItems='center' 
-          className={classes.title}
-        >
-          <Typography 
+        <Box display="flex" alignItems="center" className={classes.title}>
+          <Typography
             component="h2"
             variant="h6"
             className={classes.heroTypography}
@@ -134,127 +131,120 @@ const PrjDetailPage = () => {
             className={clsx(classes.large, classes.heroAvatar)}
             alt="project creator"
           />
-          <Typography 
+          <Typography
             component="h2"
-            variant="h6" 
+            variant="h6"
             className={clsx(classes.heroTypography, classes.creatorTypography)}
           >
             <ReactRouterDomLink to={`/users/${projectState[0].creator.id}`}>
-              <Typography className={clsx(classes.heroTypography, classes.creatorTypography)}
+              <Typography
+                className={clsx(
+                  classes.heroTypography,
+                  classes.creatorTypography
+                )}
               >
-                {projectState[0].creator.firstName.toUpperCase()} {projectState[0].creator.lastName.toUpperCase()}
+                {projectState[0].creator.firstName.toUpperCase()}{' '}
+                {projectState[0].creator.lastName.toUpperCase()}
               </Typography>
             </ReactRouterDomLink>
           </Typography>
         </Box>
         <Box
           className={classes.heroTypography}
-          display='flex'
+          display="flex"
           flexDirection={flexDirection}
           justifyContent={justifyContent}
           alignItems={alignItems}
-          width='60%'
+          width="60%"
           maxWidth="710px"
         >
           <Box
-            display='flex'
+            display="flex"
             flexDirection={flexDirection}
             justifyContent={justifyContent}
             alignItems={alignItems}
-            width='60%'
+            width="60%"
           >
-            <MuiLink href={projectState[0].siteUrl} target="_blank" rel="noopener">
+            <MuiLink
+              href={projectState[0].siteUrl}
+              target="_blank"
+              rel="noopener"
+            >
               <Button
                 variant="contained"
                 color="primary"
                 size="large"
                 className={classes.button}
-                endIcon={<OpenInNewIcon />}  
+                endIcon={<OpenInNewIcon />}
               >
                 Preview Site
               </Button>
             </MuiLink>
-            <MuiLink href={projectState[0].repoUrl} target="_blank" rel="noopener">
+            <MuiLink
+              href={projectState[0].repoUrl}
+              target="_blank"
+              rel="noopener"
+            >
               <Button
                 variant="contained"
                 size="large"
                 className={classes.button}
-                endIcon={<OpenInNewIcon />}  
+                endIcon={<OpenInNewIcon />}
               >
                 View Code
               </Button>
             </MuiLink>
           </Box>
           <div id="like" className={classes.like}>
-            <IconButton 
-              aria-label="like" 
-              className ={classes.iconButton} 
-              onClick={() => {toggleLikeProject(0, currentUser, projectState, setProjectState )}}
+            <IconButton
+              aria-label="like"
+              className={classes.iconButton}
+              onClick={() => {
+                toggleLikeProject(
+                  0,
+                  currentUser,
+                  projectState,
+                  setProjectState
+                );
+              }}
             >
-              <FavoriteBorderIcon/>
+              <FavoriteBorderIcon />
             </IconButton>
             <Box mx={1}>{projectState[0].likesCount}</Box>
           </div>
         </Box>
       </Box>
       <Container className={classes.container}>
-        <Box mx='auto' width='80%'>
+        <Box mx="auto" width="80%">
           <PrjCardHoriz project={projectState[0]} />
         </Box>
-        <Box mx='auto' width='80%'>
-          <Box
-            textAlign="center" 
-            pt={10}
-            pb={8}
-          >
-            <Typography
-              component="h3"
-              variant="h5"
-            >
+        <Box mx="auto" width="80%">
+          <Box textAlign="center" pt={10} pb={8}>
+            <Typography component="h3" variant="h5">
               {`${projectState[0].creator.firstName}'s feedback request for the community`.toUpperCase()}
             </Typography>
           </Box>
-          <Box
-          >
-            <Typography>
-              {projectState[0].feedbackRequest}
-            </Typography>
+          <Box>
+            <Typography>{projectState[0].feedbackRequest}</Typography>
           </Box>
         </Box>
-        {projectState[0].comments.length ? 
-          <Typography
-            component="h3"
-            variant="h5"
-          >
-            <Box 
-              textAlign="center" 
-              mx="auto" 
-              pt={10}
-              pb={8}
-            >
+        {projectState[0].comments.length ? (
+          <Typography component="h3" variant="h5">
+            <Box textAlign="center" mx="auto" pt={10} pb={8}>
               COMMUNITY FEEDBACK
             </Box>
           </Typography>
-        : null} 
-          <Box width='80%' mx='auto'>
-            {projectState[0].comments.length
-              ? (
-              <CommentList comments={projectState[0].comments} projectId = {projectState[0].id}/>
-              ) : (
-              null
-              )
-            }
-          </Box>
-        <Typography
-          component="h3"
-          variant="h5"
-        >
-          <Box 
-            textAlign="center" 
-            mx="auto" 
-            pt={10}
-            pb={8}
-          >
+        ) : null}
+        <Box width="80%" mx="auto">
+          {projectState[0].comments.length ? (
+            <CommentList
+              comments={projectState[0].comments}
+              projectId={projectState[0].id}
+            />
+          ) : null}
+        </Box>
+        <Typography component="h3" variant="h5">
+          <Box textAlign="center" mx="auto" pt={10} pb={8}>
             ADD YOUR FEEDBACK
           </Box>
         </Typography>
@@ -264,6 +254,6 @@ const PrjDetailPage = () => {
       </Container>
     </>
   );
-}
+};
 
 export default PrjDetailPage;
