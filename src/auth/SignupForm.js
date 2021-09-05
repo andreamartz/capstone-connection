@@ -48,11 +48,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/** Regular expressions used in form validation */
 const emailRegex = /\b[\w.-]+@[\w.-]+.\w{2,4}\b/i;
 const urlRegex =
   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/;
 const urlProtocolRegex = /^https?:\/\//;
 
+/** Validation function to use with Formik */
 const validate = (values) => {
   const errors = {};
 
