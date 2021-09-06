@@ -18,13 +18,12 @@ import PrivateRoute from './PrivateRoute';
  * Visiting a non-existant route redirects to the homepage.
  */
 
-function Routes({ login, signup }) {
+function Routes({ login, signup, signupDemo }) {
   return (
     <div>
       <Switch>
-
         <Route exact path="/">
-          <Homepage />
+          <Homepage signupDemo={signupDemo} />
         </Route>
 
         <Route exact path="/login">

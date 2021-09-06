@@ -101,6 +101,14 @@ function App() {
       return { success: false, errors };
     }
   }
+
+  async function signupDemo() {
+    try {
+      let token = await CapConApi.signupDemo();
+      setToken(token);
+      return { success: true };
+    } catch (errors) {
+      console.error('signup demo failed', errors);
       return { success: false, errors };
     }
   }

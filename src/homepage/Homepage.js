@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
+import Button from '@material-ui/core/Button';
 import UserContext from '../auth/UserContext';
 import CapConApi from '../api/api';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link as ReactRouterDomLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -43,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
  * Routes -> Homepage
  */
 
-function Homepage() {
+function Homepage({ signupDemo }) {
   const { currentUser } = useContext(UserContext);
   console.debug('Homepage', 'currentUser=', currentUser);
   const classes = useStyles();
@@ -73,6 +75,13 @@ function Homepage() {
               </h2>
             )}
           </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          {!currentUser && (
+            <Button variant="contained" color="primary" onClick={signupDemo}>
+              Try It Out!
+            </Button>
+          )}
         </Grid>
       </Grid>
     </Container>

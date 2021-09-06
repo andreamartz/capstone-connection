@@ -140,6 +140,14 @@ class CapConApi {
     return res.token;
   }
 
+  /** Register demo user. */
+
+  static async signupDemo() {
+    console.log('CALLED CAPCONAPI.signupDemo');
+    const res = await this.request(`auth/register/demo`);
+    return res.token;
+  }
+
   /** Update user profile */
 
   static async updateProfile(userId, data) {
