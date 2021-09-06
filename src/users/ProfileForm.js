@@ -1,6 +1,6 @@
 import React, { useState, useContext, useRef } from 'react';
-import { useParams, useHistory } from "react-router-dom";
-import CapConApi from "../api/api";
+import { useParams, useHistory } from 'react-router-dom';
+import CapConApi from '../api/api';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import AlertDisplay from '../common/AlertDisplay';
-import UserContext from "../auth/UserContext";
+import UserContext from '../auth/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,11 +29,11 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    height: theme.spacing(30)
+    height: theme.spacing(30),
   },
   icon: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.warning.main
+    backgroundColor: theme.palette.warning.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -44,17 +44,16 @@ const useStyles = makeStyles((theme) => ({
   // }
 }));
 
-
 const ProfileForm = () => {
   const { currentUser } = useContext(UserContext);
   const [formData, setFormData] = useState({
-    password: "",
+    password: '',
     firstName: currentUser.firstName,
     lastName: currentUser.lastName,
     email: currentUser.email,
     bio: currentUser.bio,
     portfolioUrl: currentUser.portfolioUrl,
-    gitHubUrl: currentUser.gitHubUrl
+    gitHubUrl: currentUser.gitHubUrl,
   });
   const [formErrors, setFormErrors] = useState([]);
 
@@ -63,16 +62,11 @@ const ProfileForm = () => {
   // const fileInputRef = useRef();
   const { username } = useParams();
 
-
-  console.debug(
-    "ProfileForm",
-    "formData=", formData,
-    "formErrors", formErrors
-  );
+  console.debug('ProfileForm', 'formData=', formData, 'formErrors', formErrors);
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    
+
     const profileData = {
       password: formData.password,
       firstName: formData.firstName,
@@ -80,27 +74,27 @@ const ProfileForm = () => {
       email: formData.email,
       bio: formData.bio,
       portfolioUrl: formData.portfolioUrl,
-      gitHubUrl: formData.gitHubUrl
-    }
+      gitHubUrl: formData.gitHubUrl,
+    };
 
     let updatedUser;
 
-    try { 
+    try {
       updatedUser = await CapConApi.updateProfile(currentUser.id, profileData);
-      console.log("UPDATEDUSER: ", updatedUser);
+      console.log('UPDATEDUSER: ', updatedUser);
       history.push(`/users/${currentUser.id}`);
-    } catch(errors) {
+    } catch (errors) {
       setFormErrors(errors);
       return;
     }
 
-    setFormData(data => ({ ...data, }))
-  }
+    setFormData((data) => ({ ...data }));
+  };
 
   /** Update form data field */
   function handleChange(evt) {
     const { name, value } = evt.target;
-    setFormData(data => ({ ...data, [name]: value }));
+    setFormData((data) => ({ ...data, [name]: value }));
   }
   return (
     <Paper className={classes.paper} elevation={5} component="main">
@@ -111,11 +105,13 @@ const ProfileForm = () => {
         Profile
       </Typography>
       <Box my={2} id="form--image-container">
-        <img src={currentUser.photoUrl} alt="current user" className={classes.avatar} />
+        <img
+          src={currentUser.photoUrl}
+          alt="current user"
+          className={classes.avatar}
+        />
       </Box>
-      <form className={classes.form} 
-        onSubmit={handleSubmit}
-      >
+      <form className={classes.form} onSubmit={handleSubmit}>
         {/* <TextField
           variant="outlined"
           margin="normal"
@@ -215,10 +211,9 @@ const ProfileForm = () => {
           ? <Alert type="danger">This is an error alert — check it out!</Alert>
           : null
         } */}
-        {formErrors.length
-          ? <AlertDisplay severity="error" messages={formErrors} />
-          : null
-        }
+        {formErrors.length ? (
+          <AlertDisplay severity="error" messages={formErrors} />
+        ) : null}
         <Button
           type="submit"
           fullWidth
@@ -232,6 +227,6 @@ const ProfileForm = () => {
       </form>
     </Paper>
   );
-}
+};
 
 export default ProfileForm;
