@@ -1,14 +1,14 @@
-import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import Homepage from "../homepage/Homepage";
-import PrjListPage from "../projects/PrjListPage";
-import PrjDetailPage from "../projects/PrjDetailPage";
-import UserDetailPage from "../users/UserDetailPage";
-import NewPrj from "../projects/NewPrj";
-import LoginForm from "../auth/LoginForm";
-import ProfileForm from "../users/ProfileForm";
-import SignupForm from "../auth/SignupForm";
-import PrivateRoute from "./PrivateRoute";
+import React from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import Homepage from '../homepage/Homepage';
+import PrjListPage from '../projects/PrjListPage';
+import PrjDetailPage from '../projects/PrjDetailPage';
+import UserDetailPage from '../users/UserDetailPage';
+import NewPrj from '../projects/NewPrj';
+import LoginForm from '../auth/LoginForm';
+import ProfileForm from '../users/ProfileForm';
+import SignupForm from '../auth/SignupForm';
+import PrivateRoute from './PrivateRoute';
 
 /** Site-wide routes.
  *
@@ -53,7 +53,7 @@ function Routes({ login, signup }) {
 
         <PrivateRoute exact path="/users/:id">
           <UserDetailPage />
-        </PrivateRoute> 
+        </PrivateRoute>
 
         <Redirect to="/" />
       </Switch>
