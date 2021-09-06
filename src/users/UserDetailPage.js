@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from 'react';
 import clsx from 'clsx';
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -8,38 +8,38 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import EditIcon from '@material-ui/icons/Edit';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import {Link as MuiLink} from '@material-ui/core';
-import { Link as ReactRouterDomLink } from "react-router-dom";
+import { Link as MuiLink } from '@material-ui/core';
+import { Link as ReactRouterDomLink } from 'react-router-dom';
 import PrjCardList from '../projects/PrjCardList';
 import { makeStyles } from '@material-ui/core/styles';
-import CapConApi from "../api/api";
-import LoadingSpinner from "../common/LoadingSpinner";
-import UserContext from "../auth/UserContext";
-import PageNotFound404 from "../common/PageNotFound404";
-import "./UserDetailPage.css";
+import CapConApi from '../api/api';
+import LoadingSpinner from '../common/LoadingSpinner';
+import UserContext from '../auth/UserContext';
+import PageNotFound404 from '../common/PageNotFound404';
+import './UserDetailPage.css';
 
 const useStyles = makeStyles((theme) => ({
   hero: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop:'4rem',
+    marginTop: '4rem',
     paddingTop: theme.spacing(12),
     paddingBottom: theme.spacing(12),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundSize: 'cover',
-    backgroundPosition: 'top center'
+    backgroundPosition: 'top center',
   },
   heroTypography: {
-    color: '#fff'
+    color: '#fff',
   },
   title: {
-    marginBottom: theme.spacing(8)
+    marginBottom: theme.spacing(8),
   },
   button: {
     borderRadius: '1.2rem',
     marginRight: theme.spacing(2),
-    marginLeft: theme.spacing(2)
+    marginLeft: theme.spacing(2),
   },
   heroAvatar: {
     marginLeft: theme.spacing(2),
@@ -51,8 +51,8 @@ const useStyles = makeStyles((theme) => ({
   },
   heroBio: {
     paddingRight: theme.spacing(3),
-    paddingLeft: theme.spacing(3)
-  }
+    paddingLeft: theme.spacing(3),
+  },
 }));
 
 const UserDetailPage = () => {
@@ -68,72 +68,73 @@ const UserDetailPage = () => {
       if (user) setUser(user);
     }
     getUserOnMount();
-  }, [id]); 
+  }, [id]);
 
   if (!user) return <PageNotFound404 />;
 
   return (
     <>
-      <Box 
-        className={classes.hero} 
-        style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(https://res.cloudinary.com/wahmof2/image/upload/v1626811212/Untitled_design.png)`,
+      <Box
+        className={classes.hero}
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(https://res.cloudinary.com/wahmof2/image/upload/v1626811212/Untitled_design.png)`,
         }}
       >
-        <Box 
-          display="flex" 
-          alignItems="center"
-          mb={6}
-        >
+        <Box display="flex" alignItems="center" mb={6}>
           <Avatar
             src={user.photoUrl}
             className={clsx(classes.large, classes.heroAvatar)}
             alt="project creator"
           />
-          <Typography 
-            component="h1" 
+          <Typography
+            component="h1"
             variant="h3"
             // className={clsx(classes.heroTypography, classes.title)}
             className={classes.heroTypography}
           >
             {user.firstName} {user.lastName}
           </Typography>
-          {currentUser.id === user.id
-            ? <ReactRouterDomLink to={`/users/${user.username}/settings`}>
-              <Button size="small" variant="contained" color="primary" startIcon={<EditIcon />}className={clsx(classes.heroTypography, classes.button)}>
+          {currentUser.id === user.id ? (
+            <ReactRouterDomLink to={`/users/${user.username}/settings`}>
+              <Button
+                size="small"
+                variant="contained"
+                color="primary"
+                startIcon={<EditIcon />}
+                className={clsx(classes.heroTypography, classes.button)}
+              >
                 Edit Profile
               </Button>
             </ReactRouterDomLink>
-            : null
-          }
+          ) : null}
         </Box>
 
-        <Typography 
-          component="h2" 
+        <Typography
+          component="h2"
           variant="h5"
-          className={clsx(classes.heroTypography, classes.title, classes.heroBio)}
+          className={clsx(
+            classes.heroTypography,
+            classes.title,
+            classes.heroBio
+          )}
         >
           {user.bio}
         </Typography>
         <Box
           className={classes.heroTypography}
-          display='flex'
-          justifyContent='space-between'
-          width='60%'
+          display="flex"
+          justifyContent="space-between"
+          width="60%"
           maxWidth="710px"
         >
-          <Box
-            display='flex'
-            justifyContent='center'
-            width='50%'
-            mx='auto'
-          >
+          <Box display="flex" justifyContent="center" width="50%" mx="auto">
             <MuiLink href={user.portfolioUrl} target="_blank" rel="noopener">
               <Button
                 variant="contained"
                 color="primary"
                 size="large"
                 className={classes.button}
-                endIcon={<OpenInNewIcon />}  
+                endIcon={<OpenInNewIcon />}
               >
                 Portfolio
               </Button>
@@ -143,34 +144,25 @@ const UserDetailPage = () => {
                 variant="contained"
                 size="large"
                 className={classes.button}
-                endIcon={<OpenInNewIcon />} 
+                endIcon={<OpenInNewIcon />}
               >
                 GitHub
               </Button>
             </MuiLink>
           </Box>
-
         </Box>
       </Box>
       <Container>
-        <Typography
-          component="h3"
-          variant="h4"
-        >
-          <Box 
-            textAlign="center" 
-            mx="auto" 
-            pt={10}
-            pb={8}
-          >
+        <Typography component="h3" variant="h4">
+          <Box textAlign="center" mx="auto" pt={10} pb={4}>
             {`${user.firstName}'s projects`.toUpperCase()}
           </Box>
         </Typography>
 
-        <PrjCardList userId={id}/>
+        <PrjCardList userId={id} />
       </Container>
     </>
   );
-}
- 
+};
+
 export default UserDetailPage;
