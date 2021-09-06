@@ -3,9 +3,8 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import UserContext from "../auth/UserContext";
-import CapConApi from "../api/api";
-
+import UserContext from '../auth/UserContext';
+import CapConApi from '../api/api';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -13,50 +12,61 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   button: {
-    margin: theme.spacing(2)
+    margin: theme.spacing(2),
   },
   textField: {
-    marginBottom: theme.spacing(2)
-  }
+    marginBottom: theme.spacing(2),
+  },
 }));
 
-
-const EditCommentForm = ({ commentState, projectId, idx, setFormVisible, setCommentState }) => {
+const EditCommentForm = ({
+  commentState,
+  projectId,
+  idx,
+  setFormVisible,
+  setCommentState,
+}) => {
   const { currentUser } = useContext(UserContext);
   const INITIAL_STATE_FORM_DATA = {
     projectId: projectId,
     userId: currentUser.id,
-    comment: commentState.comment
+    comment: commentState.comment,
   };
-  const [formData, setFormData] = useState( INITIAL_STATE_FORM_DATA );
+  const [formData, setFormData] = useState(INITIAL_STATE_FORM_DATA);
   const [formErrors, setFormErrors] = useState([]);
 
   const classes = useStyles();
 
   console.debug(
-    "EditCommentForm",
-    "COMMENTSTATE: ", commentState,
-    "formData=", formData,
-    "formErrors", formErrors
+    'EditCommentForm',
+    'COMMENTSTATE: ',
+    commentState,
+    'formData=',
+    formData,
+    'formErrors',
+    formErrors
   );
 
   /** Update form data field */
   const handleChange = (evt) => {
     const { name, value } = evt.target;
-    setFormData(data => ({ ...data, [name]: value }));
-  }
-    
+    setFormData((data) => ({ ...data, [name]: value }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const result = await CapConApi.updateComment(commentState.id, formData);
 
     if (result.id) {
-      console.log("RESULT OF UPDATING COMMENT: ", result);
+      console.log('RESULT OF UPDATING COMMENT: ', result);
       setFormVisible(false);
-      console.log("commentState BEFORE: ", commentState);
-      setCommentState(commentState => ({...commentState, comment: result.comment}));
-      console.log("commentState AFTER: ", commentState);
+      console.log('commentState BEFORE: ', commentState);
+      setCommentState((commentState) => ({
+        ...commentState,
+        comment: result.comment,
+      }));
+      console.log('commentState AFTER: ', commentState);
     } else {
       setFormErrors(result.error);
     }
@@ -90,6 +100,6 @@ const EditCommentForm = ({ commentState, projectId, idx, setFormVisible, setComm
       </form>
     </Box>
   );
-}
+};
 
 export default EditCommentForm;
