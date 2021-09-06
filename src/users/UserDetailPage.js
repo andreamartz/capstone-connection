@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { Link as MuiLink } from '@material-ui/core';
@@ -40,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '1.2rem',
     marginRight: theme.spacing(2),
     marginLeft: theme.spacing(2),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
   },
   heroAvatar: {
     marginLeft: theme.spacing(2),
@@ -156,6 +161,21 @@ const UserDetailPage = () => {
         <Typography component="h3" variant="h4">
           <Box textAlign="center" mx="auto" pt={10} pb={4}>
             {`${user.firstName}'s projects`.toUpperCase()}
+          </Box>
+          <Box textAlign="center" mx="auto" pb={8}>
+            {currentUser.id === user.id ? (
+              <ReactRouterDomLink to={`/projects/new`}>
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  startIcon={<AddIcon />}
+                  className={clsx(classes.heroTypography, classes.button)}
+                >
+                  Add a Project
+                </Button>
+              </ReactRouterDomLink>
+            ) : null}
           </Box>
         </Typography>
 
