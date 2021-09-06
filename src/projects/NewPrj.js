@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { useHistory } from "react-router-dom";
-import CapConApi from "../api/api";
-import LoadingSpinner from "../common/LoadingSpinner";
+import { useHistory } from 'react-router-dom';
+import CapConApi from '../api/api';
+import LoadingSpinner from '../common/LoadingSpinner';
 import AlertDisplay from '../common/AlertDisplay';
 import Checkbox from '@material-ui/core/Checkbox';
 // import Alert from "../common/Alert";
@@ -14,7 +14,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import UserContext from "../auth/UserContext";
+import UserContext from '../auth/UserContext';
 import './NewPrj.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.warning.main,
   },
   prjImage: {
-    height: '300px'
+    height: '300px',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -47,8 +47,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   textField: {
-    marginBottom: theme.spacing(2)
-  }
+    marginBottom: theme.spacing(2),
+  },
 }));
 
 // CHECK:
@@ -59,17 +59,17 @@ const NewPrj = () => {
   const { currentUser } = useContext(UserContext);
 
   const INITIAL_STATE_FORM_DATA = {
-    name: "",
-    description: "",
-    image: "",
+    name: '',
+    description: '',
+    image: '',
     creatorId: currentUser.id,
     tags: [],
-    repoUrl: "",
-    siteUrl: "",
-    feedbackRequest: ""
+    repoUrl: '',
+    siteUrl: '',
+    feedbackRequest: '',
   };
 
-  const [formData, setFormData] = useState( INITIAL_STATE_FORM_DATA );
+  const [formData, setFormData] = useState(INITIAL_STATE_FORM_DATA);
   const [fileInputState, setFileInputState] = useState('');
   const [formErrors, setFormErrors] = useState([]);
   const [dbTags, setDbTags] = useState([]);
@@ -81,36 +81,37 @@ const NewPrj = () => {
     async function getAllTagsOnMount() {
       const dbTags = await CapConApi.getTags();
       setFormData((current) => ({
-        ...current, 
-        tags: dbTags.map(tag => ({ ...tag, checked: false}))
+        ...current,
+        tags: dbTags.map((tag) => ({ ...tag, checked: false })),
       }));
-      setDbTags(dbTags); 
+      setDbTags(dbTags);
     }
     getAllTagsOnMount();
-  }, []); 
+  }, []);
 
   if (!dbTags) return <LoadingSpinner />;
 
   /** Update form data field */
   const handleChange = (evt) => {
     const { name, value } = evt.target;
-    setFormData(data => ({ ...data, [name]: value }));
-  }
+    setFormData((data) => ({ ...data, [name]: value }));
+  };
 
   const toggleCheckboxValue = (evt) => {
     const { name, checked } = evt.target;
 
     // set checked status on FormData for the tag that changed
-    setFormData(data => ({...data, 
-      tags: data.tags.map(tag => {
+    setFormData((data) => ({
+      ...data,
+      tags: data.tags.map((tag) => {
         if (tag.id === Number(name)) {
           return { ...tag, checked };
-        } 
+        }
         return tag;
-      })
-    }))
+      }),
+    }));
   };
-    
+
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     updateImageState(file);
@@ -118,22 +119,22 @@ const NewPrj = () => {
 
   const updateImageState = (file) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file);   // converts file contents to a base 64 encoded image
+    reader.readAsDataURL(file); // converts file contents to a base 64 encoded image
     reader.onloadend = () => {
-      setFormData(data => ({ ...data, image: reader.result }));
+      setFormData((data) => ({ ...data, image: reader.result }));
     };
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const tags = formData.tags
-      .filter(tag => tag.checked)
-      .map(tag => tag.id);
-    const project = {...formData, tags};
+      .filter((tag) => tag.checked)
+      .map((tag) => tag.id);
+    const project = { ...formData, tags };
     const result = await CapConApi.addProject(project);
-    
+
     if (result.id) {
-      history.push("/projects");
+      history.push('/projects');
     } else {
       setFormErrors(result.error);
     }
@@ -211,7 +212,7 @@ const NewPrj = () => {
             idx={idx}
             key={t.id}
             control={
-              <Checkbox 
+              <Checkbox
                 idx={idx}
                 checked={formData.tags[idx].checked}
                 name={t.id}
@@ -231,7 +232,7 @@ const NewPrj = () => {
             <Button
               variant="outlined"
               color="primary"
-              onClick={() => fileInputRef.current.click()}  
+              onClick={() => fileInputRef.current.click()}
             >
               Choose File
             </Button>
@@ -242,7 +243,7 @@ const NewPrj = () => {
               name="image"
               onChange={handleFileInputChange}
               value={fileInputState}
-            />            
+            />
           </Box>
         </Box>
 
@@ -256,10 +257,9 @@ const NewPrj = () => {
             />
           )}
         </Box>
-        {formErrors.length
-          ? <AlertDisplay severity="error" messages= {formErrors} />
-          : null
-        }
+        {formErrors.length ? (
+          <AlertDisplay severity="error" messages={formErrors} />
+        ) : null}
         <Button
           className={classes.button}
           variant="contained"
@@ -273,6 +273,6 @@ const NewPrj = () => {
       </form>
     </Paper>
   );
-}
+};
 
 export default NewPrj;

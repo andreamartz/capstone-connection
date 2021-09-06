@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120,
   },
   select: {
-    width: theme.spacing(20)
-  }
+    width: theme.spacing(20),
+  },
 }));
 
 const SortForm = ({ sort, sortVariable, setSortVariable }) => {
@@ -24,7 +24,7 @@ const SortForm = ({ sort, sortVariable, setSortVariable }) => {
   const classes = useStyles();
 
   const handleChange = async (event) => {
-    setSortVariable(sortVariable => event.target.value);
+    setSortVariable((sortVariable) => event.target.value);
     // await sort(sortVariable);
   };
 
@@ -52,21 +52,15 @@ const SortForm = ({ sort, sortVariable, setSortVariable }) => {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        <MenuItem 
-          value={"newest"}
-          onChange={handleChange}
-        >
-          Newest 
+        <MenuItem value={'newest'} onChange={handleChange}>
+          Newest
         </MenuItem>
-        <MenuItem 
-          value={"most likes"}
-          onChange={handleChange}
-        >
+        <MenuItem value={'most likes'} onChange={handleChange}>
           Most Likes
         </MenuItem>
       </Select>
     </FormControl>
   );
-}
+};
 
-export default SortForm; 
+export default SortForm;

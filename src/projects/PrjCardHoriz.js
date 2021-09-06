@@ -9,7 +9,7 @@ import Tags from '../tags/Tags';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
   },
   details: {
     display: 'flex',
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     paddingLeft: theme.spacing(1),
     paddingBottom: theme.spacing(1),
-  }
+  },
 }));
 
 function PrjCardHoriz({ project }) {
@@ -46,7 +46,7 @@ function PrjCardHoriz({ project }) {
           </Typography>
         </CardContent>
         <div className={classes.tags}>
-          <Tags tags={project.tags}/>
+          <Tags tags={project.tags} />
         </div>
       </div>
     </Card>
