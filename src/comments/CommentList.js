@@ -1,17 +1,17 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { List } from "@material-ui/core";
-import Comment from "./Comment";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { List } from '@material-ui/core';
+import Comment from './Comment';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    backgroundColor: theme.palette.background.paper
-  }
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+  },
 }));
 
 const CommentList = ({ comments, projectId }) => {
-  console.log("CommentList", "comments= ", comments);
+  console.log('CommentList', 'comments= ', comments);
   const classes = useStyles();
 
   return (
@@ -26,6 +26,6 @@ const CommentList = ({ comments, projectId }) => {
       ))}
     </List>
   );
-}
+};
 
 export default CommentList;
