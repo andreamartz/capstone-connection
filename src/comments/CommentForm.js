@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -8,9 +8,8 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import UserContext from "../auth/UserContext";
-import CapConApi from "../api/api";
-
+import UserContext from '../auth/UserContext';
+import CapConApi from '../api/api';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,48 +35,43 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   button: {
-    margin: theme.spacing(2)
+    margin: theme.spacing(2),
   },
   textField: {
-    marginBottom: theme.spacing(2)
-  }
+    marginBottom: theme.spacing(2),
+  },
 }));
-
 
 const CommentForm = ({ projectId }) => {
   const { currentUser } = useContext(UserContext);
   const INITIAL_STATE_FORM_DATA = {
     projectId: projectId,
     commenterId: currentUser.id,
-    comment: ""
+    comment: '',
   };
-  const [formData, setFormData] = useState( INITIAL_STATE_FORM_DATA );
+  const [formData, setFormData] = useState(INITIAL_STATE_FORM_DATA);
   const [formErrors, setFormErrors] = useState([]);
   const classes = useStyles();
   const history = useHistory();
 
-  console.debug(
-    "CommentForm",
-    "formData=", formData,
-    "formErrors", formErrors
-  );
+  console.debug('CommentForm', 'formData=', formData, 'formErrors', formErrors);
 
   /** Update form data field */
   const handleChange = (evt) => {
     const { name, value } = evt.target;
-    setFormData(data => ({ ...data, [name]: value }));
-  }
-    
+    setFormData((data) => ({ ...data, [name]: value }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // const comment = {...formData, comment};
 
     const result = await CapConApi.addComment(formData);
-    
+
     if (result.id) {
-      console.log("RESULT OF NEW COMMENT SUBMISSION: ", result);
-      history.push("/projects");
+      console.log('RESULT OF NEW COMMENT SUBMISSION: ', result);
+      history.push('/projects');
     } else {
       setFormErrors(result.error);
     }
@@ -120,6 +114,6 @@ const CommentForm = ({ projectId }) => {
       </form>
     </Paper>
   );
-}
+};
 
 export default CommentForm;
