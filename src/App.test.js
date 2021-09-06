@@ -4,19 +4,21 @@ import App from './App';
 import { MemoryRouter } from 'react-router-dom';
 
 test('renders App', () => {
-  const { getByText } = render((
+  const { getByText } = render(
     <MemoryRouter initialEntries={['/projects']}>
       <App />
     </MemoryRouter>
-  ));
+  );
   expect(getByText('Capstone Connections')).toBeInTheDocument();
 });
 
 test('navbar links', () => {
-  const { getByText } = render((
+  const { getByText } = render(
     <MemoryRouter initialEntries={['/']}>
       <App />
     </MemoryRouter>
-  ));
-  expect(getByText("The community that connects with and supports you!")).toBeInTheDocument();
+  );
+  expect(
+    getByText('The community that connects with and supports you!')
+  ).toBeInTheDocument();
 });

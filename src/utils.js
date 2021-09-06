@@ -1,49 +1,65 @@
-import CapConApi from "./api/api";
-
+import CapConApi from './api/api';
 
 const asyncWrapper = (incomingPromise) => {
   return incomingPromise
-  .then(data => ({error: null, data}))
-  .catch(error => ({error, data: null}))
-}
+    .then((data) => ({ error: null, data }))
+    .catch((error) => ({ error, data: null }));
+};
 
-const toggleLikeProject = async (projectIdx, currentUser, projects, setProjects) => {
+const toggleLikeProject = async (
+  projectIdx,
+  currentUser,
+  projects,
+  setProjects
+) => {
   const currentUserId = currentUser?.id;
-  const likerId = currentUserId;  
+  const likerId = currentUserId;
   const project = projects[projectIdx];
-  console.log("PROJECT: ", project);
+  console.log('PROJECT: ', project);
   let { id, likesCount, currentUsersLikeId } = project;
   const projectId = id;
 
   // if project already liked by currentUser, unlike it
   if (currentUsersLikeId) {
     const userId = currentUserId;
-    const {data, error} = await asyncWrapper(CapConApi.removeProjectLike({ projectId, currentUsersLikeId, userId }));
+    const { data, error } = await asyncWrapper(
+      CapConApi.removeProjectLike({ projectId, currentUsersLikeId, userId })
+    );
     if (error) {
-      alert("Failed to unlike project. Try again later.");
+      alert('Failed to unlike project. Try again later.');
       return;
     }
-    console.log("DATA: ", data);
+    console.log('DATA: ', data);
     if (data) {
-      setProjects(currentProjects => {
+      setProjects((currentProjects) => {
         const newProjects = [...currentProjects];
-        newProjects[projectIdx] = {...newProjects[projectIdx], likesCount: likesCount-1, currentUsersLikeId: null};
+        newProjects[projectIdx] = {
+          ...newProjects[projectIdx],
+          likesCount: likesCount - 1,
+          currentUsersLikeId: null,
+        };
 
         return newProjects;
       });
     }
   } else {
     // otherwise, like it
-    const {data, error} = await asyncWrapper(CapConApi.addProjectLike({ projectId, likerId }));  // CHECK replace likerId with currentUser.id once we have auth
+    const { data, error } = await asyncWrapper(
+      CapConApi.addProjectLike({ projectId, likerId })
+    ); // CHECK replace likerId with currentUser.id once we have auth
     if (error) {
-      alert ("Failed to like project. Try again later.");
+      alert('Failed to like project. Try again later.');
       return;
     }
-    console.log("DATA: ", data);
+    console.log('DATA: ', data);
     if (data.id) {
-      setProjects(currentProjects => {
+      setProjects((currentProjects) => {
         const newProjects = [...currentProjects];
-        newProjects[projectIdx] = {...newProjects[projectIdx], likesCount: likesCount+1, currentUsersLikeId: data.id};
+        newProjects[projectIdx] = {
+          ...newProjects[projectIdx],
+          likesCount: likesCount + 1,
+          currentUsersLikeId: data.id,
+        };
 
         return newProjects;
       });
@@ -58,7 +74,7 @@ const pgTimeToDate = (pgDate) => {
 
   const newDateDay = +newDateDD;
   const newDateYear = +newDateYYYY;
-  
+
   let newDateMonth;
   switch (newDateMM) {
     case '01':
@@ -102,8 +118,6 @@ const pgTimeToDate = (pgDate) => {
   }
 
   return `${newDateMonth} ${newDateDay}, ${newDateYear}`;
-}
+};
 
-export { asyncWrapper,
-         toggleLikeProject,
-         pgTimeToDate };
+export { asyncWrapper, toggleLikeProject, pgTimeToDate };
