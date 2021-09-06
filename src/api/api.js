@@ -1,33 +1,31 @@
-import axios from "axios";
+import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
+const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
-/** API class 
- * 
+/** API class
+ *
  * Class with static methods for the purpose of getting data from and sending data to the Capstone Connections API.
-*/
+ */
 
 class CapConApi {
   // The token for interacting with the API will be stored here.
   static token;
 
-  static async request(endpoint, data = {}, method = "get") {
-    console.debug("API call: ", endpoint, data, method);
+  static async request(endpoint, data = {}, method = 'get') {
+    console.debug('API call: ', endpoint, data, method);
 
     const url = `${BASE_URL}/${endpoint}`;
     const headers = { Authorization: `Bearer ${CapConApi.token}` };
-    const params = (method === "get")
-      ? data
-      : {};
+    const params = method === 'get' ? data : {};
 
     try {
       return (await axios({ url, method, data, params, headers })).data;
     } catch (err) {
-      console.error("ERR: ", err);
-      console.error("API Error:", err.response);
+      console.error('ERR: ', err);
+      console.error('API Error:', err.response);
       // const message = err.response.data.error.message;
       const message = err.message;
-      console.log("MESSAGE: ", message);
+      console.log('MESSAGE: ', message);
       // throw Array.isArray(message) ? message : [message];
     }
   }
@@ -52,9 +50,9 @@ class CapConApi {
   }
 
   /** Get a list of projects */
-  
+
   static async getProjects(tagText, sortVariable) {
-    const res = await this.request("projects", { tagText, sortVariable });
+    const res = await this.request('projects', { tagText, sortVariable });
 
     return res.projects;
   }
@@ -69,9 +67,9 @@ class CapConApi {
   /** Add a new project */
 
   static async addProject(data) {
-    console.log("DATA SENT: ", data);
-    let res = await this.request("projects", data, "post");
-    console.log("RES from CapConApi: ", res);
+    console.log('DATA SENT: ', data);
+    let res = await this.request('projects', data, 'post');
+    console.log('RES from CapConApi: ', res);
     return res.project;
   }
 
@@ -79,65 +77,73 @@ class CapConApi {
 
   static async addProjectLike(data) {
     const { projectId } = data;
-    const res = await this.request(`projects/${projectId}/likes`, data, "post");
+    const res = await this.request(`projects/${projectId}/likes`, data, 'post');
     return res.projectLike;
   }
 
   /** Unlike a project */
-  
+
   static async removeProjectLike(data) {
     const { projectId, currentUsersLikeId, userId } = data;
-    const res = await this.request(`projects/${projectId}/likes/${currentUsersLikeId}`, data, "delete");
+    const res = await this.request(
+      `projects/${projectId}/likes/${currentUsersLikeId}`,
+      data,
+      'delete'
+    );
     return res.deleted;
   }
 
-  /** Add a new tag 
+  /** Add a new tag
    * data = { text }
-  */
+   */
   static async addTag(data) {
-    const res = await this.request(`tags`, data, "post");
+    const res = await this.request(`tags`, data, 'post');
     return res.tagText;
   }
 
   /** Get a list of tags */
 
   static async getTags() {
-    const res = await this.request("tags");
+    const res = await this.request('tags');
     return res.tags;
   }
 
   /** Add a comment to a project */
 
   static async addComment(data) {
-    const res = await this.request("project_comments", data, "post");
+    const res = await this.request('project_comments', data, 'post');
     return res.comment;
   }
 
   /** Edit a comment about a project */
 
   static async updateComment(commentId, data) {
-    const res = await this.request(`project_comments/${commentId}`, data, "patch");
+    const res = await this.request(
+      `project_comments/${commentId}`,
+      data,
+      'patch'
+    );
     return res.comment;
   }
 
   /** Get token for login from username, password. */
 
   static async login(data) {
-    const res = await this.request(`auth/token`, data, "post");
+    const res = await this.request(`auth/token`, data, 'post');
     return res.token;
   }
 
   /** Signup for site. */
 
   static async signup(data) {
-    const res = await this.request(`auth/register`, data, "post");
+    const res = await this.request(`auth/register`, data, 'post');
     return res.token;
   }
 
   /** Update user profile */
 
   static async updateProfile(userId, data) {
-    const res = await this.request(`users/${userId}`, data, "patch");
+    const res = await this.request(`users/${userId}`, data, 'patch');
     return res.user;
   }
 }
