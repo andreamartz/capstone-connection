@@ -58,6 +58,11 @@ const Navigation = ({ logout }) => {
           href: `/users/${currentUser.username}/settings`,
         },
         {
+          label: 'My User Page',
+          href: `/users/${currentUser.id}`,
+        },
+      ]
+    : [
         {
           label: 'Home',
           href: '/',
