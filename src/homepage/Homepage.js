@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link as ReactRouterDomLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import UserContext from '../auth/UserContext';
 import Container from '@material-ui/core/Container';
@@ -27,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
 	gridItem: {
 		fontSize: theme.spacing(3),
 		paddingBottom: theme.spacing(6),
+	},
+	gridItemSmall: {
+		fontSize: theme.spacing(2),
+		paddingBottom: theme.spacing(4),
 	},
 	welcome: {
 		color: '#ff9c2a',
@@ -72,6 +77,13 @@ function Homepage({ signupDemo }) {
 								Welcome Back, {currentUser.firstName || currentUser.username}!
 							</h2>
 						)}
+					</Typography>
+				</Grid>
+				<Grid item>
+					<Typography className={classes.gridItemSmall} component="p">
+						New here? Check out the{' '}
+						<ReactRouterDomLink to={`/projects`}>Projects</ReactRouterDomLink>{' '}
+						page and go from there!
 					</Typography>
 				</Grid>
 				<Grid item xs={3}>
