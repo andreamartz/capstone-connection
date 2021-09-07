@@ -73,6 +73,14 @@ const PrjCardList = ({ userId }) => {
 
 	console.log('PROJECTS STATE: ', projects);
 
+	return (
+		<Container>
+			<Box
+				display="flex"
+				flexDirection={flexDirection}
+				justifyContent={justifyContent}
+				alignItems={alignItems}
+				mb={5}
 			>
 				{showSearchAndSort && (
 					<SearchForm

@@ -56,8 +56,12 @@ const ProfileForm = () => {
 
 	const classes = useStyles();
 	const history = useHistory();
-	// const fileInputRef = useRef();
+
+	/** Only the profile owner can see this page */
 	const { username } = useParams();
+	if (currentUser.username !== username) {
+		return <Redirect to={`/users/${currentUser.username}/settings`} />;
+	}
 
 	console.debug('ProfileForm', 'formData=', formData, 'formErrors', formErrors);
 
@@ -74,16 +78,13 @@ const ProfileForm = () => {
 			gitHubUrl: formData.gitHubUrl,
 		};
 
-		let updatedUser;
-
 		try {
-			updatedUser = await CapConApi.updateProfile(currentUser.id, profileData);
+			await CapConApi.updateProfile(currentUser.id, profileData);
 			history.push(`/users/${currentUser.id}`);
 		} catch (errors) {
 			setFormErrors(errors);
 			return;
 		}
-
 		setFormData((data) => ({ ...data }));
 	};
 
@@ -108,20 +109,6 @@ const ProfileForm = () => {
 				/>
 			</Box>
 			<form className={classes.form} onSubmit={handleSubmit}>
-				{/* <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="username"
-          label="Username"
-          name="username"
-          onChange={handleChange}
-          type="text"
-          value={formData.username}
-          autoComplete="username"
-          autoFocus
-        /> */}
 				<TextField
 					variant="outlined"
 					margin="normal"
@@ -202,11 +189,6 @@ const ProfileForm = () => {
 					type="gitHubUrl"
 					value={formData.gitHubUrl}
 				/>
-
-				{/* {formErrors.length
-          ? <Alert type="danger">This is an error alert — check it out!</Alert>
-          : null
-        } */}
 				{formErrors.length ? (
 					<AlertDisplay severity="error" messages={formErrors} />
 				) : null}
