@@ -14,7 +14,6 @@ import { Link as ReactRouterDomLink } from 'react-router-dom';
 import PrjCardList from '../projects/PrjCardList';
 import { makeStyles } from '@material-ui/core/styles';
 import CapConApi from '../api/api';
-import LoadingSpinner from '../common/LoadingSpinner';
 import UserContext from '../auth/UserContext';
 import PageNotFound404 from '../common/PageNotFound404';
 import './UserDetailPage.css';

@@ -1,5 +1,5 @@
-import React, { useState, useContext, useRef } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Redirect, useParams, useHistory } from 'react-router-dom';
 import CapConApi from '../api/api';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';

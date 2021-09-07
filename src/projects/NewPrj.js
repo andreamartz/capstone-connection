@@ -4,7 +4,6 @@ import CapConApi from '../api/api';
 import LoadingSpinner from '../common/LoadingSpinner';
 import AlertDisplay from '../common/AlertDisplay';
 import Checkbox from '@material-ui/core/Checkbox';
-// import Alert from "../common/Alert";
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';

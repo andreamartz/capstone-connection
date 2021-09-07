@@ -8,7 +8,6 @@ import CapConApi from './api/api';
 import LoadingSpinner from './common/LoadingSpinner';
 import UserContext from './auth/UserContext';
 import jwt from 'jsonwebtoken';
-import './App.css';
 
 // Key name for storing token in localStorage for "remember me" re-login
 export const TOKEN_STORAGE_ID = 'capstone-connections-token';

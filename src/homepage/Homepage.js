@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import UserContext from '../auth/UserContext';
-import CapConApi from '../api/api';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link as ReactRouterDomLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   container: {

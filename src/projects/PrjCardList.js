@@ -40,7 +40,6 @@ const PrjCardList = ({ userId }) => {
 
 	const classes = useStyles();
 
-
 	useEffect(() => {
 		async function getAllProjectsOnMount() {
 			const projects = userId
@@ -63,18 +62,6 @@ const PrjCardList = ({ userId }) => {
 	const justifyContent = isSmallScreen ? 'center' : 'space-between';
 	const alignItems = isSmallScreen ? 'flex-start' : 'space-between';
 	const marginBottom = isSmallScreen ? 10 : 1;
-
-  // const search = async () => {
-  //   const projects = await CapConApi.getProjects(searchTerm, sortVariable);
-  //   setProjects(projects);
-  // };
-
-  // const sort = async (sortVariable) => {
-  //   console.log("SORTVARIABLE: ", sortVariable, "PROJECTS BEFORE SORT: ", projects);
-  //   const sortedProjects = await CapConApi.getProjects(null, sortVariable);
-  //   console.log("PROJECTS AFTER SORT: ", sortedProjects);
-  //   setProjects(sortedProjects);
-  // }
 
 	if (!projects) return <LoadingSpinner />;
 

@@ -24,7 +24,6 @@ const DrawerNavigation = ({ navData, logout }) => {
 	const { currentUser } = useContext(UserContext);
 
 	const getMenuButtons = () => {
-		console.log('NAVDATA: ', navData);
 		return navData.map(({ label, href }) => {
 			return (
 				<ListItem

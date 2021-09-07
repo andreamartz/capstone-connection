@@ -21,11 +21,8 @@ class CapConApi {
 		try {
 			return (await axios({ url, method, data, params, headers })).data;
 		} catch (err) {
-			console.error('ERR: ', err);
-			console.error('API Error:', err.response);
-			// const message = err.response.data.error.message;
 			const message = err.message;
-			// throw Array.isArray(message) ? message : [message];
+			console.error('API Error:', err.response, 'MESSAGE: ', message);
 		}
 	}
 
@@ -37,7 +34,6 @@ class CapConApi {
 
 	static async getUser(id) {
 		const res = await this.request(`users/${id}`);
-
 		return res?.user;
 	}
 
@@ -52,7 +48,6 @@ class CapConApi {
 
 	static async getProjects(tagText, sortVariable) {
 		const res = await this.request('projects', { tagText, sortVariable });
-
 		return res.projects;
 	}
 
@@ -81,7 +76,7 @@ class CapConApi {
 	/** Unlike a project */
 
 	static async removeProjectLike(data) {
-		const { projectId, currentUsersLikeId, userId } = data;
+		const { projectId, currentUsersLikeId } = data;
 		const res = await this.request(
 			`projects/${projectId}/likes/${currentUsersLikeId}`,
 			data,
