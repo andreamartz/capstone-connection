@@ -17,141 +17,136 @@ import './PrjCardVert.css';
 import '../tags/Tags.css';
 
 const useStyles = makeStyles((theme) => ({
-  actions: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    marginBottom: theme.spacing(1),
-  },
-  iconButton: {
-    padding: '0',
-  },
-  date: {
-    fontSize: theme.spacing(1.5),
-  },
-  avatar: {
-    marginRight: theme.spacing(2),
-  },
-  large: {
-    width: theme.spacing(6),
-    height: theme.spacing(6),
-  },
-  creatorName: {
-    textDecoration: 'none',
-    '&:hover': {
-      textDecoration: 'underline',
-    },
-    fontWeight: 'bold',
-  },
+	actions: {
+		display: 'flex',
+		justifyContent: 'space-between',
+		paddingLeft: theme.spacing(2),
+		paddingRight: theme.spacing(2),
+		marginBottom: theme.spacing(1),
+	},
+	iconButton: {
+		padding: '0',
+	},
+	date: {
+		fontSize: theme.spacing(1.5),
+	},
+	avatar: {
+		marginRight: theme.spacing(2),
+	},
+	large: {
+		width: theme.spacing(6),
+		height: theme.spacing(6),
+	},
+	link: {
+		textDecoration: 'none',
+		'&:hover': {
+			textDecoration: 'underline',
+		},
+		fontWeight: 'bold',
+	},
 }));
 
 const PrjCardVert = ({ toggleLike, project }) => {
-  console.debug('PrjCardVert');
-  const {
-    id,
-    name,
-    image,
-    description,
-    feedbackRequest,
-    createdAt,
-    likesCount,
-    prjCommentsCount,
-    creator,
-    tags,
-  } = project;
+	console.debug('PrjCardVert');
+	const {
+		id,
+		name,
+		image,
+		description,
+		feedbackRequest,
+		createdAt,
+		likesCount,
+		prjCommentsCount,
+		creator,
+		tags,
+	} = project;
 
-  const dateCreated = pgTimeToDate(createdAt);
+	const dateCreated = pgTimeToDate(createdAt);
 
-  const classes = useStyles();
+	const classes = useStyles();
 
-  return (
-    <Card elevation={3}>
-      <ReactRouterDomLink to={`/projects/${id}`}>
-        <CardMedia component="img" image={image} alt="" />
-      </ReactRouterDomLink>
-      <Divider variant="fullWidth" />
-      <CardContent>
-        <Box mb={2}>
-          <Typography
-            component="h3"
-            variant="subtitle2"
-            className={classes.date}
-          >
-            Created: {dateCreated}
-          </Typography>
-        </Box>
+	return (
+		<Card elevation={3}>
+			<ReactRouterDomLink to={`/projects/${id}`}>
+				<CardMedia component="img" image={image} alt="" />
+			</ReactRouterDomLink>
+			<Divider variant="fullWidth" />
+			<CardContent>
+				<Box mb={2}>
+					<Typography
+						component="h3"
+						variant="subtitle2"
+						className={classes.date}
+					>
+						Created: {dateCreated}
+					</Typography>
+				</Box>
 
-        <Typography component="h3" variant="subtitle1">
-          <ReactRouterDomLink to={`/projects/${id}`}>
-            <Box
-              fontSize="h6.fontSize"
-              fontWeight="fontWeightBold"
-              lineHeight="normal"
-              paddingBottom="1rem"
-            >
-              {name}
-            </Box>
-          </ReactRouterDomLink>
-        </Typography>
+				<Typography component="h3" variant="subtitle1">
+					<ReactRouterDomLink to={`/projects/${id}`} className={classes.link}>
+						<Box
+							fontSize="h6.fontSize"
+							fontWeight="fontWeightBold"
+							lineHeight="normal"
+							paddingBottom="1rem"
+						>
+							{name}
+						</Box>
+					</ReactRouterDomLink>
+				</Typography>
 
-        <Typography variant="body1">{description}</Typography>
-      </CardContent>
+				<Typography variant="body1">{description}</Typography>
+			</CardContent>
 
-      <CardActions className={classes.actions}>
-        <Tags tags={tags} />
+			<CardActions className={classes.actions}>
+				<Tags tags={tags} />
 
-        <Box display="flex" align-items="center">
-          <IconButton
-            aria-label="like"
-            className={classes.iconButton}
-            onClick={toggleLike}
-          >
-            <FavoriteBorderIcon />
-          </IconButton>
-          <Box mx={1}>{likesCount}</Box>
-          <ModeCommentOutlinedIcon mx={8} />
-          <Box ml={1}>{prjCommentsCount}</Box>
-        </Box>
-      </CardActions>
+				<Box display="flex" align-items="center">
+					<IconButton
+						aria-label="like"
+						className={classes.iconButton}
+						onClick={toggleLike}
+					>
+						<FavoriteBorderIcon />
+					</IconButton>
+					<Box mx={1}>{likesCount}</Box>
+					<ModeCommentOutlinedIcon mx={8} />
+					<Box ml={1}>{prjCommentsCount}</Box>
+				</Box>
+			</CardActions>
 
-      <Divider variant="middle" />
+			<Divider variant="middle" />
 
-      <CardContent
-        display="flex"
-        justify-content="space-between"
-        align-items="center"
-      >
-        <Box display="flex" justify-content="space-between">
-          <Avatar
-            src={creator.photoUrl}
-            className={clsx(classes.large, classes.avatar)}
-            alt="project creator"
-          />
-          <Box
-            display="flex"
-            alignItems="center"
-            fontWeight="fontWeightBold"
-            className={classes.creatorName}
-          >
-            <Typography>
-              <ReactRouterDomLink
-                className={classes.creatorName}
-                to={`/users/${creator.id}`}
-              >
-                {creator.firstName} {creator.lastName}
-              </ReactRouterDomLink>
-            </Typography>
-          </Box>
-        </Box>
-      </CardContent>
+			<CardContent
+				display="flex"
+				justify-content="space-between"
+				align-items="center"
+			>
+				<Box display="flex" justify-content="space-between">
+					<Avatar
+						src={creator.photoUrl}
+						className={clsx(classes.large, classes.avatar)}
+						alt="project creator"
+					/>
+					<Box display="flex" alignItems="center" fontWeight="fontWeightBold">
+						<Typography>
+							<ReactRouterDomLink
+								className={classes.link}
+								to={`/users/${creator.id}`}
+							>
+								{creator.firstName} {creator.lastName}
+							</ReactRouterDomLink>
+						</Typography>
+					</Box>
+				</Box>
+			</CardContent>
 
-      <Divider variant="middle" />
-      <CardContent>
-        <Typography>{feedbackRequest}</Typography>
-      </CardContent>
-    </Card>
-  );
+			<Divider variant="middle" />
+			<CardContent>
+				<Typography>{feedbackRequest}</Typography>
+			</CardContent>
+		</Card>
+	);
 };
 
 export default PrjCardVert;
