@@ -112,6 +112,8 @@ const PrjCardList = ({ userId }) => {
 								toggleLike={() => {
 									toggleLikeProject(idx, currentUser, projects, setProjects);
 								}}
+								projects={projects}
+								setProjects={setProjects}
 							/>
 						</div>
 					))}

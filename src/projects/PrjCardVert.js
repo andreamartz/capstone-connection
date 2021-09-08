@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import CapConApi from '../api/api';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
+import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
 import Divider from '@material-ui/core/Divider';
 import { Link as ReactRouterDomLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,6 +18,7 @@ import Tags from '../tags/Tags';
 import { pgTimeToDate } from '../utils';
 import './PrjCardVert.css';
 import '../tags/Tags.css';
+import UserContext from '../auth/UserContext';
 
 const useStyles = makeStyles((theme) => ({
 	actions: {
@@ -23,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
 		paddingLeft: theme.spacing(2),
 		paddingRight: theme.spacing(2),
 		marginBottom: theme.spacing(1),
+	},
+	deleteButton: {
+		color: '#ff4025',
+		minWidth: 'fit-content',
 	},
 	iconButton: {
 		padding: '0',
@@ -46,8 +54,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const PrjCardVert = ({ toggleLike, project }) => {
-	console.debug('PrjCardVert');
+const PrjCardVert = ({ toggleLike, project, projects, setProjects }) => {
 	const {
 		id,
 		name,
@@ -61,10 +68,15 @@ const PrjCardVert = ({ toggleLike, project }) => {
 		tags,
 	} = project;
 
+	const { currentUser } = useContext(UserContext);
 	const dateCreated = pgTimeToDate(createdAt);
-
 	const classes = useStyles();
 
+	const deleteProject = async () => {
+		await CapConApi.deleteProject({ id });
+		const newProjects = projects.filter((project) => project.id !== id);
+		setProjects(newProjects);
+	};
 	return (
 		<Card elevation={3}>
 			<ReactRouterDomLink to={`/projects/${id}`}>
@@ -82,18 +94,29 @@ const PrjCardVert = ({ toggleLike, project }) => {
 					</Typography>
 				</Box>
 
-				<Typography component="h3" variant="subtitle1">
-					<ReactRouterDomLink to={`/projects/${id}`} className={classes.link}>
-						<Box
-							fontSize="h6.fontSize"
-							fontWeight="fontWeightBold"
-							lineHeight="normal"
-							paddingBottom="1rem"
-						>
+				<Box display="flex" paddingBottom="1rem" justifyContent="space-between">
+					<Box
+						display="flex"
+						alignItems="center"
+						fontSize="h6.fontSize"
+						fontWeight="fontWeightBold"
+						lineHeight="normal"
+					>
+						<ReactRouterDomLink to={`/projects/${id}`} className={classes.link}>
 							{name}
-						</Box>
-					</ReactRouterDomLink>
-				</Typography>
+						</ReactRouterDomLink>
+					</Box>
+					<Box>
+						{currentUser.id === creator.id && (
+							<Button onClick={deleteProject} className={classes.deleteButton}>
+								<DeleteOutlineRoundedIcon
+									fontWeight="fontWeightBold"
+									fontSize="medium"
+								/>
+							</Button>
+						)}
+					</Box>
+				</Box>
 
 				<Typography variant="body1">{description}</Typography>
 			</CardContent>
