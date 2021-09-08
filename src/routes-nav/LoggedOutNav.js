@@ -9,9 +9,7 @@ const LoggedOutNav = ({ navData, classes, isSmallScreen }) => {
 	}
 	return (
 		<Toolbar className={classes.toolbar}>
-			<div>
-				<WideNavMenu navData={navData} classes={classes} />
-			</div>
+			<WideNavMenu navData={navData} classes={classes} />
 		</Toolbar>
 	);
 };
