@@ -65,6 +65,16 @@ class CapConApi {
 		return res.project;
 	}
 
+	/** Delete a project */
+
+	static async deleteProject(data) {
+		const { id } = data;
+		console.log('DATA: ', data);
+		let res = await this.request(`projects/${id}`, data, 'delete');
+		console.log('RES: ', res);
+		return res.deleted;
+	}
+
 	/** Like a project */
 
 	static async addProjectLike(data) {
@@ -135,7 +145,7 @@ class CapConApi {
 	/** Register demo user. */
 
 	static async signupDemo() {
-		const res = await this.request(`auth/register/demo`);
+		const res = await this.request(`auth/register/demo`, {}, 'post');
 		return res.token;
 	}
 
