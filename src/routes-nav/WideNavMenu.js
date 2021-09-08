@@ -6,7 +6,11 @@ const WideNavMenu = ({ navData, classes }) => {
 	return (
 		<div>
 			{navData.map((navItem) => (
-				<Button key={navItem.label} className={classes.navLink}>
+				<Button
+					key={navItem.label}
+					className={classes.navLink}
+					aria-label="navigation link"
+				>
 					<NavLink to={navItem.href} className={classes.navLink}>
 						{navItem.label}
 					</NavLink>
