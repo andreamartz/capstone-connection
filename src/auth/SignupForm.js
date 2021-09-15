@@ -98,10 +98,7 @@ const validate = (values) => {
 };
 
 const SignupForm = ({ signup }) => {
-	// const [fileInputState, setFileInputState] = useState('');
 	const [fileData, setFileData] = useState({ fileName: '' });
-
-	let fileEncodedString;
 
 	const formik = useFormik({
 		initialValues: {
@@ -135,8 +132,6 @@ const SignupForm = ({ signup }) => {
 		reader.readAsDataURL(file); // converts file contents to a base 64 encoded image
 
 		reader.onloadend = () => {
-			// setFormData(data => ({ ...data, photoUrl: reader.result }));
-			// fileEncodedString = reader.result;
 			setFileData((fileData) => ({ ...fileData, fileName: reader.result }));
 		};
 	};

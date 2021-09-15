@@ -97,7 +97,6 @@ const PrjDetailPage = () => {
 	const justifyContent = isSmallScreen ? 'center' : 'space-between';
 	const alignItems = isSmallScreen ? 'center' : 'space-between';
 
-	// if (projectState.length === 0) return <LoadingSpinner />;
 	if (projectState.length === 0) return <PageNotFound404 />;
 
 	return (
