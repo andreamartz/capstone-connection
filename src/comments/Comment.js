@@ -15,6 +15,15 @@ import UserContext from '../auth/UserContext';
 import EditCommentForm from './EditCommentForm';
 import './Comment.css';
 
+/** Show comment data
+ *
+ * It is rendered by CommentList to show the comment and the commenter name and avatar.
+ *
+ * Receives props: comment {object), project id, and index in comments array being mapped over
+ *
+ * CommentList -> Comment
+ */
+
 const useStyles = makeStyles((theme) => ({
 	fonts: {
 		fontWeight: 'bold',

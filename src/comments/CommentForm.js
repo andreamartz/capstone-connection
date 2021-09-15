@@ -11,6 +11,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import UserContext from '../auth/UserContext';
 import CapConApi from '../api/api';
 
+/** Show comment creation form
+ *
+ * It is rendered by ProjectDetailPage to allow user to submit a comment on a specific project.
+ *
+ * Receives props: projectId
+ *
+ * ProjectDetailPage -> CommentForm
+ */
+
 const useStyles = makeStyles((theme) => ({
 	paper: {
 		marginTop: theme.spacing(8),

@@ -6,6 +6,20 @@ import { makeStyles } from '@material-ui/core/styles';
 import UserContext from '../auth/UserContext';
 import CapConApi from '../api/api';
 
+/** Show comment edit form
+ *
+ * It is rendered by ProjectDetailPage to allow user to submit a comment on a specific project.
+ *
+ * Receives props:
+ * 		- commentState (for the comment being edited),
+ * 		- projectId,
+ * 		- index of this comment in comments array being mapped over,
+ * 	  - setFormVisible,
+ * 		- setCommentState
+ *
+ * Comment -> EditCommentForm
+ */
+
 const useStyles = makeStyles((theme) => ({
 	form: {
 		width: '100%', // Fix IE 11 issue.

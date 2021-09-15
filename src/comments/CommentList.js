@@ -3,6 +3,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import { List } from '@material-ui/core';
 import Comment from './Comment';
 
+/** Show list of comments
+ *
+ * It is rendered by ProjectDetailPage to show all comments pertaining to the project on that page.
+ *
+ * Receives props: comments (array), projectId
+ *
+ * ProjectDetailPage -> CommentList
+ */
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		width: '100%',
