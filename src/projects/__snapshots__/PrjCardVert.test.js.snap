@@ -1,0 +1,174 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiPaper-root MuiCard-root MuiPaper-elevation3 MuiPaper-rounded"
+  >
+    <a
+      href="/projects/3"
+    >
+      <img
+        alt=""
+        class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img"
+        src="https://res.cloudinary.com/wahmof2/image/upload/v1628103099/capstone_connections/projects_capstone_connections/water-mate-Aimee-Wildstone.png"
+      />
+    </a>
+    <hr
+      class="MuiDivider-root"
+    />
+    <div
+      class="MuiCardContent-root"
+    >
+      <div
+        class="MuiBox-root MuiBox-root-26"
+      >
+        <h3
+          class="MuiTypography-root makeStyles-date-22 MuiTypography-subtitle2"
+        >
+          Created: August 5, 2021
+        </h3>
+      </div>
+      <div
+        class="MuiBox-root MuiBox-root-27"
+      >
+        <div
+          class="MuiBox-root MuiBox-root-28"
+        >
+          <a
+            class="makeStyles-link-25"
+            href="/projects/3"
+          >
+            Water Mate
+          </a>
+        </div>
+        <div
+          class="MuiBox-root MuiBox-root-29"
+        />
+      </div>
+      <p
+        class="MuiTypography-root MuiTypography-body1"
+      >
+        Water Mate is a tool to help you organize your plant collection, keep track of the health of your plants, and help remind you when it's time to water your plants. You have full control over how your collection is organized, so organize your collection in a way that makes sense for you!
+      </p>
+    </div>
+    <div
+      class="MuiCardActions-root makeStyles-actions-19 MuiCardActions-spacing"
+    >
+      <div
+        class="MuiBox-root MuiBox-root-30"
+      >
+        <div
+          class="MuiBox-root MuiBox-root-31"
+        >
+          <span
+            class="tag"
+          >
+            <p
+              class="MuiTypography-root API MuiTypography-body1"
+            >
+              API
+            </p>
+          </span>
+        </div>
+      </div>
+      <div
+        align-items="center"
+        class="MuiBox-root MuiBox-root-32"
+      >
+        <button
+          aria-label="like"
+          class="MuiButtonBase-root MuiIconButton-root makeStyles-iconButton-21"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiIconButton-label"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"
+              />
+            </svg>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </button>
+        <div
+          class="MuiBox-root MuiBox-root-33"
+        >
+          0
+        </div>
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root"
+          focusable="false"
+          mx="8"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M20 17.17L18.83 16H4V4h16v13.17zM20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2z"
+          />
+        </svg>
+        <div
+          class="MuiBox-root MuiBox-root-34"
+        />
+      </div>
+    </div>
+    <hr
+      class="MuiDivider-root MuiDivider-middle"
+    />
+    <div
+      align-items="center"
+      class="MuiCardContent-root"
+      display="flex"
+      justify-content="space-between"
+    >
+      <div
+        class="MuiBox-root MuiBox-root-35"
+        justify-content="space-between"
+      >
+        <div
+          class="MuiAvatar-root MuiAvatar-circular makeStyles-large-24 makeStyles-avatar-23"
+        >
+          <img
+            alt="project creator"
+            class="MuiAvatar-img"
+            src="https://res.cloudinary.com/wahmof2/image/upload/v1628101940/capstone_connections/users_capstone_connections/Aimee-Wildstone.jpg"
+          />
+        </div>
+        <div
+          class="MuiBox-root MuiBox-root-36"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1"
+          >
+            <a
+              class="makeStyles-link-25"
+              href="/users/3"
+            >
+              Aimee Wildstone
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="MuiDivider-root MuiDivider-middle"
+    />
+    <div
+      class="MuiCardContent-root"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiPaper-root MuiCard-root makeStyles-root-8 MuiPaper-elevation1 MuiPaper-rounded"
+  >
+    <div
+      class="MuiCardMedia-root makeStyles-cover-11"
+      style="background-image: url(https://res.cloudinary.com/wahmof2/image/upload/v1628103099/capstone_connections/projects_capstone_connections/water-mate-Aimee-Wildstone.png);"
+      title="Water Mate"
+    />
+    <div
+      class="makeStyles-details-9"
+    >
+      <div
+        class="MuiCardContent-root makeStyles-content-10"
+      >
+        <h5
+          class="MuiTypography-root MuiTypography-h5"
+        >
+          Water Mate
+        </h5>
+      </div>
+      <div
+        class="makeStyles-tags-12"
+      >
+        <div
+          class="MuiBox-root MuiBox-root-13"
+        >
+          <div
+            class="MuiBox-root MuiBox-root-14"
+          >
+            <span
+              class="tag"
+            >
+              <p
+                class="MuiTypography-root API MuiTypography-body1"
+              >
+                API
+              </p>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

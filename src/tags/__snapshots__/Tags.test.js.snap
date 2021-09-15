@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root MuiBox-root-3"
+  >
+    <div
+      class="MuiBox-root MuiBox-root-4"
+    >
+      <span
+        class="tag"
+      >
+        <p
+          class="MuiTypography-root HTML MuiTypography-body1"
+        >
+          HTML
+        </p>
+      </span>
+      <span
+        class="tag"
+      >
+        <p
+          class="MuiTypography-root CSS MuiTypography-body1"
+        >
+          CSS
+        </p>
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;

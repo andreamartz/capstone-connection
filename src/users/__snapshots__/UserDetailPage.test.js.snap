@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="makeStyles-message-16"
+  >
+    Page Not Found
+  </div>
+</DocumentFragment>
+`;

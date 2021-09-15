@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="MuiContainer-root makeStyles-container-7 MuiContainer-maxWidthLg"
+    >
+      <div
+        class="MuiGrid-root makeStyles-gridContainer-8 MuiGrid-container"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <h1
+            class="MuiTypography-root makeStyles-gridHeading-9 MuiTypography-body1 MuiTypography-colorPrimary"
+          >
+            Capstone Connections
+          </h1>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <h1
+            class="MuiTypography-root makeStyles-gridItem-10 MuiTypography-body1"
+          >
+            The community that connects with and supports you!
+          </h1>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <p
+            class="MuiTypography-root makeStyles-welcome-12 MuiTypography-body1"
+          />
+          <h2>
+            Welcome Back, testfirst!
+          </h2>
+          <p />
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <p
+            class="MuiTypography-root makeStyles-gridItemSmall-11 MuiTypography-body1"
+          >
+            New here? Check out the 
+            <a
+              href="/projects"
+            >
+              Projects
+            </a>
+             page and go from there!
+          </p>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

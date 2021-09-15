@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User logged in it matches snapshot 1`] = `
+<DocumentFragment>
+  <header
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionFixed MuiAppBar-colorPrimary mui-fixed MuiPaper-elevation4"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+    >
+      <h1
+        class="MuiTypography-root MuiTypography-h6"
+      >
+        Capstone Connections
+      </h1>
+      <div
+        class="MuiToolbar-root MuiToolbar-regular makeStyles-toolbar-8 MuiToolbar-gutters"
+      >
+        <div>
+          <button
+            aria-label="navigation link"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-navLink-7"
+            tabindex="0"
+            type="button"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              <a
+                aria-current="page"
+                class="makeStyles-navLink-7 active"
+                href="/"
+              >
+                Home
+              </a>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
+          <button
+            aria-label="navigation link"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-navLink-7"
+            tabindex="0"
+            type="button"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              <a
+                class="makeStyles-navLink-7"
+                href="/projects"
+              >
+                Projects
+              </a>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
+          <button
+            aria-label="navigation link"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-navLink-7"
+            tabindex="0"
+            type="button"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              <a
+                class="makeStyles-navLink-7"
+                href="/users/testuser/settings"
+              >
+                My Profile
+              </a>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
+          <button
+            aria-label="navigation link"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-navLink-7"
+            tabindex="0"
+            type="button"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              <a
+                class="makeStyles-navLink-7"
+                href="/users/1"
+              >
+                My User Page
+              </a>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+        <a
+          aria-current="page"
+          class="makeStyles-navLink-7 active"
+          href="/"
+        >
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit"
+            tabindex="0"
+            type="button"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              Logout
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
+        </a>
+      </div>
+    </div>
+  </header>
+</DocumentFragment>
+`;

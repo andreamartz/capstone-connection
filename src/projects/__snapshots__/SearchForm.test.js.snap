@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root MuiBox-root-14 makeStyles-box-10"
+  >
+    <form
+      class="makeStyles-form-11"
+    >
+      <div
+        class="MuiFormControl-root MuiTextField-root makeStyles-textField-12"
+      >
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiOutlinedInput-input"
+            name="searchTerm"
+            placeholder="Search by tag"
+            type="text"
+            value="JS"
+          />
+          <fieldset
+            aria-hidden="true"
+            class="PrivateNotchedOutline-root-15 MuiOutlinedInput-notchedOutline"
+            style="padding-left: 8px;"
+          >
+            <legend
+              class="PrivateNotchedOutline-legend-16"
+              style="width: 0.01px;"
+            >
+              <span>
+                ​
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+    </form>
+  </div>
+</DocumentFragment>
+`;

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot 1`] = `
+exports[`Snapshot test it matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="MuiPaper-root makeStyles-paper-9 MuiPaper-elevation5 MuiPaper-rounded"
