@@ -63,8 +63,6 @@ const ProfileForm = () => {
 		return <Redirect to={`/users/${currentUser.username}/settings`} />;
 	}
 
-	console.debug('ProfileForm', 'formData=', formData, 'formErrors', formErrors);
-
 	const handleSubmit = async (evt) => {
 		evt.preventDefault();
 

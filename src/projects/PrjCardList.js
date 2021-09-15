@@ -71,8 +71,6 @@ const PrjCardList = ({ userId }) => {
 		600: 1,
 	};
 
-	console.log('PROJECTS STATE: ', projects);
-
 	return (
 		<Container>
 			<Box

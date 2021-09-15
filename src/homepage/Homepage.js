@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Homepage({ signupDemo }) {
 	const { currentUser } = useContext(UserContext);
-	console.debug('Homepage', 'currentUser=', currentUser);
 	const classes = useStyles();
 
 	return (

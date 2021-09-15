@@ -118,7 +118,6 @@ const SignupForm = ({ signup }) => {
 		validate,
 		onSubmit: async (values) => {
 			const formData = { ...values, photoUrl: fileData.fileName };
-			console.log('FILEENCODEDSTRING: ', fileEncodedString);
 			await signup(formData);
 		},
 	});
@@ -128,7 +127,6 @@ const SignupForm = ({ signup }) => {
 
 	const handleFileInputChange = (e) => {
 		const file = e.target.files[0];
-		console.log('FILE: ', file);
 		updateImageState(file);
 	};
 

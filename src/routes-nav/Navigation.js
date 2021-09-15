@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
 const Navigation = ({ logout }) => {
 	const classes = useStyles();
 	const { currentUser } = useContext(UserContext);
-	console.debug('Navigation', 'CURRENTUSER: ', currentUser);
 
 	const navData = currentUser?.username
 		? [

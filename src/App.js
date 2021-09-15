@@ -32,16 +32,6 @@ function App() {
 	const [currentUser, setCurrentUser] = useState(null);
 	const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
 
-	console.debug(
-		'App',
-		'infoLoaded=',
-		infoLoaded,
-		'currentUser=',
-		currentUser,
-		'token=',
-		token,
-	);
-
 	// Load user info from API. Until a user is logged in and they have a token,
 	// this should not run. It only needs to re-run when a user logs out, so
 	// the value of the token is a dependency for this effect.
@@ -51,15 +41,12 @@ function App() {
 			async function getCurrentUser() {
 				if (token) {
 					try {
-						console.log('INSIDE GETCURRENT USER. TOKEN: ', token);
 						const { id } = jwt.decode(token);
 						// put the token on the Api class so it can use it to call the API.
 						CapConApi.token = token;
 						let currentUser = await CapConApi.getUser(id);
-						console.log('App', 'CURRENTUSER: ', currentUser, 'TOKEN: ', token);
 						setCurrentUser(currentUser);
 					} catch (err) {
-						console.error('App loadUserInfo: problem loading', err);
 						setCurrentUser(null);
 					}
 				}
@@ -77,9 +64,7 @@ function App() {
 
 	/** Handles site-wide logout. */
 	function logout() {
-		console.log('Logged in CURRENTUSER: ', currentUser);
 		setCurrentUser(null);
-		console.log('Logged out CURRENTUSER: ', currentUser);
 		setToken(null);
 	}
 
@@ -96,7 +81,6 @@ function App() {
 			setToken(token);
 			return { success: true };
 		} catch (errors) {
-			console.error('signup failed', errors);
 			return { success: false, errors };
 		}
 	}
@@ -107,7 +91,6 @@ function App() {
 			setToken(token);
 			return { success: true };
 		} catch (errors) {
-			console.error('signup demo failed', errors);
 			return { success: false, errors };
 		}
 	}
@@ -122,7 +105,6 @@ function App() {
 			setToken(token);
 			return { success: true };
 		} catch (errors) {
-			console.error('login failed', errors);
 			return { success: false, errors };
 		}
 	}

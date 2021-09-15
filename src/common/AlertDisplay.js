@@ -7,8 +7,6 @@ import Alert from '@material-ui/lab/Alert';
  **/
 
 const AlertDisplay = ({ severity = 'error', messages = [] }) => {
-	console.debug('Alert', 'severity=', severity, 'messages=', messages);
-
 	return (
 		<div>
 			{messages.map((error) => (

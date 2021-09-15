@@ -28,17 +28,7 @@ const useStyles = makeStyles((theme) => ({
  */
 
 const SearchForm = ({ searchTerm, setSearchTerm }) => {
-	console.debug('SearchForm', 'searchFor=', typeof search);
-
 	const [formErrors, setFormErrors] = useState([]);
-
-	console.debug(
-		'SearchForm',
-		'searchTerm=',
-		searchTerm,
-		'formErrors',
-		formErrors,
-	);
 
 	const classes = useStyles();
 

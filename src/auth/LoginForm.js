@@ -44,16 +44,6 @@ const LoginForm = ({ login }) => {
 	});
 	const [formErrors, setFormErrors] = useState([]);
 
-	console.debug(
-		'LoginForm',
-		'login=',
-		typeof login,
-		'formData=',
-		formData,
-		'formErrors',
-		formErrors,
-	);
-
 	const classes = useStyles();
 	const history = useHistory();
 

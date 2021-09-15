@@ -12,8 +12,6 @@ class CapConApi {
 	static token;
 
 	static async request(endpoint, data = {}, method = 'get') {
-		console.debug('API call: ', endpoint, data, method);
-
 		const url = `${BASE_URL}/${endpoint}`;
 		const headers = { Authorization: `Bearer ${CapConApi.token}` };
 		const params = method === 'get' ? data : {};
@@ -22,7 +20,6 @@ class CapConApi {
 			return (await axios({ url, method, data, params, headers })).data;
 		} catch (err) {
 			const message = err.message;
-			console.error('API Error:', err.response, 'MESSAGE: ', message);
 		}
 	}
 
@@ -69,9 +66,7 @@ class CapConApi {
 
 	static async deleteProject(data) {
 		const { id } = data;
-		console.log('DATA: ', data);
 		let res = await this.request(`projects/${id}`, data, 'delete');
-		console.log('RES: ', res);
 		return res.deleted;
 	}
 
