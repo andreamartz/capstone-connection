@@ -67,7 +67,7 @@ const PrjCardList = ({ userId }) => {
 
 	const breakpoints = {
 		default: 3, // default number of columns
-		960: 2, // at screen width of 1100px, reduce to 2 columns
+		960: 2, // at screen width of 1100px and below, reduce to 2 columns
 		600: 1,
 	};
 

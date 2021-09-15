@@ -85,6 +85,13 @@ function App() {
 		}
 	}
 
+	/** Handles demo account signup.
+	 *
+	 * Automatically logs them in (set token) upon signup.
+	 *
+	 * Make sure you await this function and check its return value!
+	 */
+
 	async function signupDemo() {
 		try {
 			let token = await CapConApi.signupDemo();

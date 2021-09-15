@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 /** Search form
  *
- * Appears above PrjCardList so that projects shown can be filtered.
+ * Appears above PrjCardList so that projects shown can be filtered by tag.
  *
  */
 
