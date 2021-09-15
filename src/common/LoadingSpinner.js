@@ -1,6 +1,16 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
+/** Presentational component to show when page is loading.
+ *
+ * It is rendered by NewPrj and ProjectCardList
+ *
+ * Receives no props
+ *
+ * NewPrj -> LoadingSpinner
+ * ProjectCardList -> LoadingSpinner
+ */
+
 const useStyles = makeStyles((theme) => ({
   message: {
     margin: '200px auto 0 auto',

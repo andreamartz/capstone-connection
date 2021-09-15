@@ -7,6 +7,15 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
+/** Homepage of site.
+ *
+ * Shows welcome message or login/register buttons.
+ *
+ * Receives signupDemo function prop
+ *
+ * Routes -> Homepage
+ */
+
 const useStyles = makeStyles((theme) => ({
 	container: {
 		marginTop: theme.spacing(8),
@@ -39,14 +48,6 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: theme.spacing(3),
 	},
 }));
-/** Homepage of site.
- *
- * Shows welcome message or login/register buttons.
- *
- * Routed at /
- *
- * Routes -> Homepage
- */
 
 function Homepage({ signupDemo }) {
 	const { currentUser } = useContext(UserContext);
