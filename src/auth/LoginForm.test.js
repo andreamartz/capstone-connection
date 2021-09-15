@@ -4,16 +4,18 @@ import LoginForm from './LoginForm';
 import { MemoryRouter } from 'react-router';
 
 describe('Smoke test', () => {
-  test('it renders without crashing', () => {
-    render(<LoginForm />);
-  });
+	test('it renders without crashing', () => {
+		render(<LoginForm />);
+	});
 });
 
-it('matches snapshot', function () {
-  const { asFragment } = render(
-    <MemoryRouter>
-      <LoginForm />
-    </MemoryRouter>
-  );
-  expect(asFragment()).toMatchSnapshot();
+describe('Snapshot test', () => {
+	test('it matches snapshot', function () {
+		const { asFragment } = render(
+			<MemoryRouter>
+				<LoginForm />
+			</MemoryRouter>,
+		);
+		expect(asFragment()).toMatchSnapshot();
+	});
 });

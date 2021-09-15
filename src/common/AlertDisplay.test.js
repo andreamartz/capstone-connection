@@ -1,10 +1,19 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import AlertDisplay from './AlertDisplay';
-import { MemoryRouter } from 'react-router';
 
 describe('Smoke test', () => {
-  test('it renders without crashing', () => {
-    render(<AlertDisplay />);
-  });
+	test('it renders without crashing', () => {
+		render(<AlertDisplay />);
+	});
+});
+
+describe('Snapshot test', () => {
+	test('it matches snapshot for error', function () {
+		let messages = ['Bad things happened', 'More bad news'];
+		const { asFragment } = render(
+			<AlertDisplay severity="error" messages={messages} />,
+		);
+		expect(asFragment()).toMatchSnapshot();
+	});
 });
