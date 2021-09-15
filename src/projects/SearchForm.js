@@ -28,8 +28,6 @@ const useStyles = makeStyles((theme) => ({
  */
 
 const SearchForm = ({ searchTerm, setSearchTerm }) => {
-	const [formErrors, setFormErrors] = useState([]);
-
 	const classes = useStyles();
 
 	/** Update state, form field value as user types */
